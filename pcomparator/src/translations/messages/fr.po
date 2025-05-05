@@ -170,6 +170,14 @@ msgstr "Nom d'affichage invalide."
 msgid "Invalid phone number."
 msgstr "Numéro de téléphone invalide."
 
+#: src/app/[locale]/shopping-lists/components/ShoppingListAddItemForm.tsx
+msgid "Item added successfully!"
+msgstr ""
+
+#: src/app/[locale]/shopping-lists/components/ShoppingListAddItemForm.tsx
+msgid "Item has been successfully added to your shopping list."
+msgstr ""
+
 #: src/components/ThemeSwitcher/ThemeSwitcher.tsx
 msgid "Light"
 msgstr "Clair"
