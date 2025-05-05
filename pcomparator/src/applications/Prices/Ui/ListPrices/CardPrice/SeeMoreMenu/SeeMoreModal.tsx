@@ -1,16 +1,8 @@
 import { Trans } from "@lingui/macro";
-import {
-  Button,
-  Divider,
-  Image,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader
-} from "@nextui-org/react";
+import { Button, Divider, Image } from "@nextui-org/react";
 import { MapPin } from "lucide-react";
 import Link from "~/components/Link/Link";
+import { Modal } from "~/components/Modal/Modal";
 
 interface SeeMoreModalProps {
   proof: string;
@@ -18,13 +10,17 @@ interface SeeMoreModalProps {
   price: string;
   location: string;
   isOpen: boolean;
+  onClose: () => void;
   onOpenChange: () => void;
 }
 
-export const SeeMoreModal = ({ isOpen, onOpenChange, ...price }: SeeMoreModalProps) => (
-  <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-    <ModalContent>
-      <ModalHeader className="flex flex-col gap-y-2">
+export const SeeMoreModal = ({ isOpen, onOpenChange, onClose, ...price }: SeeMoreModalProps) => (
+  <Modal
+    isOpen={isOpen}
+    onOpenChange={onOpenChange}
+    onClose={onClose}
+    header={
+      <div className="flex flex-col gap-y-2">
         <p>{price.name}</p>
         <nav>
           <ul className="flex gap-2">
@@ -50,9 +46,10 @@ export const SeeMoreModal = ({ isOpen, onOpenChange, ...price }: SeeMoreModalPro
             </li>
           </ul>
         </nav>
-      </ModalHeader>
-      <Divider />
-      <ModalBody>
+      </div>
+    }
+    body={
+      <div>
         <Link href="#product">Product</Link>
         <Image
           shadow="sm"
@@ -70,8 +67,7 @@ export const SeeMoreModal = ({ isOpen, onOpenChange, ...price }: SeeMoreModalPro
         </span>
         <Divider />
         <Link href="#product">Your criteria</Link>
-      </ModalBody>
-      <ModalFooter />
-    </ModalContent>
-  </Modal>
+      </div>
+    }
+  />
 );

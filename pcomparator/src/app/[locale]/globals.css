@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body, html {
+  @apply !bg-[#eef2ff]
+}
+
 div[data-overlay-container="true"] {
   @apply flex flex-col flex-1;
   @apply min-h-dvh w-full bg-gradient-to-b dark:from-[#1f121b] dark:via-[#0c1820] dark:via-80% dark:to-[#081917] from-indigo-50 via-white to-primary-200;
