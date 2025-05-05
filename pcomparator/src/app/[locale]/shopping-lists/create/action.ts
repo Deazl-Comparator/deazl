@@ -24,7 +24,7 @@ export async function handleCreateList(formData: FormData) {
   const list = await createShoppingList({
     name,
     description: description || null,
-    items: items.map((item) => ({
+    items: items.map((item: any) => ({
       customName: item.customName,
       quantity: item.quantity,
       unit: item.unit,

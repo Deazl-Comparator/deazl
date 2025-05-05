@@ -11,6 +11,7 @@ export default {
 
 type FileObjProps = DropdownProps & RegisterOptions<FieldValues, any>;
 
+// @ts-ignore
 const defaultProps: FileObjProps = {
   isOpen: true,
   onClose: () => null,

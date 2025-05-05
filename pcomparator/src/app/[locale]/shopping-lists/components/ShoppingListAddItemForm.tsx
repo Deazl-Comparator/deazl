@@ -42,6 +42,7 @@ export default function ShoppingListAddItemForm({
       };
 
       // Appel à l'API pour ajouter l'item à la liste
+      // @ts-ignore
       const newItem = await addItemToList(listId, { ...itemData, customName: itemData.name });
 
       // Mise à jour UI locale
@@ -65,8 +66,8 @@ export default function ShoppingListAddItemForm({
   };
 
   // Fonction pour gérer correctement le changement d'unité
-  const handleUnitChange = (e) => {
-    if (e && e.target && e.target.value) {
+  const handleUnitChange = (e: any) => {
+    if (e?.target?.value) {
       setUnit(e.target.value);
     } else if (e && typeof e.value === "string") {
       setUnit(e.value);

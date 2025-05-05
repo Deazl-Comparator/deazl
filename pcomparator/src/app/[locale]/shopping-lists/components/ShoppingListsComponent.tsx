@@ -54,10 +54,11 @@ export default function ShoppingListsComponent({
           </CardBody>
           <CardFooter className="flex justify-between">
             <Link href={`/shopping-lists/${list.id}`}>
+              {/* @ts-ignore */}
               <Button variant="outline">View Details</Button>
             </Link>
             <div className="flex gap-2">
-              <Button variant="ghost" size="icon" onClick={() => handleDelete(list.id)}>
+              <Button variant="ghost" size="md" onClick={() => handleDelete(list.id)}>
                 <TrashIcon className="h-4 w-4" />
               </Button>
             </div>

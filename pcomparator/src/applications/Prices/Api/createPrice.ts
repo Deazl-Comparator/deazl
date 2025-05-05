@@ -35,7 +35,15 @@ export const createPrice = async (params: CreatePriceParams): Promise<CreatePric
       (
         await pcomparatorAuthenticatedApiClient.post("/v1/prices", {
           body: {
-            
+            barcode: paramsPayload.barcode,
+            storeName: paramsPayload.storeName,
+            productName: offProduct.product_name,
+            categoryName: "N/A",
+            brandName: offProduct.brands,
+            location: paramsPayload.location,
+            amount: paramsPayload.amount,
+            proof: offProduct.image_url,
+            currency: paramsPayload.currency
           }
         })
       ).data

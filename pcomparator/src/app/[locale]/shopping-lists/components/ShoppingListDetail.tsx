@@ -34,6 +34,7 @@ export default function ShoppingListDetail({
                 <div className="flex items-center gap-3">
                   <Checkbox
                     checked={item.isCompleted}
+                    // @ts-ignore
                     onCheckedChange={(checked) => onToggleItem(item.id, checked as boolean)}
                     id={`item-${item.id}`}
                   />

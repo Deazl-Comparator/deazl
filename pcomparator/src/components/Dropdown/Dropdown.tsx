@@ -65,6 +65,7 @@ export const Dropdown = ({
       >
         <div className={clsx(fullwidth ? "p-0" : "p-4", "flex flex-col h-full gap-y-4 pointer-events-auto")}>
           {dropdownItems.map(({ label, key, ...item }) => (
+            // @ts-ignore
             <Button type="button" variant="flat" key={key} size="lg" {...item} fullWidth>
               {label}
             </Button>

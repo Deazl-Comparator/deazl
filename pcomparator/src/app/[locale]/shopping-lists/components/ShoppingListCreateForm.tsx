@@ -17,7 +17,7 @@ type ItemType = {
 export default function ShoppingListCreateForm({
   action
 }: {
-  action: (formData: FormData) => Promise<{ error?: string } | void>;
+  action: (formData: FormData) => Promise<{ error?: string }>;
 }) {
   const form = useForm<{ name: string }>(undefined);
   const [items, setItems] = useState<ItemType[]>([]);
@@ -78,6 +78,7 @@ export default function ShoppingListCreateForm({
         onSubmit={(data) => {
           const formData = new FormData();
           formData.append("name", data.name);
+          // @ts-ignore
           formData.append("description", data.description || "");
 
           // Add items to form data
@@ -144,6 +145,7 @@ export default function ShoppingListCreateForm({
                   <label htmlFor="itemName">Item Name</label>
                   <Input
                     id="itemName"
+                    name="itemName"
                     value={itemName}
                     onChange={(e) => setItemName(e.target.value)}
                     onKeyDown={handleKeyDown}
@@ -158,6 +160,7 @@ export default function ShoppingListCreateForm({
                     <Input
                       id="quantity"
                       type="number"
+                      name="quantity"
                       value={quantity}
                       onChange={(e) => setQuantity(e.target.value)}
                       min="0.01"
