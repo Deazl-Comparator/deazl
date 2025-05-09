@@ -79,6 +79,7 @@ msgid "Close"
 msgstr "Fermer"
 
 #: src/applications/Prices/Ui/NewPrice/FormSteps/Step4/Location.tsx
+#: src/applications/Prices/Ui/NewQuickPrice/FormSteps/Location.tsx
 msgid "Custom location"
 msgstr "Localisation personsalisée"
 
@@ -132,9 +133,32 @@ msgstr "Entrez votre numéro de téléphone"
 msgid "Enter your product name"
 msgstr "Saisissez le nom du produit"
 
-#: src/applications/Prices/Ui/ListPrices/CardPrice/SeeMoreModal.tsx
+#: src/applications/Prices/Ui/ListPrices/CardPrice/SeeMoreMenu/SeeMoreModal.tsx
 msgid "Environment"
 msgstr "Environnement"
+
+#: src/app/[locale]/shopping-lists/components/ShoppingListContainer.tsx
+#: src/app/[locale]/shopping-lists/components/ShoppingListContainer.tsx
+#: src/app/[locale]/shopping-lists/components/ShoppingListContainer.tsx
+#: src/app/[locale]/shopping-lists/components/ShoppingListQuickAddBar.tsx
+msgid "Error"
+msgstr ""
+
+#: src/app/[locale]/shopping-lists/components/ShoppingListQuickAddBar.tsx
+msgid "Failed to add item"
+msgstr ""
+
+#: src/app/[locale]/shopping-lists/components/ShoppingListContainer.tsx
+msgid "Failed to remove item"
+msgstr ""
+
+#: src/app/[locale]/shopping-lists/components/ShoppingListContainer.tsx
+msgid "Failed to update item"
+msgstr ""
+
+#: src/app/[locale]/shopping-lists/components/ShoppingListContainer.tsx
+msgid "Failed to update item status"
+msgstr ""
 
 #: src/applications/Profile/Ui/Settings/DisplayName.tsx
 msgid "Fullname updated"
@@ -145,7 +169,7 @@ msgstr "Nom complet mis à jour."
 msgid "Get faster access, work offline, and enjoy a smoother experience."
 msgstr "Accédez plus rapidement, travaillez hors ligne et profitez d'une expérience plus fluide."
 
-#: src/applications/Prices/Ui/ListPrices/CardPrice/SeeMoreModal.tsx
+#: src/applications/Prices/Ui/ListPrices/CardPrice/SeeMoreMenu/SeeMoreModal.tsx
 msgid "Health"
 msgstr "Santé"
 
@@ -170,12 +194,40 @@ msgstr "Nom d'affichage invalide."
 msgid "Invalid phone number."
 msgstr "Numéro de téléphone invalide."
 
+#: src/app/[locale]/shopping-lists/components/ShoppingListQuickAddBar.tsx
+msgid "Item added"
+msgstr ""
+
 #: src/app/[locale]/shopping-lists/components/ShoppingListAddItemForm.tsx
 msgid "Item added successfully!"
 msgstr ""
 
+#: src/app/[locale]/shopping-lists/components/ShoppingListContainer.tsx
+msgid "Item completed"
+msgstr ""
+
+#: src/app/[locale]/shopping-lists/components/ShoppingListContainer.tsx
+msgid "Item details have been updated"
+msgstr ""
+
 #: src/app/[locale]/shopping-lists/components/ShoppingListAddItemForm.tsx
 msgid "Item has been successfully added to your shopping list."
+msgstr ""
+
+#: src/app/[locale]/shopping-lists/components/ShoppingListContainer.tsx
+msgid "Item marked as completed"
+msgstr ""
+
+#: src/app/[locale]/shopping-lists/components/ShoppingListContainer.tsx
+msgid "Item removed"
+msgstr ""
+
+#: src/app/[locale]/shopping-lists/components/ShoppingListContainer.tsx
+msgid "Item removed from list"
+msgstr ""
+
+#: src/app/[locale]/shopping-lists/components/ShoppingListContainer.tsx
+msgid "Item updated"
 msgstr ""
 
 #: src/components/ThemeSwitcher/ThemeSwitcher.tsx
@@ -197,8 +249,10 @@ msgid "My Prices"
 msgstr "Mes prix"
 
 #: src/applications/Prices/Ui/NewPrice/FormSteps/Step1/TypeBarcode.tsx
-#: src/applications/Prices/Ui/NewPrice/FormSteps/Step2/Price.tsx
+#: src/applications/Prices/Ui/NewPrice/FormSteps/Step3/Proof.tsx
 #: src/applications/Prices/Ui/NewPrice/FormSteps/Step4/Location.tsx
+#: src/applications/Prices/Ui/NewQuickPrice/FormSteps/Location.tsx
+#: src/components/Form/FormActions.tsx
 msgid "Next"
 msgstr "Suivant"
 
@@ -235,13 +289,14 @@ msgstr "Veuillez entrer votre nom complet, ou un nom d'affichage avec lequel vou
 msgid "Please use 32 characters at maximum."
 msgstr "Veuillez utiliser 32 caractères maximum."
 
-#: src/applications/Prices/Ui/NewPrice/FormSteps/Step2/Price.tsx
+#: src/applications/Prices/Ui/NewPrice/FormSteps/Step3/Proof.tsx
 #: src/applications/Prices/Ui/NewPrice/FormSteps/Step4/Location.tsx
+#: src/applications/Prices/Ui/NewQuickPrice/FormSteps/Location.tsx
 msgid "Previous"
 msgstr "Précédent"
 
-#: src/applications/Prices/Ui/NewPrice/FormSteps/Step2/Price.tsx
 #: src/applications/Prices/Ui/NewPrice/NewPiceModal.tsx
+#: src/applications/Prices/Ui/NewQuickPrice/FormSteps/Price.tsx
 msgid "Price"
 msgstr "Prix"
 
@@ -261,7 +316,7 @@ msgstr "Prix pour {productName} ajouté !"
 msgid "Prices for {search}"
 msgstr "Prix pour {search}"
 
-#: src/applications/Prices/Ui/ListPrices/CardPrice/SeeMoreModal.tsx
+#: src/applications/Prices/Ui/ListPrices/CardPrice/SeeMoreMenu/SeeMoreModal.tsx
 msgid "Product"
 msgstr "Produit"
 
@@ -276,6 +331,10 @@ msgstr "Produit ajouté"
 #: src/applications/Products/Ui/NewProduct/NewProduct.tsx
 msgid "Product Not Found"
 msgstr "Produit non trouvé"
+
+#: src/app/[locale]/shopping-lists/components/ShoppingListContainer.tsx
+msgid "Removed {0}"
+msgstr ""
 
 #: src/app/[locale]/dashboard/layout.tsx
 msgid "Return to the app"
@@ -292,10 +351,10 @@ msgid "Scan barcode"
 msgstr "Scanner code-barre"
 
 #: src/applications/Prices/Ui/NewPrice/FormSteps/Step4/Location.tsx
+#: src/applications/Prices/Ui/NewQuickPrice/FormSteps/Location.tsx
 msgid "Search"
 msgstr "Recherche"
 
-#: src/components/Inputs/File/File.spec.tsx
 #: src/components/Inputs/File/File.tsx
 msgid "Select your file"
 msgstr "Choisissez vitre fichier"
@@ -346,7 +405,7 @@ msgstr "Vous ne pouvez ajouter que {maxFile} fichiers maximum"
 msgid "You must add more than {minFile} files"
 msgstr "Vous devez ajouter plus de {minFile} fichiers"
 
-#: src/applications/Prices/Ui/ListPrices/CardPrice/SeeMoreModal.tsx
+#: src/applications/Prices/Ui/ListPrices/CardPrice/SeeMoreMenu/SeeMoreModal.tsx
 msgid "Your criteria"
 msgstr "Vos critères"
 
