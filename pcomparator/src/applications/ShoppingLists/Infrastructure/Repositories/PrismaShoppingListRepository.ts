@@ -19,7 +19,8 @@ export class PrismaShoppingListRepository implements ShoppingListRepository {
                 unit: item.unit,
                 customName: item.customName,
                 productId: item.productId ?? null,
-                isCompleted: item.isCompleted ?? false
+                isCompleted: item.isCompleted ?? false,
+                price: item.price ?? null // Ajout du prix lors de la création
               }))
             }
           : undefined
@@ -44,6 +45,7 @@ export class PrismaShoppingListRepository implements ShoppingListRepository {
         unit: item.unit as any,
         isCompleted: item.isCompleted,
         customName: item.customName,
+        price: item.price ?? undefined, // Inclure le prix dans la réponse
         createdAt: item.createdAt,
         updatedAt: item.updatedAt
       }))
@@ -73,6 +75,7 @@ export class PrismaShoppingListRepository implements ShoppingListRepository {
         unit: item.unit as any,
         isCompleted: item.isCompleted,
         customName: item.customName,
+        price: item.price ?? undefined, // Inclure le prix dans la réponse
         createdAt: item.createdAt,
         updatedAt: item.updatedAt
       }))
@@ -101,6 +104,7 @@ export class PrismaShoppingListRepository implements ShoppingListRepository {
         unit: item.unit as any,
         isCompleted: item.isCompleted,
         customName: item.customName,
+        price: item.price ?? undefined, // Inclure le prix dans la réponse
         createdAt: item.createdAt,
         updatedAt: item.updatedAt
       }))
@@ -131,6 +135,7 @@ export class PrismaShoppingListRepository implements ShoppingListRepository {
         unit: item.unit as any,
         isCompleted: item.isCompleted,
         customName: item.customName,
+        price: item.price ?? undefined, // Inclure le prix dans la réponse
         createdAt: item.createdAt,
         updatedAt: item.updatedAt
       }))
@@ -151,7 +156,8 @@ export class PrismaShoppingListRepository implements ShoppingListRepository {
         quantity: item.quantity,
         unit: item.unit,
         isCompleted: item.isCompleted ?? false,
-        customName: item.customName
+        customName: item.customName,
+        price: item.price ?? null // Prise en charge du prix lors de la création
       }
     });
 
@@ -163,6 +169,7 @@ export class PrismaShoppingListRepository implements ShoppingListRepository {
       unit: newItem.unit as any,
       isCompleted: newItem.isCompleted,
       customName: newItem.customName,
+      price: newItem.price ?? undefined,
       createdAt: newItem.createdAt,
       updatedAt: newItem.updatedAt
     };
@@ -180,6 +187,7 @@ export class PrismaShoppingListRepository implements ShoppingListRepository {
       productId: updatedItem.productId,
       quantity: updatedItem.quantity,
       unit: updatedItem.unit as any,
+      price: updatedItem.price ?? undefined,
       isCompleted: updatedItem.isCompleted,
       customName: updatedItem.customName,
       createdAt: updatedItem.createdAt,

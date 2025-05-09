@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardBody, CardFooter, Image, useDisclosure } from "@nextui-org/react";
+import { Card, CardBody, CardFooter, Image, useDisclosure } from "@heroui/react";
 import { useRef } from "react";
 import { SeeMoreMenu } from "~/applications/Prices/Ui/ListPrices/CardPrice/Dropdown";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { Link as LinkNextUi, type LinkProps as LinkNextUiProps } from "@nextui-org/link";
+import { Link as LinkNextUi, type LinkProps as LinkNextUiProps } from "@heroui/link";
 import clsx from "clsx";
 import LinkNext from "next/link";
 import { type ReactNode, forwardRef } from "react";

@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --turbo",
     "build": "next build",
+    "vercel-build": "npm run prepare && next build",
     "start": "next start",
     "lint": "next lint",
     "lint:check": "biome check .",

@@ -1,6 +1,6 @@
+import {} from "@heroui/react";
 import { t } from "@lingui/macro";
 import { useLingui } from "@lingui/react";
-import {} from "@nextui-org/react";
 import { useState } from "react";
 import { createPrice } from "~/applications/Prices/Api/createPrice";
 import type { Barcode } from "~/applications/Prices/Domain/ValueObjects/Barcode";

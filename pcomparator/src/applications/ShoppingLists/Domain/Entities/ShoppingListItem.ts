@@ -1,13 +1,6 @@
 import { z } from "zod";
 
-export const UnitSchema = z.enum([
-  "unit",
-  "kg",
-  "g",
-  "l",
-  "ml",
-  "piece"
-]);
+export const UnitSchema = z.enum(["unit", "kg", "g", "l", "ml", "piece"]);
 
 export type Unit = z.infer<typeof UnitSchema>;
 
@@ -19,6 +12,7 @@ export const ShoppingListItemSchema = z.object({
   unit: UnitSchema.default("unit"),
   isCompleted: z.boolean().default(false),
   customName: z.string().nullable().optional(),
+  price: z.number().positive().optional(), // Ajout du champ prix
   createdAt: z.date().optional(),
   updatedAt: z.date().optional()
 });

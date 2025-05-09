@@ -1,5 +1,5 @@
+import { Button, Divider, Image } from "@heroui/react";
 import { Trans } from "@lingui/macro";
-import { Button, Divider, Image } from "@nextui-org/react";
 import { MapPin } from "lucide-react";
 import Link from "~/components/Link/Link";
 import { Modal } from "~/components/Modal/Modal";

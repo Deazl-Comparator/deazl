@@ -16,7 +16,7 @@ export default async function ShoppingListPage({ params }: { params: { id: strin
         <div className="container max-w-3xl mx-auto py-8">
           <BackToList />
 
-          {/* Wrapper qui va gérer l'état partagé et la modale */}
+          {/* Wrapper avec barre d'ajout rapide au-dessus de la liste */}
           <ShoppingListContainer initialList={list} />
         </div>
       </div>

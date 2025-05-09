@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import type { FieldValues, RegisterOptions } from "react-hook-form";
 import { Dropdown, type DropdownProps } from "~/components/Dropdown/Dropdown";
 import "react-spring-bottom-sheet/dist/style.css";
-import { useDisclosure } from "@nextui-org/react";
+import { useDisclosure } from "@heroui/react";
 
 export default {
   title: "components/Dropdown",

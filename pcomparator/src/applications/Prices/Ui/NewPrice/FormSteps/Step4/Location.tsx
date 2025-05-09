@@ -1,5 +1,5 @@
+import { Button, Radio, RadioGroup, Spinner } from "@heroui/react";
 import { Trans } from "@lingui/macro";
-import { Button, Radio, RadioGroup, Spinner } from "@nextui-org/react";
 import { Search } from "lucide-react";
 import { useRef, useState } from "react";
 import useForm from "~/components/Form/useForm";

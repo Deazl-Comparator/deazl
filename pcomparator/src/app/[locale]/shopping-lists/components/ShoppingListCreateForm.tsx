@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Card, CardBody, CardFooter, Chip, Select, SelectItem, Textarea } from "@nextui-org/react";
+import { Button, Card, CardBody, CardFooter, Chip, Select, SelectItem, Textarea } from "@heroui/react";
 import { PlusIcon, XIcon } from "lucide-react";
 import { type KeyboardEvent, useState } from "react";
 import { UnitSchema } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListItem";
@@ -178,6 +178,7 @@ export default function ShoppingListCreateForm({
                       onChange={(e) => setUnit(e.target.value)}
                     >
                       {Object.values(UnitSchema.Values).map((unitValue) => (
+                        //@ts-ignore
                         <SelectItem key={unitValue} value={unitValue}>
                           {unitValue}
                         </SelectItem>

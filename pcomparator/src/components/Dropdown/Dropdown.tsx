@@ -5,7 +5,7 @@ import {
   DropdownMenu,
   Dropdown as DropdownNextUi,
   type DropdownProps as DropdownNextUiProps
-} from "@nextui-org/react";
+} from "@heroui/react";
 import clsx from "clsx";
 import type { ReactNode, RefObject } from "react";
 import { BottomSheet } from "react-spring-bottom-sheet";

@@ -1,4 +1,3 @@
-import { Trans } from "@lingui/macro";
 import {
   Button,
   Card,
@@ -8,7 +7,8 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader
-} from "@nextui-org/react";
+} from "@heroui/react";
+import { Trans } from "@lingui/macro";
 import { Info } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useActionState } from "react";

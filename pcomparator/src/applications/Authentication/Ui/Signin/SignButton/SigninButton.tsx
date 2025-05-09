@@ -1,7 +1,7 @@
 "use client";
 
+import { Button } from "@heroui/react";
 import { Trans } from "@lingui/macro";
-import { Button } from "@nextui-org/react";
 import { signIn } from "next-auth/react";
 
 export const SigninButton = () => (

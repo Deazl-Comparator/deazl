@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Card, CardBody, CardFooter, CardHeader } from "@nextui-org/react";
+import { Button, Card, CardBody, CardFooter, CardHeader } from "@heroui/react";
 import { ShoppingCartIcon, TrashIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";

@@ -1,6 +1,6 @@
 "use client";
 
-import { Image, Navbar, NavbarBrand, NavbarContent } from "@nextui-org/react";
+import { Image, Navbar, NavbarBrand, NavbarContent } from "@heroui/react";
 import Logo from "public/static/logo.png";
 import type { ReactNode } from "react";
 import Link from "~/components/Link/Link";

@@ -1,4 +1,4 @@
-import { useDisclosure } from "@nextui-org/react";
+import { useDisclosure } from "@heroui/react";
 import { Eye, Trash2 } from "lucide-react";
 import { DeletePriceModal } from "~/applications/Prices/Ui/ListPrices/CardPrice/DeletePriceModal/DeletePriceModal";
 import { SeeMoreModal } from "~/applications/Prices/Ui/ListPrices/CardPrice/SeeMoreMenu/SeeMoreModal";

@@ -1,4 +1,4 @@
-import { Button, Modal, ModalBody, ModalContent, ModalFooter } from "@nextui-org/react";
+import { Button, Modal, ModalBody, ModalContent, ModalFooter } from "@heroui/react";
 import { Camera as CameraIcon } from "lucide-react";
 import { useRef, useState } from "react";
 import { Camera } from "react-camera-pro";

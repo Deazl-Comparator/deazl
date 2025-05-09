@@ -160,6 +160,7 @@ model ShoppingListItem {
   unit           String?  @default("unit")
   isCompleted    Boolean  @default(false)
   customName     String?
+  price          Float?   // Champ pour stocker le prix d'un article
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 

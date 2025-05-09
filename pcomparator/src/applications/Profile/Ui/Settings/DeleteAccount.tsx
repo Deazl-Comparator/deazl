@@ -1,8 +1,8 @@
 "use client";
 
+import { Button, Card, CardBody, CardFooter, CardHeader, useDisclosure } from "@heroui/react";
 import { Trans, t } from "@lingui/macro";
 import { useLingui } from "@lingui/react";
-import { Button, Card, CardBody, CardFooter, CardHeader, useDisclosure } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { deleteAccount } from "~/applications/Profile/Api/deleteAccount";

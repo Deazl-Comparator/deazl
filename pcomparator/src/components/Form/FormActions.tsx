@@ -1,7 +1,7 @@
 "use client";
 
+import { Button, type ButtonProps } from "@heroui/react";
 import { Trans } from "@lingui/macro";
-import { Button, type ButtonProps } from "@nextui-org/react";
 import clsx from "clsx";
 import _ from "lodash";
 import type { ComponentType, ReactNode } from "react";

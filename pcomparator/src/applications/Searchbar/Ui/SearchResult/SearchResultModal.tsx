@@ -1,4 +1,3 @@
-import { Trans } from "@lingui/macro";
 import {
   Button,
   Card,
@@ -11,7 +10,8 @@ import {
   ModalHeader,
   Spinner,
   useDisclosure
-} from "@nextui-org/react";
+} from "@heroui/react";
+import { Trans } from "@lingui/macro";
 import { useEffect, useState, useTransition } from "react";
 import type { Price } from "~/applications/Prices/Domain/Entities/Price";
 import type { Product } from "~/applications/Prices/Domain/Entities/Product";

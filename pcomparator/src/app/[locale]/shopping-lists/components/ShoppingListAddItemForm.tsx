@@ -1,7 +1,5 @@
 "use client";
-import { addToast } from "@heroui/react";
-import { Trans } from "@lingui/macro";
-import { Select, SelectItem } from "@nextui-org/react";
+import { Select, SelectItem } from "@heroui/react";
 import { useState } from "react";
 import { addItemToList } from "~/applications/ShoppingLists/Actions/shoppingListActions";
 import { UnitSchema } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListItem";
@@ -90,12 +88,6 @@ export default function ShoppingListAddItemForm({
       onSubmit={async (data) => {
         console.log("Form submitted with data:", data);
         handleSubmit(data);
-        addToast({
-          title: <Trans>Item added successfully!</Trans>,
-          description: <Trans>Item has been successfully added to your shopping list.</Trans>,
-          variant: "solid",
-          color: "success"
-        });
       }}
     >
       <div className="space-y-4">
@@ -127,6 +119,7 @@ export default function ShoppingListAddItemForm({
             <label htmlFor="unit">Unit</label>
             <Select className="w-full" label="Unit" selectedKeys={[unit]} onChange={handleUnitChange}>
               {Object.values(UnitSchema.Values).map((unitValue) => (
+                // @ts-ignore
                 <SelectItem key={unitValue} value={unitValue}>
                   {unitValue}
                 </SelectItem>

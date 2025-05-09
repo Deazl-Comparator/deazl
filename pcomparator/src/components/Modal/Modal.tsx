@@ -5,7 +5,7 @@ import {
   ModalHeader,
   Modal as ModalNextUi,
   type ModalProps as ModalNextUiProps
-} from "@nextui-org/react";
+} from "@heroui/react";
 import clsx from "clsx";
 import { BottomSheet } from "react-spring-bottom-sheet";
 import useDevice from "~/hooks/useDevice";

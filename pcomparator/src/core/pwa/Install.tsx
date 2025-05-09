@@ -1,6 +1,5 @@
 "use client";
 
-import { Trans } from "@lingui/macro";
 import {
   Button,
   Card,
@@ -12,7 +11,8 @@ import {
   ModalFooter,
   ModalHeader,
   useDisclosure
-} from "@nextui-org/react";
+} from "@heroui/react";
+import { Trans } from "@lingui/macro";
 import { ExternalLink, Info } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useEffect } from "react";
