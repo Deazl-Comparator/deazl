@@ -1,5 +1,5 @@
+import {} from "@heroui/react";
 import { Trans } from "@lingui/macro";
-import {} from "@nextui-org/react";
 import _ from "lodash";
 import type { Barcode as BarcodeT } from "~/applications/Prices/Domain/ValueObjects/Barcode";
 import useForm from "~/components/Form/useForm";

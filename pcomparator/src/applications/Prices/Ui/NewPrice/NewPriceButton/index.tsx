@@ -1,7 +1,7 @@
 "use client";
 
+import { useDisclosure } from "@heroui/react";
 import { Trans } from "@lingui/macro";
-import { useDisclosure } from "@nextui-org/react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import type { Barcode } from "~/applications/Prices/Domain/ValueObjects/Barcode";

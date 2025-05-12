@@ -1,4 +1,4 @@
-import { Button, useDisclosure } from "@nextui-org/react";
+import { Button, useDisclosure } from "@heroui/react";
 import { ScanBarcode } from "lucide-react";
 import { useState } from "react";
 import { BarcodeScannerModal } from "~/applications/Searchbar/Ui/SearchBarcode/BarcodeScannerModal";

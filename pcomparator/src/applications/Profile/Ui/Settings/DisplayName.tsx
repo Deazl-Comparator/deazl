@@ -1,8 +1,8 @@
 "use client";
 
+import { Card, CardBody, CardFooter, CardHeader } from "@heroui/react";
 import { Trans, t } from "@lingui/macro";
 import { useLingui } from "@lingui/react";
-import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/react";
 import { toast } from "react-toastify";
 import { updateFullname } from "~/applications/Profile/Api/updateFullname";
 import useForm from "~/components/Form/useForm";

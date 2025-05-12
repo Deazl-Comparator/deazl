@@ -1,4 +1,5 @@
-import { Trans } from "@lingui/macro";
+import { Trans, t } from "@lingui/macro";
+import { useLingui } from "@lingui/react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { deletePrice } from "~/applications/Prices/Api/deletePrice";
@@ -8,25 +9,19 @@ import { Modal } from "~/components/Modal/Modal";
 
 interface DeletePriceModalProps {
   priceId: string;
-  productName: string;
   isOpen: boolean;
   onOpenChange: () => void;
   onClose: () => void;
 }
 
-export const DeletePriceModal = ({
-  priceId,
-  productName,
-  isOpen,
-  onOpenChange,
-  onClose
-}: DeletePriceModalProps) => {
+export const DeletePriceModal = ({ priceId, isOpen, onOpenChange, onClose }: DeletePriceModalProps) => {
   const form = useForm<{ confirmation: string }>();
   const notify = () =>
     toast(<Trans>Price deleted</Trans>, {
       type: "success"
     });
   const { refresh } = useRouter();
+  const { i18n } = useLingui();
 
   return (
     <Modal
@@ -50,7 +45,7 @@ export const DeletePriceModal = ({
           actions={{
             nextProps: {
               color: "danger",
-              isDisabled: !form.watch("confirmation")?.match(`delete ${productName.toLowerCase()}`)
+              isDisabled: !form.watch("confirmation")?.match("confirm")
             },
             prevProps: { title: <Trans>Cancel</Trans> }
           }}
@@ -66,8 +61,8 @@ export const DeletePriceModal = ({
           <Input name="empty" hidden className="hidden" />
           <Input
             name="confirmation"
-            label={<Trans>Type "delete {productName.toLowerCase()}" to confirm</Trans>}
-            placeholder={`delete ${productName.toLowerCase()}`}
+            label={<Trans>Type "{<Trans>confirm</Trans>}" to confirm</Trans>}
+            placeholder={t(i18n)`confirm`}
           />
         </form.Form>
       }

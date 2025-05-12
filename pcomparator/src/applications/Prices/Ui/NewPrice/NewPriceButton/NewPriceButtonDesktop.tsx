@@ -1,6 +1,6 @@
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@heroui/react";
 import { i18n } from "@lingui/core";
 import { Trans, t } from "@lingui/macro";
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
 import { Plus, ScanBarcode, Type } from "lucide-react";
 
 interface NewPriceButtonDekstopProps {

@@ -5,7 +5,7 @@ import {
   ModalHeader,
   Modal as ModalNextUi,
   type ModalProps as ModalNextUiProps
-} from "@nextui-org/react";
+} from "@heroui/react";
 import clsx from "clsx";
 import { BottomSheet } from "react-spring-bottom-sheet";
 import useDevice from "~/hooks/useDevice";
@@ -20,6 +20,7 @@ export interface ModalProps {
   sheetHeight?: "sm" | "md" | "lg" | "fit" | "full";
   modalProps?: Omit<ModalNextUiProps, "children">;
   isForm?: boolean;
+  fullwidth?: boolean;
 }
 
 export const Modal = ({
@@ -31,7 +32,8 @@ export const Modal = ({
   footer,
   modalProps,
   sheetHeight = "fit",
-  isForm
+  isForm,
+  fullwidth
 }: ModalProps) => {
   const device = useDevice();
 
@@ -58,7 +60,7 @@ export const Modal = ({
           }
         }}
       >
-        <div className="p-4">{body}</div>
+        <div className={clsx(fullwidth ? "p-0" : "p-4", "h-full pointer-events-auto")}>{body}</div>
       </BottomSheet>
     );
   }

@@ -1,6 +1,7 @@
 "use client";
 
-import { NextUIProvider } from "@nextui-org/react";
+import { HeroUIProvider } from "@heroui/react";
+import { ToastProvider } from "@heroui/toast";
 import { I18nProvider } from "@react-aria/i18n";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
@@ -24,17 +25,22 @@ const ApplicationProvider = ({ children, locale, messages, device }: Application
 
   return (
     <SessionProvider>
-      <NextUIProvider locale={locale} navigate={router.push}>
+      <HeroUIProvider locale={locale} navigate={router.push}>
         <I18nProvider locale={locale}>
           <NextThemesProvider attribute="class" enableSystem>
             <TranslationProvider locale={locale} messages={messages}>
+              <ToastProvider
+                placement="top-right"
+                toastProps={{ classNames: { base: "z-9" } }}
+                regionProps={{ className: "z-[999]" }}
+              />
               <DeviceProvider device={device}>
                 <ReactWrapBalancerProvider>{children}</ReactWrapBalancerProvider>
               </DeviceProvider>
             </TranslationProvider>
           </NextThemesProvider>
         </I18nProvider>
-      </NextUIProvider>
+      </HeroUIProvider>
     </SessionProvider>
   );
 };

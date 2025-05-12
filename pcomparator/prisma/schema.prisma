@@ -17,6 +17,7 @@ model User {
   phone         String?
   accounts      Account[]
   sessions      Session[]
+  shoppingLists ShoppingList[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -76,6 +77,8 @@ model Product {
   category       Category? @relation(fields: [category_id], references: [id])
   brand          Brand?    @relation(fields: [brand_id], references: [id])
   prices         Price[]
+
+  ShoppingListItem ShoppingListItem[]
 }
 
 model Category {
@@ -134,4 +137,34 @@ model Store {
   prices      Price[]
 
   @@unique([name, location])
+}
+
+model ShoppingList {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String
+  description String?
+  userId      String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items       ShoppingListItem[]
+}
+
+model ShoppingListItem {
+  id             String   @id @default(uuid()) @db.Uuid
+  shoppingListId String   @db.Uuid
+  productId      String?  @db.Uuid
+  quantity       Float    @default(1)
+  unit           String?  @default("unit")
+  isCompleted    Boolean  @default(false)
+  customName     String?
+  price          Float?   // Champ pour stocker le prix d'un article
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // Relations
+  shoppingList   ShoppingList @relation(fields: [shoppingListId], references: [id], onDelete: Cascade)
+  product        Product?     @relation(fields: [productId], references: [id])
 }

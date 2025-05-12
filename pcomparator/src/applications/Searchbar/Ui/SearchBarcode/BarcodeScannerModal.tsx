@@ -44,6 +44,7 @@ export const BarcodeScannerModal = ({ isOpen, onClose, onBarcodeDetected }: Barc
           }}
         />
       }
+      fullwidth
     />
   );
 };

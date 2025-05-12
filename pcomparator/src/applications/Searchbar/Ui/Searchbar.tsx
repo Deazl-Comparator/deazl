@@ -1,8 +1,8 @@
 "use client";
 
+import { useDisclosure } from "@heroui/react";
 import { t } from "@lingui/macro";
 import { useLingui } from "@lingui/react";
-import { useDisclosure } from "@nextui-org/react";
 import clsx from "clsx";
 import { Send } from "lucide-react";
 import { type ReactNode, useActionState } from "react";

@@ -1,5 +1,5 @@
+import { Button } from "@heroui/react";
 import { Trans } from "@lingui/macro";
-import { Button } from "@nextui-org/react";
 import { Plus, ScanBarcode, Type } from "lucide-react";
 import { Modal } from "~/components/Modal/Modal";
 
@@ -30,6 +30,8 @@ export const NewPriceButtonMobile = ({
             data-testid="scan-barcode"
             startContent={<ScanBarcode />}
             size="lg"
+            variant="flat"
+            color="primary"
             fullWidth
             onPress={() => {
               onOpenModal("with");
@@ -44,6 +46,8 @@ export const NewPriceButtonMobile = ({
             data-testid="type-barcode"
             startContent={<Type />}
             size="lg"
+            variant="flat"
+            color="primary"
             fullWidth
             onPress={() => {
               onOpenModal("without");

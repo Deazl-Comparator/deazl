@@ -22,7 +22,7 @@ export const BarcodeScannerModal = ({
       body={
         <BarcodeScanner
           onCapture={(barcode) => onBarcodeDetected({ barcode: barcode.rawValue, format: barcode.format })}
-          className="pointer-events-none"
+          className="pointer-events-none !h-[80dvh]"
           options={{
             formats: [
               "codabar",
@@ -44,6 +44,7 @@ export const BarcodeScannerModal = ({
       onClose={onClose}
       modalProps={{ size: "4xl", classNames: { body: "!p-0", footer: "p-0", header: "p-0" } }}
       data-testid="modal-barcode-scanner"
+      fullwidth
     />
   );
 };
