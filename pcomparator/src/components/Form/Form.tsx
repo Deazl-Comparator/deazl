@@ -14,7 +14,7 @@ export interface FormProps<T> extends Omit<FormHookProps<any, any>, "onSubmit"> 
   onSubmit: (data: T) => void;
   children: ReactNode;
   className?: string;
-  methods: UseFormReturn<any, any, undefined>;
+  methods: UseFormReturn<any, any, any>;
   actions?: FormActionsProps;
   wrapper?: ComponentType<{ children: ReactNode }>;
   wrapperProps?: any;
