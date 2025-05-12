@@ -1,9 +1,12 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin '../../hero';
 
-body, html {
-  @apply !bg-[#eef2ff]
+@source '../../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
+@custom-variant dark (&:is(.dark *));
+
+body,
+html {
+  @apply !bg-[#eef2ff];
 }
 
 div[data-overlay-container="true"] {
