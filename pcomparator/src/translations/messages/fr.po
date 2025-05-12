@@ -50,6 +50,10 @@ msgstr "Tous les types de code-barres sont acceptés."
 msgid "An avatar is optional but strongly recommended."
 msgstr "Un avatar est optionnel mais fortement recommandé."
 
+#: src/app/[locale]/shopping-lists/[id]/ShareListModal.tsx
+msgid "An invitation has been sent to {email}"
+msgstr "Une invitation a été envoyée à {email}"
+
 #: src/applications/Prices/Ui/ListPrices/CardPrice/DeletePriceModal/DeletePriceModal.tsx
 msgid "Are you sure you want to delete this price?"
 msgstr "Êtes-vous sûr de vouloir supprimer ce prix ?"
@@ -77,6 +81,14 @@ msgstr "Cliquer sur avatar pour ajouter un depuis vos fichier."
 #: src/applications/Searchbar/Ui/SearchResult/SearchResultModal.tsx
 msgid "Close"
 msgstr "Fermer"
+
+#: src/applications/Prices/Ui/ListPrices/CardPrice/DeletePriceModal/DeletePriceModal.tsx
+msgid "confirm"
+msgstr "Confirmer"
+
+#: src/app/[locale]/shopping-lists/components/ShoppingListCreateForm.tsx
+msgid "Create Shopping List"
+msgstr "Créer une liste de courses"
 
 #: src/applications/Prices/Ui/NewPrice/FormSteps/Step4/Location.tsx
 #: src/applications/Prices/Ui/NewQuickPrice/FormSteps/Location.tsx
@@ -137,20 +149,30 @@ msgstr "Saisissez le nom du produit"
 msgid "Environment"
 msgstr "Environnement"
 
+#: src/app/[locale]/shopping-lists/[id]/ShareListModal.tsx
+#: src/app/[locale]/shopping-lists/[id]/ShoppingListPageHeader.tsx
 #: src/app/[locale]/shopping-lists/components/ShoppingListContainer.tsx
 #: src/app/[locale]/shopping-lists/components/ShoppingListContainer.tsx
 #: src/app/[locale]/shopping-lists/components/ShoppingListContainer.tsx
 #: src/app/[locale]/shopping-lists/components/ShoppingListQuickAddBar.tsx
 msgid "Error"
-msgstr ""
+msgstr "Erreur"
 
 #: src/app/[locale]/shopping-lists/components/ShoppingListQuickAddBar.tsx
 msgid "Failed to add item"
-msgstr ""
+msgstr "Échec de l'ajout de l'article"
+
+#: src/app/[locale]/shopping-lists/[id]/ShoppingListPageHeader.tsx
+msgid "Failed to delete shopping list"
+msgstr "Échec de la suppression de la liste de courses"
 
 #: src/app/[locale]/shopping-lists/components/ShoppingListContainer.tsx
 msgid "Failed to remove item"
-msgstr ""
+msgstr "Échec de la suppression de l'article"
+
+#: src/app/[locale]/shopping-lists/[id]/ShareListModal.tsx
+msgid "Failed to send invitation"
+msgstr "Échec de l'envoi de l'invitation"
 
 #: src/app/[locale]/shopping-lists/components/ShoppingListContainer.tsx
 msgid "Failed to update item"
@@ -194,6 +216,10 @@ msgstr "Nom d'affichage invalide."
 msgid "Invalid phone number."
 msgstr "Numéro de téléphone invalide."
 
+#: src/app/[locale]/shopping-lists/[id]/ShareListModal.tsx
+msgid "Invitation sent"
+msgstr "Invitation envoyée"
+
 #: src/app/[locale]/shopping-lists/components/ShoppingListQuickAddBar.tsx
 msgid "Item added"
 msgstr ""
@@ -233,6 +259,14 @@ msgstr ""
 #: src/components/ThemeSwitcher/ThemeSwitcher.tsx
 msgid "Light"
 msgstr "Clair"
+
+#: src/app/[locale]/shopping-lists/[id]/ShareListModal.tsx
+msgid "Link copied"
+msgstr "Lien copié"
+
+#: src/app/[locale]/shopping-lists/[id]/ShoppingListPageHeader.tsx
+msgid "List deleted"
+msgstr "Liste supprimée"
 
 #: src/applications/Prices/Ui/NewPrice/NewPiceModal.tsx
 msgid "Location"
@@ -332,6 +366,10 @@ msgstr "Produit ajouté"
 msgid "Product Not Found"
 msgstr "Produit non trouvé"
 
+#: src/app/[locale]/shopping-lists/[id]/ShareListModal.tsx
+msgid "QR Code copied"
+msgstr "QR Code copié"
+
 #: src/app/[locale]/shopping-lists/components/ShoppingListContainer.tsx
 msgid "Removed {0}"
 msgstr ""
@@ -363,6 +401,14 @@ msgstr "Choisissez vitre fichier"
 msgid "Settings"
 msgstr "Paramètres"
 
+#: src/app/[locale]/shopping-lists/[id]/ShareListModal.tsx
+msgid "Share link copied to clipboard"
+msgstr "Lien de partage copié dans le presse-papiers"
+
+#: src/app/[locale]/shopping-lists/[id]/ShoppingListPageHeader.tsx
+msgid "Shopping list deleted successfully"
+msgstr "Liste de courses supprimée avec succès"
+
 #: src/applications/Authentication/Ui/Signin/SignButton/SigninButton.tsx
 msgid "Signin"
 msgstr "Se connecter"
@@ -379,6 +425,10 @@ msgstr "Système"
 msgid "Take a picture"
 msgstr "Prendre un photo"
 
+#: src/app/[locale]/shopping-lists/[id]/ShareListModal.tsx
+msgid "The link has been copied to clipboard"
+msgstr "Le lien a été copié dans le presse-papiers"
+
 #: src/applications/Prices/Ui/ListPrices/CardPrice/DeletePriceModal/DeletePriceModal.tsx
 msgid "This action <0>CANNOT be undone</0>. Please be certain about your decision."
 msgstr "Cette action <0>ne peut PAS être annulée</0>. Veuillez être sûr de votre décision."
@@ -386,6 +436,10 @@ msgstr "Cette action <0>ne peut PAS être annulée</0>. Veuillez être sûr de v
 #: src/applications/Profile/Ui/Settings/Avatar.tsx
 msgid "This is your avatar."
 msgstr "Ceci est votre avatar."
+
+#: src/applications/Prices/Ui/ListPrices/CardPrice/DeletePriceModal/DeletePriceModal.tsx
+msgid "Type \"confirm\" to confirm"
+msgstr "Saisissez \"confirmer\" pour confirmer"
 
 #: src/applications/Prices/Ui/ListPrices/CardPrice/DeletePriceModal/DeletePriceModal.tsx
 msgid "Type \"delete {0}\" to confirm"
