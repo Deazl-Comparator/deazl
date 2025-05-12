@@ -254,6 +254,9 @@ export default function ShoppingListDetail({
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   isClearable
+                  autoFocus={false}
+                  tabIndex={undefined}
+                  isDisabled
                   onClear={() => setSearchTerm("")}
                 />
 

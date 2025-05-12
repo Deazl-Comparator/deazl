@@ -46,7 +46,7 @@ export const InviteTab = ({
   <div className="space-y-6">
     {/* Section d'invitation */}
     <div className="space-y-3">
-      <h3 className="text-sm font-semibold text-gray-700">Invite people to collaborate</h3>
+      <h3 className="font-semibold text-gray-700">Invite people to collaborate</h3>
       <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 space-y-3">
         <div className="flex gap-2">
           <Input
@@ -55,13 +55,11 @@ export const InviteTab = ({
             onChange={(e) => onEmailChange(e.target.value)}
             startContent={<MailIcon className="h-4 w-4 text-gray-400" />}
             className="flex-1"
-            size="sm"
           />
           <Select
             selectedKeys={[role]}
             onChange={(e) => onRoleChange(e.target.value as "editor" | "viewer")}
             className="w-32"
-            size="sm"
           >
             {/* @ts-ignore */}
             <SelectItem key="editor" value="editor">
@@ -75,7 +73,6 @@ export const InviteTab = ({
         </div>
         <Button
           color="primary"
-          size="sm"
           isLoading={isInviting}
           isDisabled={!email.trim() || isInviting}
           onPress={onInvite}
@@ -90,7 +87,7 @@ export const InviteTab = ({
     {/* Liste des collaborateurs */}
     <div className="space-y-3">
       <div className="flex justify-between items-center">
-        <h3 className="text-sm font-semibold text-gray-700">People with access</h3>
+        <h3 className="font-semibold text-gray-700">People with access</h3>
       </div>
 
       <div className="border border-gray-200 rounded-lg overflow-hidden">
@@ -116,12 +113,11 @@ export const InviteTab = ({
                       <Avatar
                         name={collaborator.name}
                         src={collaborator.avatar}
-                        size="sm"
                         className="bg-primary-100 text-primary-600"
                         icon={<UserIcon size={16} />}
                       />
                       <div className="flex flex-col">
-                        <span className="text-sm font-medium">
+                        <span className="font-medium">
                           {collaborator.name} {collaborator.role === "owner" && "(you)"}
                         </span>
                         <span className="text-xs text-gray-500">{collaborator.email}</span>
@@ -138,7 +134,6 @@ export const InviteTab = ({
                             : "default"
                       }
                       variant="flat"
-                      size="sm"
                     >
                       {collaborator.role === "owner"
                         ? "Owner"
@@ -151,7 +146,6 @@ export const InviteTab = ({
                     <Button
                       isIconOnly
                       variant="light"
-                      size="sm"
                       disabled={collaborator.role === "owner"}
                       onPress={() => onRemoveCollaborator(collaborator.id)}
                     >

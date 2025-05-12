@@ -16,7 +16,7 @@ export const ShoppingListButton = ({ floating = false }: { floating?: boolean })
               variant="solid"
               className="shadow-lg hover:shadow-xl transition-shadow"
             >
-              <PlusIcon />
+              <PlusIcon size={18} />
               New List
             </Button>
           </Link>

@@ -60,6 +60,7 @@ export const ShoppingListDetailsHeader = ({ shoppingListId, listName }: Shopping
         <Tooltip content="Return to shopping lists">
           <Button
             variant="light"
+            size="md"
             startContent={<ArrowLeftIcon className="h-4 w-4" />}
             className="text-primary-500 hover:shadow-sm transition-all px-0 min-w-0"
             onPress={() => router.push("/shopping-lists")}
@@ -70,13 +71,13 @@ export const ShoppingListDetailsHeader = ({ shoppingListId, listName }: Shopping
 
         <div className="flex items-center gap-2">
           <Tooltip content="Invite someone to collaborate">
-            <Button variant="light" size="sm" isIconOnly onPress={handleShareList}>
+            <Button variant="light" size="md" isIconOnly onPress={handleShareList}>
               <UserPlusIcon className="h-4 w-4" />
             </Button>
           </Tooltip>
 
           <Tooltip content="More actions">
-            <Button isIconOnly variant="light" size="sm" onPress={actionsModal.onOpen}>
+            <Button isIconOnly variant="light" size="md" onPress={actionsModal.onOpen}>
               <MoreVerticalIcon className="h-4 w-4" />
             </Button>
           </Tooltip>

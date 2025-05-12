@@ -37,8 +37,8 @@ export const MoreActionModal = ({
           >
             <Share2Icon className="h-4 w-4 text-primary-600" />
             <div className="flex flex-col">
-              <span className="text-sm font-medium">Share List</span>
-              <span className="text-xs text-gray-500">Share this list with others</span>
+              <span className="font-medium">Share List</span>
+              <span className="text-sm text-gray-500">Share this list with others</span>
             </div>
           </div>
 
@@ -51,8 +51,8 @@ export const MoreActionModal = ({
           >
             <DownloadIcon className="h-4 w-4 text-primary-600" />
             <div className="flex flex-col">
-              <span className="text-sm font-medium">Export List</span>
-              <span className="text-xs text-gray-500">Export this list as CSV</span>
+              <span className="font-medium">Export List</span>
+              <span className="text-sm text-gray-500">Export this list as CSV</span>
             </div>
           </div>
 
@@ -64,8 +64,8 @@ export const MoreActionModal = ({
           >
             <TrashIcon className="h-4 w-4" />
             <div className="flex flex-col">
-              <span className="text-sm font-medium">Delete List</span>
-              <span className="text-xs text-gray-500">Delete this shopping list</span>
+              <span className="font-medium">Delete List</span>
+              <span className="text-sm text-gray-500">Delete this shopping list</span>
             </div>
           </div>
         </div>
