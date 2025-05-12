@@ -150,8 +150,6 @@ msgstr "Saisissez le nom du produit"
 msgid "Environment"
 msgstr "Environnement"
 
-#: src/app/[locale]/shopping-lists/[id]/ShoppingListPageHeader.tsx
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShareList.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListDetailsHeader.tsx
 msgid "Error"
 msgstr "Erreur"
@@ -160,7 +158,6 @@ msgstr "Erreur"
 msgid "Failed to add item"
 msgstr "Échec de l'ajout de l'article"
 
-#: src/app/[locale]/shopping-lists/[id]/ShoppingListPageHeader.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListDetailsHeader.tsx
 msgid "Failed to delete shopping list"
 msgstr "Échec de la suppression de la liste de courses"
@@ -255,7 +252,6 @@ msgstr "Clair"
 msgid "Link copied"
 msgstr "Lien copié"
 
-#: src/app/[locale]/shopping-lists/[id]/ShoppingListPageHeader.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListDetailsHeader.tsx
 msgid "List deleted"
 msgstr "Liste supprimée"
@@ -401,7 +397,6 @@ msgstr "Paramètres"
 msgid "Share link copied to clipboard"
 msgstr "Lien de partage copié dans le presse-papiers"
 
-#: src/app/[locale]/shopping-lists/[id]/ShoppingListPageHeader.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListDetailsHeader.tsx
 msgid "Shopping list deleted successfully"
 msgstr "Liste de courses supprimée avec succès"

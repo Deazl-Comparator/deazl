@@ -150,8 +150,6 @@ msgstr "Enter your product name"
 msgid "Environment"
 msgstr "Environment"
 
-#: src/app/[locale]/shopping-lists/[id]/ShoppingListPageHeader.tsx
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShareList.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListDetailsHeader.tsx
 msgid "Error"
 msgstr "Error"
@@ -160,7 +158,6 @@ msgstr "Error"
 msgid "Failed to add item"
 msgstr "Failed to add item"
 
-#: src/app/[locale]/shopping-lists/[id]/ShoppingListPageHeader.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListDetailsHeader.tsx
 msgid "Failed to delete shopping list"
 msgstr "Failed to delete shopping list"
@@ -255,7 +252,6 @@ msgstr "Light"
 msgid "Link copied"
 msgstr "Link copied"
 
-#: src/app/[locale]/shopping-lists/[id]/ShoppingListPageHeader.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListDetailsHeader.tsx
 msgid "List deleted"
 msgstr "List deleted"
@@ -401,7 +397,6 @@ msgstr "Settings"
 msgid "Share link copied to clipboard"
 msgstr "Share link copied to clipboard"
 
-#: src/app/[locale]/shopping-lists/[id]/ShoppingListPageHeader.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListDetailsHeader.tsx
 msgid "Shopping list deleted successfully"
 msgstr "Shopping list deleted successfully"
