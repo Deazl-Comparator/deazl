@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { deleteShoppingList } from "~/applications/ShoppingLists/Actions/shoppingListActions";
-import ShareListModal from "./ShareListModal";
+import ShareListModal from "../../../../applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/ShareListModal";
 
 interface ShoppingListPageHeaderProps {
   listId: string;

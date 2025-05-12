@@ -50,7 +50,7 @@ msgstr "All barcode types are accepted."
 msgid "An avatar is optional but strongly recommended."
 msgstr "An avatar is optional but strongly recommended."
 
-#: src/app/[locale]/shopping-lists/[id]/ShareListModal.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShareList.tsx
 msgid "An invitation has been sent to {email}"
 msgstr "An invitation has been sent to {email}"
 
@@ -67,6 +67,7 @@ msgid "Avatar updated"
 msgstr "Avatar updated"
 
 #: src/applications/Prices/Ui/NewPrice/NewPiceModal.tsx
+#: src/components/Inputs/Input/Barcode.tsx
 msgid "Barcode"
 msgstr "Barcode"
 
@@ -149,12 +150,9 @@ msgstr "Enter your product name"
 msgid "Environment"
 msgstr "Environment"
 
-#: src/app/[locale]/shopping-lists/[id]/ShareListModal.tsx
 #: src/app/[locale]/shopping-lists/[id]/ShoppingListPageHeader.tsx
-#: src/app/[locale]/shopping-lists/components/ShoppingListContainer.tsx
-#: src/app/[locale]/shopping-lists/components/ShoppingListContainer.tsx
-#: src/app/[locale]/shopping-lists/components/ShoppingListContainer.tsx
-#: src/app/[locale]/shopping-lists/components/ShoppingListQuickAddBar.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShareList.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListDetailsHeader.tsx
 msgid "Error"
 msgstr "Error"
 
@@ -163,6 +161,7 @@ msgid "Failed to add item"
 msgstr "Failed to add item"
 
 #: src/app/[locale]/shopping-lists/[id]/ShoppingListPageHeader.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListDetailsHeader.tsx
 msgid "Failed to delete shopping list"
 msgstr "Failed to delete shopping list"
 
@@ -170,7 +169,7 @@ msgstr "Failed to delete shopping list"
 msgid "Failed to remove item"
 msgstr "Failed to remove item"
 
-#: src/app/[locale]/shopping-lists/[id]/ShareListModal.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShareList.tsx
 msgid "Failed to send invitation"
 msgstr "Failed to send invitation"
 
@@ -216,17 +215,13 @@ msgstr "Invalid display name."
 msgid "Invalid phone number."
 msgstr "Invalid phone number."
 
-#: src/app/[locale]/shopping-lists/[id]/ShareListModal.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShareList.tsx
 msgid "Invitation sent"
 msgstr "Invitation sent"
 
 #: src/app/[locale]/shopping-lists/components/ShoppingListQuickAddBar.tsx
 msgid "Item added"
 msgstr "Item added"
-
-#: src/app/[locale]/shopping-lists/components/ShoppingListAddItemForm.tsx
-msgid "Item added successfully!"
-msgstr "Item added successfully!"
 
 #: src/app/[locale]/shopping-lists/components/ShoppingListContainer.tsx
 msgid "Item completed"
@@ -235,10 +230,6 @@ msgstr "Item completed"
 #: src/app/[locale]/shopping-lists/components/ShoppingListContainer.tsx
 msgid "Item details have been updated"
 msgstr "Item details have been updated"
-
-#: src/app/[locale]/shopping-lists/components/ShoppingListAddItemForm.tsx
-msgid "Item has been successfully added to your shopping list."
-msgstr "Item has been successfully added to your shopping list."
 
 #: src/app/[locale]/shopping-lists/components/ShoppingListContainer.tsx
 msgid "Item marked as completed"
@@ -260,11 +251,12 @@ msgstr "Item updated"
 msgid "Light"
 msgstr "Light"
 
-#: src/app/[locale]/shopping-lists/[id]/ShareListModal.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShareList.tsx
 msgid "Link copied"
 msgstr "Link copied"
 
 #: src/app/[locale]/shopping-lists/[id]/ShoppingListPageHeader.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListDetailsHeader.tsx
 msgid "List deleted"
 msgstr "List deleted"
 
@@ -283,6 +275,7 @@ msgid "My Prices"
 msgstr "My Prices"
 
 #: src/applications/Prices/Ui/NewPrice/FormSteps/Step1/TypeBarcode.tsx
+#: src/applications/Prices/Ui/NewPrice/FormSteps/Step2/Price.tsx
 #: src/applications/Prices/Ui/NewPrice/FormSteps/Step3/Proof.tsx
 #: src/applications/Prices/Ui/NewPrice/FormSteps/Step4/Location.tsx
 #: src/applications/Prices/Ui/NewQuickPrice/FormSteps/Location.tsx
@@ -323,12 +316,14 @@ msgstr "Please enter your full name, or a display name you are comfortable with.
 msgid "Please use 32 characters at maximum."
 msgstr "Please use 32 characters at maximum."
 
+#: src/applications/Prices/Ui/NewPrice/FormSteps/Step2/Price.tsx
 #: src/applications/Prices/Ui/NewPrice/FormSteps/Step3/Proof.tsx
 #: src/applications/Prices/Ui/NewPrice/FormSteps/Step4/Location.tsx
 #: src/applications/Prices/Ui/NewQuickPrice/FormSteps/Location.tsx
 msgid "Previous"
 msgstr "Previous"
 
+#: src/applications/Prices/Ui/NewPrice/FormSteps/Step2/Price.tsx
 #: src/applications/Prices/Ui/NewPrice/NewPiceModal.tsx
 #: src/applications/Prices/Ui/NewQuickPrice/FormSteps/Price.tsx
 msgid "Price"
@@ -366,7 +361,7 @@ msgstr "Product added"
 msgid "Product Not Found"
 msgstr "Product Not Found"
 
-#: src/app/[locale]/shopping-lists/[id]/ShareListModal.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/QrCodeTab.tsx
 msgid "QR Code copied"
 msgstr "QR Code copied"
 
@@ -393,6 +388,7 @@ msgstr "Scan barcode"
 msgid "Search"
 msgstr "Search"
 
+#: src/components/Inputs/File/File.spec.tsx
 #: src/components/Inputs/File/File.tsx
 msgid "Select your file"
 msgstr "Select your file"
@@ -401,11 +397,12 @@ msgstr "Select your file"
 msgid "Settings"
 msgstr "Settings"
 
-#: src/app/[locale]/shopping-lists/[id]/ShareListModal.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShareList.tsx
 msgid "Share link copied to clipboard"
 msgstr "Share link copied to clipboard"
 
 #: src/app/[locale]/shopping-lists/[id]/ShoppingListPageHeader.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListDetailsHeader.tsx
 msgid "Shopping list deleted successfully"
 msgstr "Shopping list deleted successfully"
 
@@ -425,7 +422,7 @@ msgstr "System"
 msgid "Take a picture"
 msgstr "Take a picture"
 
-#: src/app/[locale]/shopping-lists/[id]/ShareListModal.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/QrCodeTab.tsx
 msgid "The link has been copied to clipboard"
 msgstr "The link has been copied to clipboard"
 
@@ -440,10 +437,6 @@ msgstr "This is your avatar."
 #: src/applications/Prices/Ui/ListPrices/CardPrice/DeletePriceModal/DeletePriceModal.tsx
 msgid "Type \"confirm\" to confirm"
 msgstr "Type \"confirm\" to confirm"
-
-#: src/applications/Prices/Ui/ListPrices/CardPrice/DeletePriceModal/DeletePriceModal.tsx
-msgid "Type \"delete {0}\" to confirm"
-msgstr "Type \"delete {0}\" to confirm"
 
 #: src/applications/Prices/Ui/NewPrice/NewPriceButton/NewPriceButtonDesktop.tsx
 #: src/applications/Prices/Ui/NewPrice/NewPriceButton/NewPriceButtonMobile.tsx
@@ -474,3 +467,7 @@ msgstr "Your file exceeded the limit {maxSize}Mo"
 #: src/components/Inputs/Phone/Phone.tsx
 msgid "Your phone number is not valid"
 msgstr "Your phone number is not valid"
+
+#: src/app/[locale]/shopping-lists/page.tsx
+msgid "Your Shopping Lists"
+msgstr "Your Shopping Lists"

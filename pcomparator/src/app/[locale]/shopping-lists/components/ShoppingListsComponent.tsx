@@ -3,7 +3,6 @@
 import { Badge, Button, Card, CardBody, CardHeader, Chip, Tooltip } from "@heroui/react";
 import { CalendarIcon, ClipboardListIcon, ShoppingCartIcon } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { ShoppingList } from "~/applications/ShoppingLists/Domain/Entities/ShoppingList";
 
@@ -12,8 +11,7 @@ export default function ShoppingListsComponent({
 }: {
   initialLists: ShoppingList[];
 }) {
-  const [lists, setLists] = useState(initialLists);
-  const router = useRouter();
+  const [lists, _] = useState(initialLists);
 
   if (lists.length === 0) {
     return (
