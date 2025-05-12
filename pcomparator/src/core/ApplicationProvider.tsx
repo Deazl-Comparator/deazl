@@ -27,7 +27,7 @@ const ApplicationProvider = ({ children, locale, messages, device }: Application
     <SessionProvider>
       <HeroUIProvider locale={locale} navigate={router.push}>
         <I18nProvider locale={locale}>
-          <NextThemesProvider attribute="class" enableSystem>
+          <NextThemesProvider defaultTheme="light" attribute="class" enableSystem>
             <TranslationProvider locale={locale} messages={messages}>
               <ToastProvider
                 placement="top-right"

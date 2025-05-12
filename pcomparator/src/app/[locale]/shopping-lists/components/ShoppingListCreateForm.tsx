@@ -1,9 +1,9 @@
 "use client";
 
-import { Button, Card, CardBody, CardFooter, Chip, Select, SelectItem, Textarea } from "@heroui/react";
-import { PlusIcon, XIcon } from "lucide-react";
+import { Card, CardBody, CardFooter, Textarea } from "@heroui/react";
+import { Trans } from "@lingui/macro";
+import {} from "lucide-react";
 import { type KeyboardEvent, useState } from "react";
-import { UnitSchema } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListItem";
 import useForm from "~/components/Form/useForm";
 import { Input } from "~/components/Inputs/Input/Input";
 
@@ -86,6 +86,15 @@ export default function ShoppingListCreateForm({
 
           action(formData);
         }}
+        actions={{
+          nextProps: {
+            title: <Trans>Create Shopping List</Trans>,
+            fullWidth: true,
+            color: "primary"
+          },
+          wrapper: CardFooter,
+          wrapperProps: { className: "justify-end border-t border-t-default -px-4" }
+        }}
       >
         <CardBody className="pt-6 space-y-6">
           <div className="space-y-2">
@@ -104,7 +113,7 @@ export default function ShoppingListCreateForm({
           </div>
 
           {/* Items section */}
-          <div className="space-y-4 border-t pt-4">
+          {/* <div className="space-y-4 border-t pt-4">
             <div className="flex justify-between items-center">
               <h3 className="text-lg font-medium">Items</h3>
               <Button
@@ -127,7 +136,6 @@ export default function ShoppingListCreateForm({
               </Button>
             </div>
 
-            {/* Item list display */}
             {items.length > 0 && (
               <div className="flex flex-wrap gap-2 mb-4">
                 {items.map((item) => (
@@ -138,7 +146,6 @@ export default function ShoppingListCreateForm({
               </div>
             )}
 
-            {/* Add item form */}
             {isAddingItem && (
               <div className="p-4 bg-gray-50 rounded-md space-y-4">
                 <div className="space-y-2">
@@ -202,7 +209,6 @@ export default function ShoppingListCreateForm({
               </div>
             )}
 
-            {/* Empty state for items */}
             {items.length === 0 && !isAddingItem && (
               <div className="text-center p-8 bg-gray-50 rounded-md">
                 <p className="text-gray-500">No items added yet</p>
@@ -212,19 +218,8 @@ export default function ShoppingListCreateForm({
                 </Button>
               </div>
             )}
-          </div>
+          </div> */}
         </CardBody>
-
-        <CardFooter>
-          <Button
-            type="submit"
-            className="w-full"
-            color="primary"
-            isDisabled={form.methods.formState.isSubmitting}
-          >
-            Create Shopping List
-          </Button>
-        </CardFooter>
       </form.Form>
     </Card>
   );

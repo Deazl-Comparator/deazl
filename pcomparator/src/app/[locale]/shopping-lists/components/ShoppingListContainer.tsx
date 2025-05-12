@@ -129,9 +129,8 @@ export default function ShoppingListContainer({ initialList }: { initialList: Sh
   };
 
   return (
-    <>
-      <div className="flex flex-col gap-4 mb-4">
-        <h1 className="text-2xl font-bold">{initialList.name}</h1>
+    <div className="flex flex-col gap-6 animate-fadeIn">
+      <div className="flex flex-col gap-4">
         <ShoppingListQuickAddBar listId={initialList.id} onItemAdded={handleAddItem} />
       </div>
 
@@ -141,6 +140,6 @@ export default function ShoppingListContainer({ initialList }: { initialList: Sh
         onDeleteItem={handleDeleteItem}
         onUpdateItem={handleUpdateItem}
       />
-    </>
+    </div>
   );
 }

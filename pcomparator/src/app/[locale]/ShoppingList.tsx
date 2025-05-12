@@ -1,14 +1,37 @@
 "use client";
 
-import { Button } from "@heroui/react";
+import { Button, Tooltip } from "@heroui/react";
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
 
-export const ShoppingListButton = () => (
-  <Link href="/shopping-lists/create">
-    <Button size="sm">
-      <PlusIcon className="h-4 w-4 mr-2" />
-      New List
-    </Button>
-  </Link>
-);
+export const ShoppingListButton = ({ floating = false }: { floating?: boolean }) => {
+  if (floating) {
+    return (
+      <div className="fixed bottom-24 right-6 z-50">
+        <Tooltip content="Create a new shopping list" placement="top">
+          <Link href="/shopping-lists/create">
+            <Button
+              size="lg"
+              color="primary"
+              variant="solid"
+              className="shadow-lg hover:shadow-xl transition-shadow"
+            >
+              <PlusIcon />
+              New List
+            </Button>
+          </Link>
+        </Tooltip>
+      </div>
+    );
+  }
+
+  return (
+    <Link href="/shopping-lists/create">
+      <Tooltip content="Create a new shopping list">
+        <Button size="md" color="primary" variant="solid" startContent={<PlusIcon className="h-4 w-4" />}>
+          New List
+        </Button>
+      </Tooltip>
+    </Link>
+  );
+};

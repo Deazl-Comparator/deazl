@@ -1,9 +1,8 @@
 "use client";
 
-import { Input } from "@heroui/react";
-import { addToast } from "@heroui/react";
+import { Input, Tooltip, addToast } from "@heroui/react";
 import { Trans } from "@lingui/macro";
-import { PlusIcon } from "lucide-react";
+import { HelpCircleIcon, PlusIcon, SparklesIcon } from "lucide-react";
 import { type KeyboardEvent, useRef, useState } from "react";
 import { addItemToList } from "~/applications/ShoppingLists/Actions/shoppingListActions";
 import { UnitSchema } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListItem";
@@ -128,12 +127,32 @@ export default function ShoppingListQuickAddBar({
     }
   };
 
+  const examples = ["2 apples", "500g rice", "1.5l milk 2.49€"];
+
   return (
     <div className="flex flex-col gap-2">
-      <div className="text-sm text-gray-500 mb-1">
-        <span className="font-medium">Quick Add Format: </span>
-        <span>quantity unit product price (e.g. "500g potatoes 2.99€")</span>
+      <div className="flex items-center gap-2 mb-1">
+        <SparklesIcon size={16} className="text-primary-500" />
+        <span className="text-sm text-gray-600 font-medium">Quick Add</span>
+        <Tooltip
+          content={
+            <div className="p-2 max-w-xs">
+              <p className="font-medium mb-1">Format: quantity unit product price</p>
+              <p className="mb-2">Examples:</p>
+              <ul className="space-y-1 text-sm">
+                <li>• 2 apples</li>
+                <li>• 500g rice</li>
+                <li>• 1.5l milk 2.49€</li>
+              </ul>
+            </div>
+          }
+        >
+          <span>
+            <HelpCircleIcon size={14} className="text-gray-400 cursor-help" />
+          </span>
+        </Tooltip>
       </div>
+
       <div className="flex gap-2 items-center">
         <Input
           ref={inputRef}
@@ -141,24 +160,71 @@ export default function ShoppingListQuickAddBar({
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Add item (e.g. 500g potatoes 2.99€, 2 apples...)"
+          placeholder="Add item (e.g. 500g potatoes 2.99€)"
           size="lg"
           startContent={
-            <div className="text-sm text-gray-400 pointer-events-none">
+            <div className="text-sm text-primary-500 pointer-events-none">
               <PlusIcon size={18} />
             </div>
           }
+          // endContent={
+          //   <Button
+          //     isIconOnly
+          //     color="primary"
+          //     size="sm"
+          //     className="mr-1"
+          //     isLoading={isSubmitting}
+          //     isDisabled={!inputValue.trim() || isSubmitting}
+          //     onClick={handleAddItem}
+          //   >
+          //     <PlusIcon size={16} />
+          //   </Button>
+          // }
           autoFocus
         />
-        {/* <Button
-          color="primary"
-          isLoading={isSubmitting}
-          isDisabled={!inputValue.trim() || isSubmitting}
-          onClick={handleAddItem}
-        >
-          Add
-        </Button> */}
       </div>
+
+      {/* <div className="flex flex-wrap gap-2 mt-1">
+        {examples.map((example, index) => (
+          <Chip
+            key={index}
+            variant="flat"
+            color="primary"
+            className="cursor-pointer hover:bg-primary-100 transition-colors"
+            onClick={() => setInputValue(example)}
+            startContent={<PlusIcon size={12} />}
+            animation="pulse"
+          >
+            {example}
+          </Chip>
+        ))}
+      </div>
+
+      <div className="flex justify-end mt-1">
+        <Button
+          size="sm"
+          variant="light"
+          color="primary"
+          className="text-xs"
+          onClick={() => {
+            // Générer des suggestions aléatoires plus complexes
+            const suggestions = [
+              "2kg rice 3.99€",
+              "6 eggs 2.50€",
+              "1.5l orange juice 1.99€",
+              "500g pasta 0.89€",
+              "250g cheese 4.29€"
+            ];
+
+            // Sélectionner une suggestion aléatoire
+            const randomSuggestion = suggestions[Math.floor(Math.random() * suggestions.length)];
+            setInputValue(randomSuggestion);
+          }}
+        >
+          <SparklesIcon size={12} className="mr-1" />
+          Suggest item
+        </Button>
+      </div> */}
     </div>
   );
 }
