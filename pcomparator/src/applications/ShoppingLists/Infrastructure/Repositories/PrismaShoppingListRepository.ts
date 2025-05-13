@@ -1,55 +1,56 @@
 import { prisma } from "~/libraries/prisma";
-import type { CreateShoppingList, ShoppingList } from "../../Domain/Entities/ShoppingList";
-import type { CreateShoppingListItem, ShoppingListItem } from "../../Domain/Entities/ShoppingListItem";
+import type { ShoppingList } from "../../Domain/Entities/ShoppingList.entity";
+import type { ShoppingListItemEntity } from "../../Domain/Entities/ShoppingListItem.entity";
 import type { ShoppingListRepository } from "../../Domain/Repositories/ShoppingListRepository";
+import { ShoppingListItemMapper } from "../Mappers/ShoppingListItemMapper";
+import { ShoppingListMapper } from "../Mappers/ShoppingListMapper";
 
 export class PrismaShoppingListRepository implements ShoppingListRepository {
-  async create(data: CreateShoppingList): Promise<ShoppingList> {
-    const { items, ...shoppingListData } = data;
+  async create(list: ShoppingList): Promise<ShoppingList> {
+    const persistenceData = ShoppingListMapper.toPersistence(list);
 
     const newList = await prisma.shoppingList.create({
       data: {
-        name: shoppingListData.name,
-        description: shoppingListData.description ?? null,
-        userId: shoppingListData.userId,
-        items: items
-          ? {
-              create: items.map((item) => ({
-                quantity: item.quantity,
-                unit: item.unit,
-                customName: item.customName,
-                productId: item.productId ?? null,
-                isCompleted: item.isCompleted ?? false,
-                price: item.price ?? null // Ajout du prix lors de la création
-              }))
-            }
-          : undefined
+        name: persistenceData.name,
+        description: persistenceData.description,
+        userId: persistenceData.userId
       },
       include: {
         items: true
       }
     });
 
-    return {
-      id: newList.id,
-      name: newList.name,
-      description: newList.description,
-      userId: newList.userId,
-      createdAt: newList.createdAt,
-      updatedAt: newList.updatedAt,
-      items: newList.items.map((item) => ({
-        id: item.id,
-        shoppingListId: item.shoppingListId,
-        productId: item.productId,
-        quantity: item.quantity,
-        unit: item.unit as any,
-        isCompleted: item.isCompleted,
-        customName: item.customName,
-        price: item.price ?? undefined, // Inclure le prix dans la réponse
-        createdAt: item.createdAt,
-        updatedAt: item.updatedAt
-      }))
-    };
+    // Add items if there are any
+    if (list.items.length > 0) {
+      for (const item of list.items) {
+        // @ts-ignore
+        const itemData = ShoppingListItemMapper.toPersistence({
+          ...item,
+          shoppingListId: newList.id
+        });
+
+        await prisma.shoppingListItem.create({
+          data: {
+            shoppingListId: newList.id,
+            quantity: itemData.quantity,
+            unit: itemData.unit,
+            customName: itemData.customName,
+            productId: itemData.productId,
+            isCompleted: itemData.isCompleted,
+            price: itemData.price
+            // notes: itemData.notes
+          }
+        });
+      }
+    }
+
+    // Fetch the complete list with items
+    const completeList = await prisma.shoppingList.findUnique({
+      where: { id: newList.id },
+      include: { items: true }
+    });
+
+    return ShoppingListMapper.toDomain(completeList);
   }
 
   async findById(id: string): Promise<ShoppingList | null> {
@@ -60,26 +61,7 @@ export class PrismaShoppingListRepository implements ShoppingListRepository {
 
     if (!list) return null;
 
-    return {
-      id: list.id,
-      name: list.name,
-      description: list.description,
-      userId: list.userId,
-      createdAt: list.createdAt,
-      updatedAt: list.updatedAt,
-      items: list.items.map((item) => ({
-        id: item.id,
-        shoppingListId: item.shoppingListId,
-        productId: item.productId,
-        quantity: item.quantity,
-        unit: item.unit as any,
-        isCompleted: item.isCompleted,
-        customName: item.customName,
-        price: item.price ?? undefined, // Inclure le prix dans la réponse
-        createdAt: item.createdAt,
-        updatedAt: item.updatedAt
-      }))
-    };
+    return ShoppingListMapper.toDomain(list);
   }
 
   async findByUserId(userId: string): Promise<ShoppingList[]> {
@@ -89,115 +71,77 @@ export class PrismaShoppingListRepository implements ShoppingListRepository {
       orderBy: { updatedAt: "desc" }
     });
 
-    return lists.map((list) => ({
-      id: list.id,
-      name: list.name,
-      description: list.description,
-      userId: list.userId,
-      createdAt: list.createdAt,
-      updatedAt: list.updatedAt,
-      items: list.items.map((item) => ({
-        id: item.id,
-        shoppingListId: item.shoppingListId,
-        productId: item.productId,
-        quantity: item.quantity,
-        unit: item.unit as any,
-        isCompleted: item.isCompleted,
-        customName: item.customName,
-        price: item.price ?? undefined, // Inclure le prix dans la réponse
-        createdAt: item.createdAt,
-        updatedAt: item.updatedAt
-      }))
-    }));
+    return lists.map((list) => ShoppingListMapper.toDomain(list));
   }
 
-  async update(id: string, data: Partial<CreateShoppingList>): Promise<ShoppingList> {
-    const { items, ...updateData } = data;
+  async update(list: ShoppingList): Promise<ShoppingList> {
+    const persistenceData = ShoppingListMapper.toPersistence(list);
 
     const updatedList = await prisma.shoppingList.update({
-      where: { id },
-      data: updateData,
+      where: { id: list.id },
+      data: {
+        name: persistenceData.name,
+        description: persistenceData.description,
+        updatedAt: new Date()
+      },
       include: { items: true }
     });
 
-    return {
-      id: updatedList.id,
-      name: updatedList.name,
-      description: updatedList.description,
-      userId: updatedList.userId,
-      createdAt: updatedList.createdAt,
-      updatedAt: updatedList.updatedAt,
-      items: updatedList.items.map((item) => ({
-        id: item.id,
-        shoppingListId: item.shoppingListId,
-        productId: item.productId,
-        quantity: item.quantity,
-        unit: item.unit as any,
-        isCompleted: item.isCompleted,
-        customName: item.customName,
-        price: item.price ?? undefined, // Inclure le prix dans la réponse
-        createdAt: item.createdAt,
-        updatedAt: item.updatedAt
-      }))
-    };
+    return ShoppingListMapper.toDomain(updatedList);
   }
 
   async delete(id: string): Promise<void> {
+    // Delete items first (assuming cascade delete is not set up)
+    await prisma.shoppingListItem.deleteMany({
+      where: { shoppingListId: id }
+    });
+
     await prisma.shoppingList.delete({
       where: { id }
     });
   }
 
-  async addItem(shoppingListId: string, item: CreateShoppingListItem): Promise<ShoppingListItem> {
+  async addItem(listId: string, item: ShoppingListItemEntity): Promise<ShoppingListItemEntity> {
+    const itemData = ShoppingListItemMapper.toPersistence(item);
+
     const newItem = await prisma.shoppingListItem.create({
       data: {
-        shoppingListId,
-        productId: item.productId ?? null,
-        quantity: item.quantity,
-        unit: item.unit,
-        isCompleted: item.isCompleted ?? false,
-        customName: item.customName,
-        price: item.price ?? null // Prise en charge du prix lors de la création
+        shoppingListId: listId,
+        productId: itemData.productId,
+        quantity: itemData.quantity,
+        unit: itemData.unit,
+        isCompleted: itemData.isCompleted,
+        customName: itemData.customName,
+        price: itemData.price
+        // notes: itemData.notes
       }
     });
 
-    return {
-      id: newItem.id,
-      shoppingListId: newItem.shoppingListId,
-      productId: newItem.productId,
-      quantity: newItem.quantity,
-      unit: newItem.unit as any,
-      isCompleted: newItem.isCompleted,
-      customName: newItem.customName,
-      price: newItem.price ?? undefined,
-      createdAt: newItem.createdAt,
-      updatedAt: newItem.updatedAt
-    };
+    return ShoppingListItemMapper.toDomain(newItem);
   }
 
-  async updateItem(id: string, data: Partial<CreateShoppingListItem>): Promise<ShoppingListItem> {
+  async updateItem(item: ShoppingListItemEntity): Promise<ShoppingListItemEntity> {
+    const itemData = ShoppingListItemMapper.toPersistence(item);
+
     const updatedItem = await prisma.shoppingListItem.update({
-      where: { id },
-      data
+      where: { id: item.id },
+      data: {
+        quantity: itemData.quantity,
+        unit: itemData.unit,
+        isCompleted: itemData.isCompleted,
+        customName: itemData.customName,
+        price: itemData.price,
+        // notes: itemData.notes,
+        updatedAt: new Date()
+      }
     });
 
-    return {
-      id: updatedItem.id,
-      shoppingListId: updatedItem.shoppingListId,
-      productId: updatedItem.productId,
-      quantity: updatedItem.quantity,
-      unit: updatedItem.unit as any,
-      price: updatedItem.price ?? undefined,
-      isCompleted: updatedItem.isCompleted,
-      customName: updatedItem.customName,
-      createdAt: updatedItem.createdAt,
-      updatedAt: updatedItem.updatedAt
-    };
+    return ShoppingListItemMapper.toDomain(updatedItem);
   }
 
-  async removeItem(id: string): Promise<void> {
+  async removeItem(itemId: string): Promise<void> {
     await prisma.shoppingListItem.delete({
-      where: { id }
+      where: { id: itemId }
     });
   }
 }

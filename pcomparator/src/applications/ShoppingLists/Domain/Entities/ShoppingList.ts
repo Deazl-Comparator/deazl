@@ -20,5 +20,12 @@ export const CreateShoppingListSchema = ShoppingListSchema.omit({
   items: z.array(ShoppingListItemSchema.omit({ id: true, shoppingListId: true })).optional()
 });
 
-export type ShoppingList = z.infer<typeof ShoppingListSchema>;
+export type ShoppingList = z.infer<typeof ShoppingListSchema> & {
+  totalItems: number;
+  completedItems: number;
+  progressPercentage: number;
+  totalPrice: number;
+  totalPendingPrice: number;
+  totalCompletedPrice: number;
+};
 export type CreateShoppingList = z.infer<typeof CreateShoppingListSchema>;

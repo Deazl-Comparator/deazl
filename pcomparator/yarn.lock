@@ -1809,6 +1809,7 @@ __metadata:
     openapi-fetch: ^0.13.0
     postcss: ^8.5.3
     prisma: ^5.21.1
+    qrcode.react: ^4.2.0
     react: ^19.1.0
     react-barcode-scanner: ^2.1.0
     react-camera-pro: ^1.4.0
@@ -17843,6 +17844,15 @@ __metadata:
   bin:
     qrcode-terminal: ./bin/qrcode-terminal.js
   checksum: 51638d11d080e06ef79ef2d5cfe911202159e48d2873d6a80a3c5489b4b767acf4754811ceba4e113db8f41f61a06c163bcb17e6e18e6b34e04a7a5155dac974
+  languageName: node
+  linkType: hard
+
+"qrcode.react@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "qrcode.react@npm:4.2.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: fe7f496bb3696eedf4113390c6feda386e7a5e5d69d12fcc2489c55ecec467f682dc99b0d8085afbeb8ed3962c1f7554b26225cd78b72e78416f9506abbebd5d
   languageName: node
   linkType: hard
 

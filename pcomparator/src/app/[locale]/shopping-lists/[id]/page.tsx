@@ -1,23 +1,18 @@
 import { notFound } from "next/navigation";
-import { BackToList } from "~/app/[locale]/shopping-lists/[id]/BackToList";
-import ShoppingListContainer from "~/app/[locale]/shopping-lists/components/ShoppingListContainer";
-import { getShoppingList } from "~/applications/ShoppingLists/Actions/shoppingListActions";
+import { getShoppingList } from "~/applications/ShoppingLists/Api/shoppingListActions";
+import { ShoppingListDetails } from "~/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListDetails";
 
-export default async function ShoppingListPage({ params }: { params: { id: string } }) {
-  const list = await getShoppingList((await params).id);
+export default async function ShoppingListPage({ params }: { params: Promise<{ id: string }> }) {
+  const shoppingListId = (await params).id;
+  const list = await getShoppingList(shoppingListId);
 
-  if (!list) {
-    notFound();
-  }
+  if (!list) notFound();
 
   return (
-    <main className="flex w-full justify-center p-4 md:mt-8">
-      <div className="flex flex-col gap-y-8 max-w-4xl w-[inherit]">
-        <div className="container max-w-3xl mx-auto py-8">
-          <BackToList />
-
-          {/* Wrapper avec barre d'ajout rapide au-dessus de la liste */}
-          <ShoppingListContainer initialList={list} />
+    <main className="flex w-full justify-center p-4">
+      <div className="flex flex-col gap-y-8 max-w-4xl w-full">
+        <div className="max-w-3xl mx-auto w-full pb-8">
+          <ShoppingListDetails list={list} />
         </div>
       </div>
     </main>

@@ -57,6 +57,7 @@
     "next-themes": "^0.3.0",
     "openapi-fetch": "^0.13.0",
     "postcss": "^8.5.3",
+    "qrcode.react": "^4.2.0",
     "react": "^19.1.0",
     "react-barcode-scanner": "^2.1.0",
     "react-camera-pro": "^1.4.0",

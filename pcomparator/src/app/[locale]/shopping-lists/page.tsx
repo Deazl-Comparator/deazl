@@ -1,7 +1,9 @@
-import { Suspense } from "react";
-import { ShoppingListButton } from "~/app/[locale]/ShoppingList";
-import ShoppingListsComponent from "~/app/[locale]/shopping-lists/components/ShoppingListsComponent";
-import { getUserShoppingLists } from "~/applications/ShoppingLists/Actions/shoppingListActions";
+import { Divider } from "@heroui/react";
+import { Trans } from "@lingui/macro";
+import { ClipboardListIcon } from "lucide-react";
+import { listUserShoppingList } from "~/applications/ShoppingLists/Api/listUserShoppingList";
+import { NewShoppingListButton } from "~/applications/ShoppingLists/Ui/NewShoppingListButton/NewShoppingListButton";
+import { ShoppingList } from "~/applications/ShoppingLists/Ui/ShoppingList/ShoppingList";
 import { withLinguiPage } from "~/core/withLinguiLayout";
 
 export const metadata = {
@@ -10,22 +12,27 @@ export const metadata = {
 };
 
 const ShoppingListsPage = async () => {
-  const lists = await getUserShoppingLists();
+  const lists = await listUserShoppingList();
 
   return (
-    <main className="flex w-full justify-center p-4 md:mt-8">
-      <div className="flex flex-col gap-y-8 max-w-4xl w-[inherit]">
-        <div className="container max-w-4xl mx-auto py-8">
-          <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-bold">Your Shopping Lists</h1>
-            <ShoppingListButton />
+    <main className="flex w-full justify-center p-4">
+      <div className="flex flex-col gap-y-8 max-w-4xl w-full">
+        <div className="pb-4">
+          <div className="flex justify-between items-center mb-6">
+            <div className="flex items-center gap-3">
+              <ClipboardListIcon size={24} className="text-primary-400" />
+              <h1 className="text-xl font-bold">
+                <Trans>Your Shopping Lists</Trans>
+              </h1>
+            </div>
           </div>
 
-          <Suspense fallback={<div>Loading shopping lists...</div>}>
-            <ShoppingListsComponent initialLists={lists} />
-          </Suspense>
+          <Divider className="my-4" />
+
+          <ShoppingList lists={lists} />
         </div>
       </div>
+      <NewShoppingListButton />
     </main>
   );
 };

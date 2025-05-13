@@ -1,3 +1,4 @@
+import { ModalFooter } from "@heroui/react";
 import { Trans, t } from "@lingui/macro";
 import { useLingui } from "@lingui/react";
 import { useRouter } from "next/navigation";
@@ -47,7 +48,8 @@ export const DeletePriceModal = ({ priceId, isOpen, onOpenChange, onClose }: Del
               color: "danger",
               isDisabled: !form.watch("confirmation")?.match("confirm")
             },
-            prevProps: { title: <Trans>Cancel</Trans> }
+            prevProps: { title: <Trans>Cancel</Trans> },
+            wrapper: ModalFooter
           }}
         >
           <p className="text-small text-default-500">
