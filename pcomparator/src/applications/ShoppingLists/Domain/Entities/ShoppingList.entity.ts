@@ -1,6 +1,7 @@
 import { DomainError } from "~/applications/Shared/Domain/Core/DomainError";
 import { Entity } from "~/applications/Shared/Domain/Core/Entity";
 import { UniqueEntityID } from "~/applications/Shared/Domain/Core/UniqueEntityId";
+import type { ShoppingList as ShoppingListT } from "./ShoppingList";
 import type { ShoppingListItemEntity } from "./ShoppingListItem.entity";
 
 export class ListNameTooShortError extends DomainError {
@@ -32,9 +33,7 @@ export class ShoppingList extends Entity<ShoppingListProps> {
     },
     id?: string
   ): ShoppingList {
-    if (props.name.length < 2) {
-      throw new ListNameTooShortError();
-    }
+    if (props.name.length < 2) throw new ListNameTooShortError();
 
     const listEntity = new ShoppingList(
       {
@@ -151,7 +150,7 @@ export class ShoppingList extends Entity<ShoppingListProps> {
     return this.props.items.length === 0;
   }
 
-  public toObject() {
+  public toObject(): ShoppingListT {
     return {
       id: this.id,
       name: this.name,
@@ -160,7 +159,6 @@ export class ShoppingList extends Entity<ShoppingListProps> {
       items: this.items.map((item) => item.toObject()),
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
-      // Computed properties
       totalItems: this.totalItems,
       completedItems: this.completedItems,
       progressPercentage: this.progressPercentage,

@@ -19,7 +19,8 @@ export const listUserShoppingList = async () => {
 export const getShoppingList = async (id: string): Promise<ShoppingList | null> => {
   try {
     const list = await shoppingListService.getShoppingList(id);
-    return list ? list : null;
+
+    return list;
   } catch (error) {
     console.error("Error retrieving shopping list", error);
     throw new Error("Failed to retrieve shopping list");

@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Button,
   Checkbox,
@@ -10,32 +8,27 @@ import {
   ModalFooter,
   ModalHeader,
   Select,
-  SelectItem,
-  Textarea
+  SelectItem
 } from "@heroui/react";
+import { Trans } from "@lingui/macro";
 import { CoinsIcon, SaveIcon, ShoppingBagIcon } from "lucide-react";
 import { useState } from "react";
 import type { ShoppingListItem } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListItem";
 import { UnitSchema } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListItem";
 
-export default function EditItemModal({
-  isOpen,
-  onClose,
-  item,
-  onUpdate
-}: {
+interface EditItemModalProps {
   isOpen: boolean;
   onClose: () => void;
   item: ShoppingListItem;
   onUpdate: (data: Partial<ShoppingListItem>) => Promise<void>;
-}) {
+}
+
+export const EditItemModal = ({ isOpen, onClose, item, onUpdate }: EditItemModalProps) => {
   const [name, setName] = useState(item.customName || "");
   const [quantity, setQuantity] = useState(item.quantity.toString());
   const [unit, setUnit] = useState(item.unit);
   const [price, setPrice] = useState(item.price?.toString() || "");
   const [isCompleted, setIsCompleted] = useState(item.isCompleted);
-  // @ts-ignore
-  const [notes, setNotes] = useState(item.notes || "");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async () => {
@@ -46,9 +39,7 @@ export default function EditItemModal({
         quantity: Number.parseFloat(quantity),
         unit,
         price: price ? Number.parseFloat(price) : undefined,
-        isCompleted,
-        // @ts-ignore
-        notes
+        isCompleted
       });
     } catch (error) {
       console.error("Error updating item:", error);
@@ -63,14 +54,14 @@ export default function EditItemModal({
         <ModalHeader className="flex flex-col gap-1">
           <h3 className="text-lg font-semibold flex items-center gap-2">
             <ShoppingBagIcon className="h-5 w-5 text-primary-600" />
-            Edit Item
+            <Trans>Edit Item</Trans>
           </h3>
         </ModalHeader>
         <ModalBody>
           <div className="space-y-4">
             <div className="space-y-2">
               <label htmlFor="name" className="text-sm font-medium">
-                Item Name
+                <Trans>Item Name</Trans>
               </label>
               <Input
                 id="name"
@@ -84,7 +75,7 @@ export default function EditItemModal({
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <label htmlFor="quantity" className="text-sm font-medium">
-                  Quantity
+                  <Trans>Quantity</Trans>
                 </label>
                 <Input
                   id="quantity"
@@ -99,7 +90,7 @@ export default function EditItemModal({
 
               <div className="space-y-2">
                 <label htmlFor="unit" className="text-sm font-medium">
-                  Unit
+                  <Trans>Unit</Trans>
                 </label>
                 {/* @ts-ignore */}
                 <Select className="w-full" selectedKeys={[unit]} onChange={(e) => setUnit(e.target.value)}>
@@ -116,7 +107,7 @@ export default function EditItemModal({
             <div className="space-y-2">
               <label htmlFor="price" className="text-sm font-medium flex items-center gap-1">
                 <CoinsIcon size={16} className="text-green-600" />
-                Price (optional)
+                <Trans>Price (optional)</Trans>
               </label>
               <Input
                 id="price"
@@ -130,29 +121,16 @@ export default function EditItemModal({
               />
             </div>
 
-            <div className="space-y-2">
-              <label htmlFor="notes" className="text-sm font-medium">
-                Notes (optional)
-              </label>
-              <Textarea
-                id="notes"
-                placeholder="Add any additional notes here..."
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-                rows={2}
-              />
-            </div>
-
             <div className="pt-2">
               <Checkbox isSelected={isCompleted} onValueChange={setIsCompleted}>
-                Mark as completed
+                <Trans>Mark as completed</Trans>
               </Checkbox>
             </div>
           </div>
         </ModalBody>
         <ModalFooter>
           <Button color="default" variant="flat" onPress={onClose} className="flex-1">
-            Cancel
+            <Trans>Cancel</Trans>
           </Button>
           <Button
             color="primary"
@@ -161,10 +139,10 @@ export default function EditItemModal({
             startContent={<SaveIcon size={16} />}
             className="flex-1"
           >
-            Save Changes
+            <Trans>Save Changes</Trans>
           </Button>
         </ModalFooter>
       </ModalContent>
     </Modal>
   );
-}
+};

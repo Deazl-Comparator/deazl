@@ -5,6 +5,7 @@ import { ItemQuantity } from "../ValueObjects/ItemQuantity";
 import { ItemStatus } from "../ValueObjects/ItemStatus";
 import { Price } from "../ValueObjects/Price";
 import { Unit } from "../ValueObjects/Unit";
+import type { ShoppingListItem as ShoppingListItemT } from "./ShoppingListItem";
 
 export class ItemNameTooShortError extends DomainError {
   constructor() {
@@ -153,15 +154,17 @@ export class ShoppingListItemEntity extends Entity<ShoppingListItemProps> {
     this.props.updatedAt = new Date();
   }
 
-  public toObject() {
+  public toObject(): ShoppingListItemT {
     return {
       id: this.id,
       shoppingListId: this.shoppingListId,
       productId: this.productId,
       quantity: this.quantity,
+      // @ts-ignore
       unit: this.unit,
       isCompleted: this.isCompleted,
       customName: this.customName,
+      // @ts-ignore
       price: this.price,
       notes: this.notes,
       createdAt: this.createdAt,

@@ -41,4 +41,17 @@ export class ShoppingListMapper {
       updatedAt: new Date()
     };
   }
+
+  static toDTO(entity: ShoppingList): any {
+    return {
+      ...entity.toObject(),
+      totalItems: entity.totalItems,
+      completedItems: entity.completedItems,
+      progressPercentage: entity.progressPercentage,
+      totalPrice: entity.totalPrice,
+      totalPendingPrice: entity.totalPendingPrice,
+      totalCompletedPrice: entity.totalCompletedPrice,
+      isEmpty: entity.isEmpty()
+    };
+  }
 }

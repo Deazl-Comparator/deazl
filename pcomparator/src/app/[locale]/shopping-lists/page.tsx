@@ -1,8 +1,8 @@
 import { Divider } from "@heroui/react";
 import { Trans } from "@lingui/macro";
 import { ClipboardListIcon } from "lucide-react";
-import { ShoppingListButton } from "~/app/[locale]/ShoppingList";
 import { listUserShoppingList } from "~/applications/ShoppingLists/Api/listUserShoppingList";
+import { NewShoppingListButton } from "~/applications/ShoppingLists/Ui/NewShoppingListButton/NewShoppingListButton";
 import { ShoppingList } from "~/applications/ShoppingLists/Ui/ShoppingList/ShoppingList";
 import { withLinguiPage } from "~/core/withLinguiLayout";
 
@@ -32,7 +32,7 @@ const ShoppingListsPage = async () => {
           <ShoppingList lists={lists} />
         </div>
       </div>
-      <ShoppingListButton floating />
+      <NewShoppingListButton />
     </main>
   );
 };

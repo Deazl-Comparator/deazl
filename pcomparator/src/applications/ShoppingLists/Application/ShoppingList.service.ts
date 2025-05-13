@@ -1,5 +1,5 @@
 import { auth } from "~/libraries/nextauth/authConfig";
-import type { ShoppingList } from "../Domain/Entities/ShoppingList.entity";
+import type { ShoppingList as ShoppingListEntity } from "../Domain/Entities/ShoppingList.entity";
 import type { ShoppingListItemEntity } from "../Domain/Entities/ShoppingListItem.entity";
 import type { ShoppingListRepository } from "../Domain/Repositories/ShoppingListRepository";
 import { AddItemToListUseCase } from "./UseCases/AddItemToList.usecase";
@@ -17,7 +17,7 @@ export class ShoppingListService {
     this.updateItemUseCase = new UpdateShoppingListItemUseCase(shoppingListRepository);
   }
 
-  async listUserShoppingLists(): Promise<ShoppingList[]> {
+  async listUserShoppingLists(): Promise<ShoppingListEntity[]> {
     try {
       const session = await auth();
 
@@ -30,7 +30,7 @@ export class ShoppingListService {
     }
   }
 
-  async getShoppingList(id: string): Promise<ShoppingList | null> {
+  async getShoppingList(id: string): Promise<ShoppingListEntity | null> {
     try {
       const session = await auth();
       if (!session?.user?.id) throw new Error("User not authenticated");
@@ -60,7 +60,7 @@ export class ShoppingListService {
       isCompleted?: boolean;
       price?: number | null;
     }>;
-  }): Promise<ShoppingList> {
+  }): Promise<ShoppingListEntity> {
     try {
       const session = await auth();
       if (!session?.user?.id) throw new Error("User not authenticated");
