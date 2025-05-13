@@ -12,9 +12,19 @@ export const ShoppingListItemSchema = z.object({
   unit: UnitSchema.default("unit"),
   isCompleted: z.boolean().default(false),
   customName: z.string().nullable().optional(),
-  price: z.number().positive().optional(), // Ajout du champ prix
+  price: z.number().positive().optional(), // Champ pour stocker le prix d'un article
   createdAt: z.date().optional(),
-  updatedAt: z.date().optional()
+  updatedAt: z.date().optional(),
+  // Add product relationship information
+  product: z
+    .object({
+      id: z.string().uuid(),
+      name: z.string(),
+      barcode: z.string(),
+      description: z.string().nullable().optional()
+    })
+    .nullable()
+    .optional()
 });
 
 export const CreateShoppingListItemSchema = ShoppingListItemSchema.omit({

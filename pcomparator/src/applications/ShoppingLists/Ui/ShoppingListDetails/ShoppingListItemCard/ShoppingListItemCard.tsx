@@ -3,6 +3,7 @@ import { FilterIcon, InfoIcon, ShoppingCartIcon } from "lucide-react";
 import type { ShoppingList } from "~/applications/ShoppingLists/Domain/Entities/ShoppingList";
 import type { ShoppingListItem } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListItem";
 import { EditItemModal } from "~/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal";
+import { StoreSelector } from "~/applications/ShoppingLists/Ui/ShoppingListDetails/StoreSelector";
 import { ShoppingListFilter } from "./ShoppingListFilter";
 import { ShoppingListItemList } from "./ShoppingListItemList";
 import { ShoppingListStats } from "./ShoppingListStats";
@@ -58,6 +59,7 @@ export const ShoppingListItemCard = ({
       <Card className="shadow-sm border border-gray-200">
         <CardHeader className="pb-2">
           <div className="flex flex-col gap-2 w-full">
+            <StoreSelector />
             {list.description && (
               <div className="flex items-center gap-2 text-sm text-gray-500 bg-gray-50 p-3 rounded-md">
                 <InfoIcon size={16} className="text-gray-400 flex-shrink-0" />

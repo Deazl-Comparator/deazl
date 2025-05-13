@@ -1,39 +1,37 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { ShoppingList } from "~/applications/ShoppingLists/Domain/Entities/ShoppingList";
 import type { ShoppingListItem } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListItem";
 
 export const useShoppingListItems = (list: ShoppingList) => {
-  const items = list.items || [];
+  const [items, setItems] = useState<ShoppingListItem[]>(list.items || []);
   const [loading, setLoading] = useState<Record<string, boolean>>({});
   const [selectedItem, setSelectedItem] = useState<ShoppingListItem | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filter, setFilter] = useState<"all" | "pending" | "completed">("all");
+  const [filter, setFilter] = useState<"all" | "pending" | "completed">("pending");
   const [sortBy, setSortBy] = useState<"name" | "price" | "added" | "unit">("added");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
-  // Utiliser les statistiques calculées par l'entité ShoppingList
+  // Mettre à jour les items quand list.items change
+  useEffect(() => {
+    setItems(list.items || []);
+  }, [list.items]);
+
+  // Calculer les stats en fonction des items actuels
   const stats = useMemo(() => {
+    const completedItems = items.filter((item) => item.isCompleted);
+    const pendingItems = items.filter((item) => !item.isCompleted);
+
     return {
-      total: list.totalItems || items.length,
-      checked: list.completedItems || items.filter((item) => item.isCompleted).length,
-      unchecked:
-        (list.totalItems || items.length) -
-        (list.completedItems || items.filter((item) => item.isCompleted).length),
-      progress:
-        list.progressPercentage ||
-        (items.length > 0
-          ? Math.round((items.filter((item) => item.isCompleted).length / items.length) * 100)
-          : 0),
-      totalAmount: list.totalPrice || items.reduce((sum, item) => sum + (item.price || 0), 0),
-      checkedAmount:
-        list.totalCompletedPrice ||
-        items.filter((item) => item.isCompleted).reduce((sum, item) => sum + (item.price || 0), 0),
-      uncheckedAmount:
-        list.totalPendingPrice ||
-        items.filter((item) => !item.isCompleted).reduce((sum, item) => sum + (item.price || 0), 0),
-      hasPrices: (list.totalPrice || 0) > 0
+      total: items.length,
+      checked: completedItems.length,
+      unchecked: pendingItems.length,
+      progress: items.length > 0 ? Math.round((completedItems.length / items.length) * 100) : 0,
+      totalAmount: items.reduce((sum, item) => sum + (item.price || 0), 0),
+      checkedAmount: completedItems.reduce((sum, item) => sum + (item.price || 0), 0),
+      uncheckedAmount: pendingItems.reduce((sum, item) => sum + (item.price || 0), 0),
+      hasPrices: items.some((item) => !!item.price)
     };
-  }, [list, items]);
+  }, [items]);
 
   const filteredItems = useMemo(() => {
     let result = [...items];
@@ -80,6 +78,8 @@ export const useShoppingListItems = (list: ShoppingList) => {
   ) => {
     try {
       setLoading((prev) => ({ ...prev, [itemId]: true }));
+
+      // La mise à jour optimiste est maintenant gérée dans ShoppingListItemCard
       await onToggleItem(itemId, isCompleted);
     } catch (error) {
       console.error("Error toggling item completion:", error);
@@ -96,6 +96,7 @@ export const useShoppingListItems = (list: ShoppingList) => {
     stats,
     filteredItems,
     loading,
+    setLoading, // Exposer setLoading pour permettre la gestion des états de chargement
     searchTerm,
     setSearchTerm,
     filter,

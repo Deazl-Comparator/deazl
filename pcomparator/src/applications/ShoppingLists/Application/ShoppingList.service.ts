@@ -1,7 +1,9 @@
+import { CreateProductFromItemUseCase } from "~/applications/ShoppingLists/Application/UseCases/CreateProductFromItem.usecase";
 import { auth } from "~/libraries/nextauth/authConfig";
 import type { ShoppingList as ShoppingListEntity } from "../Domain/Entities/ShoppingList.entity";
 import type { ShoppingListItemEntity } from "../Domain/Entities/ShoppingListItem.entity";
 import type { ShoppingListRepository } from "../Domain/Repositories/ShoppingListRepository";
+import type { ProductInformation } from "../Domain/ValueObjects/ProductInformation";
 import { AddItemToListUseCase } from "./UseCases/AddItemToList.usecase";
 import { CreateShoppingListUseCase } from "./UseCases/CreateShoppingList.usecase";
 import { UpdateShoppingListItemUseCase } from "./UseCases/UpdateShoppingListItem.usecase";
@@ -10,11 +12,13 @@ export class ShoppingListService {
   private readonly createShoppingListUseCase: CreateShoppingListUseCase;
   private readonly addItemToListUseCase: AddItemToListUseCase;
   private readonly updateItemUseCase: UpdateShoppingListItemUseCase;
+  private readonly createProductFromItemUseCase: CreateProductFromItemUseCase;
 
   constructor(private shoppingListRepository: ShoppingListRepository) {
     this.createShoppingListUseCase = new CreateShoppingListUseCase(shoppingListRepository);
     this.addItemToListUseCase = new AddItemToListUseCase(shoppingListRepository);
     this.updateItemUseCase = new UpdateShoppingListItemUseCase(shoppingListRepository);
+    this.createProductFromItemUseCase = new CreateProductFromItemUseCase();
   }
 
   async listUserShoppingLists(): Promise<ShoppingListEntity[]> {
@@ -157,6 +161,18 @@ export class ShoppingListService {
     } catch (error) {
       console.error("Error removing shopping list item", error);
       throw new Error("Failed to remove shopping list item");
+    }
+  }
+
+  async createProductFromItem(productInfo: ProductInformation): Promise<any> {
+    try {
+      const session = await auth();
+      if (!session?.user?.id) throw new Error("User not authenticated");
+
+      return this.createProductFromItemUseCase.execute(productInfo);
+    } catch (error) {
+      console.error("Error creating product from item:", error);
+      throw new Error("Failed to create product from item");
     }
   }
 }
