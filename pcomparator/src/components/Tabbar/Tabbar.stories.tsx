@@ -12,7 +12,8 @@ export default {
 type FileObjProps = TabbarProps & RegisterOptions<FieldValues, any>;
 
 const defaultProps: FileObjProps = {
-  mainButton: <Button startContent={<ScanBarcode />} isIconOnly />
+  mainButton: <Button startContent={<ScanBarcode />} isIconOnly />,
+  isSignedIn: false
 };
 
 export const Default: StoryObj = {
