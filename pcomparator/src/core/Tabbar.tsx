@@ -13,7 +13,11 @@ const NewProduct = dynamic(() =>
 import { SearchBarcode } from "~/applications/Searchbar/Ui/SearchBarcode/SearchBarcode";
 import { Tabbar as TabbarComponent } from "~/components/Tabbar/Tabbar";
 
-export const Tabbar = () => {
+interface TabbarProps {
+  isSignedIn: boolean;
+}
+
+export const Tabbar = ({ isSignedIn }: TabbarProps) => {
   const [barcode, setBarcode] = useState<string | null>(null);
   const [newProductDefaultDetails, setNewProductDefaultDetails] = useState<any | null>(null);
   const { isOpen, onOpenChange, onOpen, onClose } = useDisclosure();
@@ -43,6 +47,7 @@ export const Tabbar = () => {
             }}
           />
         }
+        isSignedIn={isSignedIn}
       />
       {isOpen ? (
         newProductDefaultDetails ? (

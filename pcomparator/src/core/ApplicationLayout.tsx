@@ -4,6 +4,7 @@ import { Header } from "~/components/Header/Header";
 import { Toast } from "~/components/Toast/Toast";
 import { Tabbar } from "~/core/Tabbar";
 import { getDevice } from "~/core/getDevice";
+import { auth } from "~/libraries/nextauth/authConfig";
 
 export interface ApplicationLayoutProps {
   children: ReactNode;
@@ -11,12 +12,13 @@ export interface ApplicationLayoutProps {
 
 const ApplicationLayout = async ({ children }: ApplicationLayoutProps) => {
   const device = await getDevice();
+  const session = await auth();
 
   return (
     <>
       <Header rightArea={<SignButton />} />
       {children}
-      {device === "mobile" ? <Tabbar /> : null}
+      {device === "mobile" ? <Tabbar isSignedIn={!!session?.user} /> : null}
       <Toast />
     </>
   );
