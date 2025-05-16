@@ -30,6 +30,10 @@ msgstr "Compte supprimé"
 msgid "Account Settings"
 msgstr "Paramètres de compte"
 
+#: src/applications/ShoppingLists/Ui/ShoppingLists/Stats/Stats.tsx
+msgid "Active Lists"
+msgstr "Listes actives"
+
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/AddStoreModal.tsx
 msgid "Add a new store to track prices and products. This information will help you compare prices across different stores."
 msgstr "Ajouter un nouveau magasin pour suivre les prix et les produits. Ces informations vous aideront à comparer les prix dans différents magasins."
@@ -111,6 +115,14 @@ msgstr "Cliquer sur avatar pour ajouter un depuis vos fichier."
 msgid "Close"
 msgstr "Fermer"
 
+#: src/applications/ShoppingLists/Ui/ShoppingLists/Stats/Stats.tsx
+msgid "Completed"
+msgstr "Terminées"
+
+#: src/applications/ShoppingLists/Ui/ShoppingLists/EmptyState.tsx
+msgid "Completed lists will appear here"
+msgstr "Les listes terminées apparaîtront ici"
+
 #: src/applications/Prices/Ui/ListPrices/CardPrice/DeletePriceModal/DeletePriceModal.tsx
 msgid "confirm"
 msgstr "Confirmer"
@@ -126,6 +138,10 @@ msgstr "Créer une liste de courses"
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/AddStoreModal.tsx
 msgid "Create Store"
 msgstr "Créer un magasin"
+
+#: src/applications/ShoppingLists/Ui/ShoppingLists/EmptyState.tsx
+msgid "Create your first shopping list to get started"
+msgstr "Créez votre première liste de courses pour commencer"
 
 #: src/applications/Prices/Ui/NewPrice/FormSteps/Step4/Location.tsx
 #: src/applications/Prices/Ui/NewQuickPrice/FormSteps/Location.tsx
@@ -345,7 +361,7 @@ msgstr "Mes prix"
 msgid "Name and price are required to create a product"
 msgstr "Le nom et le prix sont requis pour créer un produit"
 
-#: src/applications/ShoppingLists/Ui/NewShoppingListButton/NewShoppingListButton.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingLists/ShoppingListsView.tsx
 msgid "New List"
 msgstr "Nouvelle liste"
 
@@ -357,6 +373,14 @@ msgstr "Nouvelle liste"
 #: src/components/Form/FormActions.tsx
 msgid "Next"
 msgstr "Suivant"
+
+#: src/applications/ShoppingLists/Ui/ShoppingLists/EmptyState.tsx
+msgid "No active shopping lists"
+msgstr "Aucune liste de courses active"
+
+#: src/applications/ShoppingLists/Ui/ShoppingLists/EmptyState.tsx
+msgid "No completed lists"
+msgstr "Aucune liste de courses terminée"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
@@ -604,6 +628,10 @@ msgstr "Ce produit sera associé à <0>{0}</0> dans <1>{1}</1>"
 msgid "This will create a new product in your database with the current name, price, and quantity information. You can then track price changes over time and get recommendations for the cheapest stores."
 msgstr "Cela créera un nouveau produit dans votre base de données avec le nom, le prix et la quantité actuels. Vous pourrez ensuite suivre les changements de prix au fil du temps et obtenir des recommandations pour les magasins les moins chers."
 
+#: src/applications/ShoppingLists/Ui/ShoppingLists/Stats/Stats.tsx
+msgid "Total Items"
+msgstr "Total des articles"
+
 #: src/applications/Prices/Ui/ListPrices/CardPrice/DeletePriceModal/DeletePriceModal.tsx
 msgid "Type \"confirm\" to confirm"
 msgstr "Saisissez \"confirmer\" pour confirmer"
@@ -637,6 +665,10 @@ msgstr "Votre fichier a dépassé la limite de {0} Mo"
 #: src/components/Inputs/File/File.spec.tsx
 msgid "Your file exceeded the limit {maxSize}Mo"
 msgstr "Votre fichier a dépassé la limite de {maxSize} Mo"
+
+#: src/applications/ShoppingLists/Ui/ShoppingLists/ShoppingListsView.tsx
+msgid "Your Lists"
+msgstr "Vos lists"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/AddStoreModal.tsx
 msgid "Your new store has been added and selected"
