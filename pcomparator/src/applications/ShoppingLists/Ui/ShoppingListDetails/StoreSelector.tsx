@@ -1,16 +1,21 @@
 "use client";
 
-import { Button, Chip, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, Spinner } from "@heroui/react";
+import { Autocomplete, AutocompleteItem, Button, Chip } from "@heroui/react";
 import { Trans } from "@lingui/macro";
-import { ChevronDownIcon, MapPinIcon, PlusIcon, StoreIcon } from "lucide-react";
+import { MapPinIcon, PlusIcon, SearchIcon, StoreIcon } from "lucide-react";
 import { useState } from "react";
+import { CollapsibleCard } from "~/components/CollapsibleCard/CollapsibleCard";
 import { useStore } from "../Contexts/StoreContext";
 import { useStoreData } from "../Hooks/useStoreData";
 import { AddStoreModal } from "./AddStoreModal";
 
+interface StoreGroup {
+  label: string;
+  stores: Array<{ id: string; name: string; location: string }>;
+}
+
 export const StoreSelector = () => {
   const { selectedStore, setSelectedStore, stores, isLoading } = useStore();
-  // Utiliser le hook pour charger les données
   useStoreData();
 
   const [isAddStoreModalOpen, setIsAddStoreModalOpen] = useState(false);
@@ -19,116 +24,111 @@ export const StoreSelector = () => {
     setIsAddStoreModalOpen(true);
   };
 
+  // Grouper les magasins par première lettre
+  const groupedStores = stores
+    .reduce<StoreGroup[]>((acc, store) => {
+      const firstLetter = store.name[0].toUpperCase();
+      const group = acc.find((g) => g.label === firstLetter);
+
+      if (group) {
+        group.stores.push(store);
+      } else {
+        acc.push({ label: firstLetter, stores: [store] });
+      }
+
+      return acc;
+    }, [])
+    .sort((a, b) => a.label.localeCompare(b.label));
+
   return (
     <>
-      <div className="bg-gray-50 rounded-lg border border-gray-100">
-        <div className="py-2 px-3">
-          <div className="flex items-center justify-between flex-wrap gap-2">
-            <div className="flex items-center gap-2 text-sm text-gray-600">
-              <StoreIcon className="h-4 w-4 text-primary-500" />
-              <span>
-                <Trans>Shopping at:</Trans>
-              </span>
+      <CollapsibleCard
+        title={<Trans>Shopping at</Trans>}
+        icon={<StoreIcon className="h-4 w-4 text-primary-500" />}
+        summary={
+          selectedStore ? (
+            <div className="flex items-center gap-2">
+              <span className="font-medium text-primary-600">{selectedStore.name}</span>
             </div>
-
-            <div className="flex items-center gap-2 flex-wrap">
-              <Dropdown placement="bottom-end">
-                <DropdownTrigger>
-                  <Button
-                    variant={selectedStore ? "flat" : "light"}
-                    color={selectedStore ? "primary" : "default"}
-                    className="h-8 px-3"
-                    endContent={<ChevronDownIcon className="h-3.5 w-3.5" />}
-                    size="sm"
-                  >
-                    {selectedStore ? (
-                      <span className="font-medium">{selectedStore.name}</span>
-                    ) : (
-                      <span className="text-gray-600 text-sm">
-                        <Trans>Select store</Trans>
-                      </span>
-                    )}
-                  </Button>
-                </DropdownTrigger>
-                <DropdownMenu
-                  aria-label="Store selection"
-                  className="min-w-[220px] max-h-[400px] overflow-y-auto shadow-lg"
-                  closeOnSelect
-                >
-                  {isLoading ? (
-                    <div className="flex items-center justify-center p-4">
-                      <Spinner size="sm" />
-                      <span className="ml-2 text-sm">
-                        <Trans>Loading...</Trans>
-                      </span>
-                    </div>
-                  ) : (
-                    <>
-                      <DropdownItem
-                        key="header"
-                        className="font-semibold text-gray-500 bg-gray-50"
-                        isReadOnly
-                        showDivider
-                      >
-                        <Trans>Select a store</Trans>
-                      </DropdownItem>
-
-                      {selectedStore && (
-                        <DropdownItem
-                          key="clear"
-                          className="text-danger font-medium"
-                          startContent={<StoreIcon className="h-4 w-4" />}
-                          onPress={() => setSelectedStore(null)}
-                        >
-                          <Trans>Clear selection</Trans>
-                        </DropdownItem>
-                      )}
-
-                      {stores.map((store) => (
-                        <DropdownItem
-                          key={store.id}
-                          startContent={<StoreIcon className="h-4 w-4" />}
-                          onPress={() => setSelectedStore(store)}
-                          className={
-                            selectedStore?.id === store.id ? "bg-primary-50 text-primary-600 font-medium" : ""
-                          }
-                        >
-                          <div>
-                            <div>{store.name}</div>
-                            <div className="text-xs text-gray-500 mt-0.5">{store.location}</div>
-                          </div>
-                        </DropdownItem>
-                      ))}
-
-                      <DropdownItem
-                        key="add-new"
-                        startContent={<PlusIcon className="h-4 w-4" />}
-                        className="text-primary-600 font-medium"
-                        showDivider
-                        onPress={handleAddNewStore}
-                      >
-                        <Trans>Add new store</Trans>
-                      </DropdownItem>
-                    </>
-                  )}
-                </DropdownMenu>
-              </Dropdown>
-
-              {selectedStore && (
-                <Chip
-                  color="primary"
-                  variant="flat"
-                  size="sm"
-                  className="h-6 max-w-[300px]"
-                  startContent={<MapPinIcon className="h-3 w-3 flex-shrink-0" />}
-                >
-                  <span className="text-xs truncate block max-w-full">{selectedStore.location}</span>
-                </Chip>
-              )}
-            </div>
-          </div>
+          ) : (
+            <span className="text-gray-400">
+              <Trans>No store selected</Trans>
+            </span>
+          )
+        }
+      >
+        <div className="flex items-center gap-2 flex-wrap flex-1 justify-end">
+          <Autocomplete
+            defaultItems={stores}
+            selectedKey={selectedStore?.id}
+            className="min-w-[250px] max-w-[350px]"
+            onSelectionChange={(key) => {
+              if (key === null) {
+                setSelectedStore(null);
+                return;
+              }
+              const store = stores.find((s) => s.id === key);
+              if (store) setSelectedStore(store);
+            }}
+            allowsCustomValue={false}
+            isLoading={isLoading}
+            startContent={<SearchIcon className="text-default-400 h-4 w-4" />}
+            endContent={
+              !selectedStore && (
+                <Button size="sm" color="primary" variant="light" onPress={handleAddNewStore} isIconOnly>
+                  <PlusIcon className="h-4 w-4" />
+                </Button>
+              )
+            }
+            inputProps={{
+              classNames: {
+                input: "text-sm",
+                inputWrapper: "h-9 shadow-sm bg-white"
+              }
+            }}
+            placeholder="Search stores..."
+          >
+            {(store) => (
+              <AutocompleteItem key={store.id} textValue={`${store.name} ${store.location}`}>
+                <div className="flex items-start gap-2 py-1">
+                  <div className="h-6 w-6 rounded bg-primary-50 flex items-center justify-center flex-shrink-0">
+                    <StoreIcon className="h-3.5 w-3.5 text-primary-600" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-sm">{store.name}</p>
+                    <p className="text-xs text-gray-500 flex items-center gap-1">
+                      <MapPinIcon className="h-3 w-3" />
+                      {store.location}
+                    </p>
+                  </div>
+                </div>
+              </AutocompleteItem>
+            )}
+          </Autocomplete>
         </div>
-      </div>
+        {selectedStore && (
+          <div className="mt-3 flex items-center gap-2">
+            <Chip
+              color="primary"
+              variant="flat"
+              size="sm"
+              className="h-6"
+              startContent={<MapPinIcon className="h-3 w-3" />}
+            >
+              {selectedStore.location}
+            </Chip>
+            <Button
+              size="sm"
+              variant="light"
+              color="danger"
+              className="h-6 min-w-0 px-2"
+              onPress={() => setSelectedStore(null)}
+            >
+              <Trans>Clear</Trans>
+            </Button>
+          </div>
+        )}
+      </CollapsibleCard>
 
       <AddStoreModal isOpen={isAddStoreModalOpen} onClose={() => setIsAddStoreModalOpen(false)} />
     </>

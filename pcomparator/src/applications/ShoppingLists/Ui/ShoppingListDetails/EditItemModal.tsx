@@ -47,8 +47,6 @@ export const EditItemModal = ({ isOpen, onClose, item, onUpdate }: EditItemModal
   const [isCompleted, setIsCompleted] = useState(item.isCompleted);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isCreatingProduct, setIsCreatingProduct] = useState(false);
-
-  // État pour la modal des détails du produit
   const [isProductDetailsModalOpen, setIsProductDetailsModalOpen] = useState(false);
 
   const handleSubmit = async () => {
@@ -193,8 +191,14 @@ export const EditItemModal = ({ isOpen, onClose, item, onUpdate }: EditItemModal
                   <label htmlFor="unit" className="text-sm font-medium">
                     <Trans>Unit</Trans>
                   </label>
-                  {/* @ts-ignore */}
-                  <Select className="w-full" selectedKeys={[unit]} onChange={(e) => setUnit(e.target.value)}>
+                  <Select
+                    className="w-full"
+                    id="unit"
+                    selectedKeys={[unit]}
+                    // @ts-ignore
+                    onChange={(e) => setUnit(e.target.value)}
+                    aria-label="Select unit"
+                  >
                     {Object.values(UnitSchema.Values).map((unitValue) => (
                       // @ts-ignore
                       <SelectItem key={unitValue} value={unitValue}>
@@ -288,11 +292,11 @@ export const EditItemModal = ({ isOpen, onClose, item, onUpdate }: EditItemModal
                   <Button
                     color="primary"
                     variant="flat"
-                    size="sm"
+                    size="md"
                     startContent={<PlusCircleIcon size={16} />}
                     endContent={price ? <span className="text-xs ml-1">{price}€</span> : null}
-                    className="w-full"
-                    onClick={openProductDetailsModal}
+                    fullWidth
+                    onPress={openProductDetailsModal}
                     isDisabled={!name || !price || !selectedStore}
                   >
                     <Trans>Create Product</Trans>

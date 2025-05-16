@@ -8,10 +8,15 @@ import { useQuickAdd } from "~/applications/ShoppingLists/Ui/ShoppingListDetails
 interface ShoppingListQuickAddBarProps {
   listId: string;
   className?: string;
+  onItemAdded?: (item: any) => void;
 }
 
-export const ShoppingListQuickAddBar = ({ listId, className = "" }: ShoppingListQuickAddBarProps) => {
-  const { handleKeyDown, inputRef, inputValue, setInputValue } = useQuickAdd();
+export const ShoppingListQuickAddBar = ({
+  listId,
+  className = "",
+  onItemAdded
+}: ShoppingListQuickAddBarProps) => {
+  const { handleKeyDown, inputRef, inputValue, setInputValue } = useQuickAdd(listId, onItemAdded);
 
   return (
     <div className={`relative ${className}`}>
@@ -45,7 +50,7 @@ export const ShoppingListQuickAddBar = ({ listId, className = "" }: ShoppingList
         <div className="flex gap-2 items-center">
           <Input
             ref={inputRef}
-            className="flex-1"
+            classNames={{ inputWrapper: "bg-white" }}
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={handleKeyDown}

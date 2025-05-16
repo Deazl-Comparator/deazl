@@ -8,7 +8,6 @@ import { type NextPageProps, withLinguiLayout } from "~/core/withLinguiLayout";
 import "react-toastify/dist/ReactToastify.css";
 import "react-spring-bottom-sheet/dist/style.css";
 import "./globals.css";
-import { InstallPWA } from "~/core/pwa/Install";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +21,7 @@ const RootLayout = ({ children, locale }: NextPageProps) => {
       <body className={inter.className}>
         <ApplicationKernel locale={locale}>
           <ApplicationLayout>
-            <InstallPWA />
+            {/* <InstallPWA /> */}
             {children}
           </ApplicationLayout>
         </ApplicationKernel>
