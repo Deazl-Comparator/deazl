@@ -1,9 +1,10 @@
 import { addToast } from "@heroui/react";
 import { Trans } from "@lingui/macro";
 import { type KeyboardEvent, useRef, useState } from "react";
+import { addItemToList } from "~/applications/ShoppingLists/Api/shoppingListActions";
 import { UnitSchema } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListItem";
 
-export const useQuickAdd = (onItemAdded?: (item: any) => void) => {
+export const useQuickAdd = (listId: string, onItemAdded?: (item: any) => void) => {
   const [inputValue, setInputValue] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -69,22 +70,21 @@ export const useQuickAdd = (onItemAdded?: (item: any) => void) => {
         price: parsedInput.price
       };
 
-      // @ts-ignore
       const newItem = await addItemToList(listId, itemData);
 
-      if (onItemAdded && newItem) {
-        onItemAdded(newItem);
-        let successMessage = `${parsedInput.name} (${parsedInput.quantity} ${parsedInput.unit})`;
+      // if (onItemAdded && newItem) {
+      // onItemAdded(newItem);
+      let successMessage = `${parsedInput.name} (${parsedInput.quantity} ${parsedInput.unit})`;
 
-        if (parsedInput.price) successMessage += ` - ${parsedInput.price.toFixed(2)}€`;
+      if (parsedInput.price) successMessage += ` - ${parsedInput.price.toFixed(2)}€`;
 
-        addToast({
-          title: <Trans>Item added</Trans>,
-          description: successMessage,
-          variant: "solid",
-          color: "success"
-        });
-      }
+      addToast({
+        title: <Trans>Item added</Trans>,
+        description: successMessage,
+        variant: "solid",
+        color: "success"
+      });
+      // }
 
       setInputValue("");
       inputRef.current?.focus();

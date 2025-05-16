@@ -54,9 +54,9 @@ export const ShoppingListFilter = ({
           color="primary"
           className="hidden sm:flex"
         >
-          <Tab key="all" title="All" />
           <Tab key="pending" title="To Buy" />
           <Tab key="completed" title="Completed" />
+          <Tab key="all" title="All" />
         </Tabs>
 
         <Dropdown>
@@ -103,9 +103,9 @@ export const ShoppingListFilter = ({
 
     <div className="flex sm:hidden mb-2">
       <Tabs selectedKey={filter} onSelectionChange={setFilter} size="sm" color="primary" fullWidth>
-        <Tab key="all" title="All" />
         <Tab key="pending" title="To Buy" />
         <Tab key="completed" title="Completed" />
+        <Tab key="all" title="All" />
       </Tabs>
     </div>
   </>

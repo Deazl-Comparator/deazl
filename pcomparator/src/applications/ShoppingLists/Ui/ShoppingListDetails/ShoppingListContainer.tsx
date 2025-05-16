@@ -15,8 +15,12 @@ export const ShoppingListContainer = ({ initialList }: ShoppingListContainerProp
 
   return (
     <div className="flex flex-col gap-6 animate-fadeIn">
-      <div className="flex flex-col gap-4">
-        <ShoppingListQuickAddBar onItemAdded={handleAddItem} />
+      <div className="flex items-center justify-between flex-wrap gap-2">
+        <ShoppingListQuickAddBar
+          listId={initialList.id}
+          onItemAdded={handleAddItem}
+          className="flex-1 min-w-[260px]"
+        />
       </div>
 
       <ShoppingListItemCard

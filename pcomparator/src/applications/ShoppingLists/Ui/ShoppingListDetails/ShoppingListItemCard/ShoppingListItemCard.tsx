@@ -3,6 +3,7 @@ import { FilterIcon, InfoIcon, ShoppingCartIcon } from "lucide-react";
 import type { ShoppingList } from "~/applications/ShoppingLists/Domain/Entities/ShoppingList";
 import type { ShoppingListItem } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListItem";
 import { EditItemModal } from "~/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal";
+import { StoreSelector } from "~/applications/ShoppingLists/Ui/ShoppingListDetails/StoreSelector";
 import { ShoppingListFilter } from "./ShoppingListFilter";
 import { ShoppingListItemList } from "./ShoppingListItemList";
 import { ShoppingListStats } from "./ShoppingListStats";
@@ -55,13 +56,23 @@ export const ShoppingListItemCard = ({
 
   return (
     <>
-      <Card className="shadow-sm border border-gray-200">
+      <Card className="shadow-sm border border-gray-100 hover:border-gray-200 transition-colors">
         <CardHeader className="pb-2">
           <div className="flex flex-col gap-2 w-full">
+            <StoreSelector />
+
             {list.description && (
-              <div className="flex items-center gap-2 text-sm text-gray-500 bg-gray-50 p-3 rounded-md">
-                <InfoIcon size={16} className="text-gray-400 flex-shrink-0" />
-                <p>{list.description}</p>
+              <div className="flex items-start gap-2 p-3 rounded-lg bg-blue-50 border border-blue-100">
+                <InfoIcon size={16} className="text-blue-500 flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-sm text-blue-700">{list.description}</p>
+                  {stats.total > 0 && (
+                    <p className="text-xs text-blue-600 mt-1">
+                      {stats.checked} of {stats.total} items completed
+                      {stats.hasPrices && ` • Total: ${stats.totalAmount.toFixed(2)}€`}
+                    </p>
+                  )}
+                </div>
               </div>
             )}
 
@@ -127,7 +138,17 @@ export const ShoppingListItemCard = ({
       </Card>
 
       {selectedItem && (
-        <EditItemModal isOpen={isOpen} onClose={onClose} item={selectedItem} onUpdate={handleUpdateItem} />
+        <EditItemModal
+          isOpen={isOpen}
+          onClose={() => {
+            onClose();
+            setTimeout(() => {
+              setSelectedItem(null);
+            }, 200);
+          }}
+          item={selectedItem}
+          onUpdate={handleUpdateItem}
+        />
       )}
     </>
   );

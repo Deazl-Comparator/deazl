@@ -91,12 +91,13 @@ msgstr "Both name and location are required"
 msgid "Brand"
 msgstr "Brand"
 
-#: src/applications/Prices/Ui/ListPrices/CardPrice/DeletePriceModal/DeletePriceModal.tsx
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/AddStoreModal.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ProductDetailsModal.tsx
 msgid "Cancel"
 msgstr "Cancel"
+
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/StoreSelector.tsx
+msgid "Clear"
+msgstr "Clear"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/StoreSelector.tsx
 msgid "Clear selection"
@@ -115,7 +116,6 @@ msgid "confirm"
 msgstr "confirm"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ProductDetailsModal.tsx
 msgid "Create Product"
 msgstr "Create Product"
 
@@ -190,14 +190,8 @@ msgstr "Enter your product name"
 msgid "Environment"
 msgstr "Environment"
 
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/AddStoreModal.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShareList.tsx
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListDetailsHeader.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/useQuickAdd.tsx
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/useShoppingListActions.tsx
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/useShoppingListActions.tsx
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/useShoppingListActions.tsx
 msgid "Error"
 msgstr "Error"
 
@@ -338,7 +332,6 @@ msgstr "Mark as completed"
 msgid "Maybe later"
 msgstr "Maybe later"
 
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/AddStoreModal.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
 msgid "Missing information"
@@ -367,6 +360,7 @@ msgstr "Next"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/StoreSelector.tsx
 msgid "No store selected"
 msgstr "No store selected"
 
@@ -549,6 +543,10 @@ msgstr "Settings"
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShareList.tsx
 msgid "Share link copied to clipboard"
 msgstr "Share link copied to clipboard"
+
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/StoreSelector.tsx
+msgid "Shopping at"
+msgstr "Shopping at"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/StoreSelector.tsx
 msgid "Shopping at:"

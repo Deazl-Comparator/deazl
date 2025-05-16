@@ -1,16 +1,16 @@
-import type { ShoppingList } from "~/applications/ShoppingLists/Domain/Entities/ShoppingList.entity";
+"use client";
+
+import {} from "~/app/[locale]/shopping-lists/[id]/action";
+import type { ShoppingList } from "~/applications/ShoppingLists/Domain/Entities/ShoppingList";
 import { ShoppingListContainer } from "~/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListContainer";
-import { ShoppingListDetailsHeader } from "~/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListDetailsHeader";
+import { StoreProvider } from "../Contexts/StoreContext";
 
-interface ShoppingListDetailsProps {
-  list: ShoppingList;
-}
-
-export const ShoppingListDetails = ({ list }: ShoppingListDetailsProps) => {
+export const ShoppingListDetails = ({ list }: { list: ShoppingList }) => {
   return (
-    <>
-      <ShoppingListDetailsHeader shoppingListId={list.id} listName={list.name} />
-      <ShoppingListContainer initialList={list.toObject()} />
-    </>
+    <StoreProvider>
+      <div className="space-y-4">
+        <ShoppingListContainer initialList={list} />
+      </div>
+    </StoreProvider>
   );
 };
