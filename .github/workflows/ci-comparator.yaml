@@ -1,6 +1,7 @@
 name: CI / Price comparator
 
 on: 
+  workflow_dispatch:
   pull_request:
     paths:
       - 'pcomparator/**'
@@ -23,15 +24,30 @@ jobs:
     
     steps:
       - uses: actions/checkout@v4
-      
+        with:
+          fetch-depth: 2
+          
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-          cache: 'yarn'
-          
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+
+      - name: Cache yarn dependencies
+        uses: actions/cache@v4
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
       - name: Install dependencies
-        run: yarn install
+        run: |
+          yarn install --frozen-lockfile
         
       - name: Cache turbo build setup
         uses: actions/cache@v4
@@ -58,6 +74,13 @@ jobs:
         env:
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: pcomparator/.next
+          retention-days: 1
         
   validate-prisma:
     name: Validate Prisma Schema
@@ -66,15 +89,30 @@ jobs:
     
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
       
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-          cache: 'yarn'
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+
+      - name: Cache yarn dependencies
+        uses: actions/cache@v4
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
           
       - name: Install dependencies
-        run: yarn install
+        run: |
+          yarn install --frozen-lockfile
         
       - name: Validate Prisma schema
         run: yarn prisma validate
@@ -89,15 +127,30 @@ jobs:
     
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
       
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-          cache: 'yarn'
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+
+      - name: Cache yarn dependencies
+        uses: actions/cache@v4
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
           
       - name: Install dependencies
-        run: yarn install
+        run: |
+          yarn install --frozen-lockfile
         
       - name: Build application
         run: yarn build
@@ -110,3 +163,10 @@ jobs:
         with:
           pattern: 'pcomparator/.next/**/*.js'
           strip-hash: true
+          
+      - name: Upload bundle size report
+        uses: actions/upload-artifact@v4
+        with:
+          name: bundle-size-report
+          path: pcomparator/.next/analyze
+          retention-days: 1
