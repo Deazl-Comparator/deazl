@@ -1,13 +1,13 @@
 import { Button, Checkbox } from "@heroui/react";
 import { CheckIcon, TrashIcon } from "lucide-react";
 import { useCallback } from "react";
-import type { ShoppingListItem } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListItem";
+import type { ShoppingListItemPayload } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
 
 interface ShoppingListItemListProps {
-  items: ShoppingListItem[];
+  items: ShoppingListItemPayload[];
   loading: Record<string, boolean>;
   handleToggleComplete: (itemId: string, isCompleted: boolean) => Promise<void>;
-  onOpenEditModal: (item: ShoppingListItem) => void;
+  onOpenEditModal: (item: ShoppingListItemPayload) => void;
   onDeleteItem: (itemId: string) => Promise<void>;
 }
 

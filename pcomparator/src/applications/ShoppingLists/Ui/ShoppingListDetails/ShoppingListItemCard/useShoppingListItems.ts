@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
-import type { ShoppingList } from "~/applications/ShoppingLists/Domain/Entities/ShoppingList";
-import type { ShoppingListItem } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListItem";
+import type { ShoppingListPayload } from "~/applications/ShoppingLists/Domain/Entities/ShoppingList.entity";
+import type { ShoppingListItemPayload } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
 
-export const useShoppingListItems = (list: ShoppingList) => {
-  const [items, setItems] = useState<ShoppingListItem[]>(list.items || []);
+export const useShoppingListItems = (list: ShoppingListPayload) => {
+  const [items, setItems] = useState<ShoppingListItemPayload[]>(list.items || []);
   const [loading, setLoading] = useState<Record<string, boolean>>({});
-  const [selectedItem, setSelectedItem] = useState<ShoppingListItem | null>(null);
+  const [selectedItem, setSelectedItem] = useState<ShoppingListItemPayload | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFilter] = useState<"all" | "pending" | "completed">("pending");
   const [sortBy, setSortBy] = useState<"name" | "price" | "added" | "unit">("added");

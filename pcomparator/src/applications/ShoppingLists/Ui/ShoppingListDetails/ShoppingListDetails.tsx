@@ -1,15 +1,17 @@
 "use client";
 
-import {} from "~/app/[locale]/shopping-lists/[id]/action";
-import type { ShoppingList } from "~/applications/ShoppingLists/Domain/Entities/ShoppingList";
+import type { User } from "~/applications/Authentication/Domain/User";
+import type { ShoppingListPayload } from "~/applications/ShoppingLists/Domain/Entities/ShoppingList.entity";
 import { ShoppingListContainer } from "~/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListContainer";
+import { ShoppingListDetailsHeader } from "~/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListDetailsHeader";
 import { StoreProvider } from "../Contexts/StoreContext";
 
-export const ShoppingListDetails = ({ list }: { list: ShoppingList }) => {
+export const ShoppingListDetails = ({ list, user }: { list: ShoppingListPayload; user: User }) => {
   return (
     <StoreProvider>
       <div className="space-y-4">
-        <ShoppingListContainer initialList={list} />
+        <ShoppingListDetailsHeader listName={list.name} shoppingListId={list.id} />
+        <ShoppingListContainer initialList={list} user={{ id: user.id }} />
       </div>
     </StoreProvider>
   );

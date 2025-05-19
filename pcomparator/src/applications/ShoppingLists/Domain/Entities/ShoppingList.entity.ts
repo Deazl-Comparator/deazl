@@ -1,7 +1,10 @@
+import type { z } from "zod";
 import { DomainError } from "~/applications/Shared/Domain/Core/DomainError";
 import { Entity } from "~/applications/Shared/Domain/Core/Entity";
 import { UniqueEntityID } from "~/applications/Shared/Domain/Core/UniqueEntityId";
-import type { ShoppingList as ShoppingListT } from "./ShoppingList";
+import type { ShoppingListCollaboratorPayload } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListCollaborator.entity";
+import type { ShoppingListSchema } from "~/applications/ShoppingLists/Domain/Schemas/ShoppingList.schema";
+import type { UserRoleEnum } from "~/applications/ShoppingLists/Domain/Schemas/UserRole.schema";
 import type { ShoppingListItemEntity } from "./ShoppingListItem.entity";
 
 export class ListNameTooShortError extends DomainError {
@@ -10,11 +13,25 @@ export class ListNameTooShortError extends DomainError {
   }
 }
 
+export type UserRole = z.infer<typeof UserRoleEnum>;
+
+export type ShoppingListPayload = z.infer<typeof ShoppingListSchema> & {
+  totalItems: number;
+  completedItems: number;
+  progressPercentage: number;
+  totalPrice: number;
+  totalPendingPrice: number;
+  totalCompletedPrice: number;
+  userRole?: UserRole;
+};
+
 interface ShoppingListProps {
   name: string;
   description?: string;
   userId: string;
   items: ShoppingListItemEntity[];
+  collaborators?: ShoppingListCollaboratorPayload[];
+  isPublic: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -30,6 +47,8 @@ export class ShoppingList extends Entity<ShoppingListProps> {
       description?: string;
       userId: string;
       items?: ShoppingListItemEntity[];
+      collaborators?: ShoppingListCollaboratorPayload[];
+      isPublic?: boolean;
     },
     id?: string
   ): ShoppingList {
@@ -41,6 +60,8 @@ export class ShoppingList extends Entity<ShoppingListProps> {
         description: props.description,
         userId: props.userId,
         items: props.items || [],
+        collaborators: props.collaborators || [],
+        isPublic: props.isPublic ?? false,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -66,6 +87,10 @@ export class ShoppingList extends Entity<ShoppingListProps> {
     return this.props.userId;
   }
 
+  get collaborators(): ShoppingListCollaboratorPayload[] | undefined {
+    return this.props.collaborators;
+  }
+
   get items(): ShoppingListItemEntity[] {
     return this.props.items;
   }
@@ -76,6 +101,10 @@ export class ShoppingList extends Entity<ShoppingListProps> {
 
   get updatedAt(): Date | undefined {
     return this.props.updatedAt;
+  }
+
+  get isPublic(): boolean {
+    return this.props.isPublic;
   }
 
   public updateName(name: string): void {
@@ -150,13 +179,15 @@ export class ShoppingList extends Entity<ShoppingListProps> {
     return this.props.items.length === 0;
   }
 
-  public toObject(): ShoppingListT {
+  public toObject(): ShoppingListPayload {
     return {
       id: this.id,
       name: this.name,
       description: this.description,
       userId: this.userId,
+      isPublic: this.isPublic,
       items: this.items.map((item) => item.toObject()),
+      collaborators: this.collaborators,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       totalItems: this.totalItems,

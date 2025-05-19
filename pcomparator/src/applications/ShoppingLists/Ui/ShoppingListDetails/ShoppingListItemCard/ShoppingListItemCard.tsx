@@ -1,7 +1,7 @@
 import { Button, Card, CardBody, CardHeader, useDisclosure } from "@heroui/react";
 import { FilterIcon, InfoIcon, ShoppingCartIcon } from "lucide-react";
-import type { ShoppingList } from "~/applications/ShoppingLists/Domain/Entities/ShoppingList";
-import type { ShoppingListItem } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListItem";
+import type { ShoppingListPayload } from "~/applications/ShoppingLists/Domain/Entities/ShoppingList.entity";
+import type { ShoppingListItemPayload } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
 import { EditItemModal } from "~/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal";
 import { StoreSelector } from "~/applications/ShoppingLists/Ui/ShoppingListDetails/StoreSelector";
 import { ShoppingListFilter } from "./ShoppingListFilter";
@@ -15,10 +15,10 @@ export const ShoppingListItemCard = ({
   onDeleteItem,
   onUpdateItem
 }: {
-  list: ShoppingList;
+  list: ShoppingListPayload;
   onToggleItem: (itemId: string, isCompleted: boolean) => Promise<void>;
   onDeleteItem: (itemId: string) => Promise<void>;
-  onUpdateItem: (itemId: string, data: Partial<ShoppingListItem>) => Promise<void>;
+  onUpdateItem: (itemId: string, data: Partial<ShoppingListItemPayload>) => Promise<void>;
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
@@ -38,12 +38,12 @@ export const ShoppingListItemCard = ({
     toggleSortDirection
   } = useShoppingListItems(list);
 
-  const handleOpenEditModal = (item: ShoppingListItem) => {
+  const handleOpenEditModal = (item: ShoppingListItemPayload) => {
     setSelectedItem(item);
     onOpen();
   };
 
-  const handleUpdateItem = async (data: Partial<ShoppingListItem>) => {
+  const handleUpdateItem = async (data: Partial<ShoppingListItemPayload>) => {
     if (!selectedItem) return;
 
     await onUpdateItem(selectedItem.id, data);

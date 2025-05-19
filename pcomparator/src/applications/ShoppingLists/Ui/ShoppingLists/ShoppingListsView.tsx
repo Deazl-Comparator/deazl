@@ -6,12 +6,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArchiveIcon, ListPlusIcon, ShoppingCartIcon } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import type { ShoppingList } from "~/applications/ShoppingLists/Domain/Entities/ShoppingList";
+import type { ShoppingListPayload } from "~/applications/ShoppingLists/Domain/Entities/ShoppingList.entity";
 import { EmptyState, type EmptyStateProps } from "~/applications/ShoppingLists/Ui/ShoppingLists/EmptyState";
 import { ShoppingListCard } from "~/applications/ShoppingLists/Ui/ShoppingLists/ShoppingListCard";
 
 export interface ShoppingListViewProps {
-  lists: ShoppingList[];
+  lists: ShoppingListPayload[];
 }
 
 export const ShoppingListsView = ({ lists }: ShoppingListViewProps) => {
@@ -96,21 +96,20 @@ export const ShoppingListsView = ({ lists }: ShoppingListViewProps) => {
                 delay: index * 0.05
               }}
             >
-              <ShoppingListCard list={list} />
+              <ShoppingListCard list={list} userRole={list.userRole} />
             </motion.div>
           ))}
         </AnimatePresence>
 
-        {(filter === "active" ? activeLists : completedLists).length === 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.2 }}
-            // @ts-ignore
-            className="sm:col-span-2"
-          >
-            <EmptyState type={filter} />
-          </motion.div>
+        {filter === "active" && activeLists.length === 0 && (
+          <div className="col-span-2">
+            <EmptyState type="active" />
+          </div>
+        )}
+        {filter === "completed" && completedLists.length === 0 && (
+          <div className="col-span-2">
+            <EmptyState type="completed" />
+          </div>
         )}
       </div>
     </div>

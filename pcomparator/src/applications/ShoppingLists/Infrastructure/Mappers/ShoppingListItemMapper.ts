@@ -1,4 +1,4 @@
-import { ShoppingListItemEntity } from "../../Domain/Entities/ShoppingListItem.entity";
+import { ShoppingListItemEntity } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
 
 export class ShoppingListItemMapper {
   static toDomain(raw: any): ShoppingListItemEntity {
