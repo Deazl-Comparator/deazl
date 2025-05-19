@@ -1,6 +1,7 @@
 name: CI / Price comparator
 
 on: 
+  workflow_dispatch:
   pull_request:
     paths:
       - 'pcomparator/**'
