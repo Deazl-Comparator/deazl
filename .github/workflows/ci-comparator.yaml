@@ -29,7 +29,8 @@ jobs:
         with:
           node-version: 'lts/*'
           cache: 'yarn'
-          
+          cache-dependency-path: 'pcomparator/yarn.lock'
+
       - name: Install dependencies
         run: yarn install
         
@@ -72,6 +73,7 @@ jobs:
         with:
           node-version: 'lts/*'
           cache: 'yarn'
+          cache-dependency-path: 'pcomparator/yarn.lock'
           
       - name: Install dependencies
         run: yarn install
@@ -95,6 +97,7 @@ jobs:
         with:
           node-version: 'lts/*'
           cache: 'yarn'
+          cache-dependency-path: 'pcomparator/yarn.lock'
           
       - name: Install dependencies
         run: yarn install
