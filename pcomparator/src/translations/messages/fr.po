@@ -46,10 +46,6 @@ msgstr "Ajouter un nouveau prix en scannant le code-barre"
 msgid "Add new price by typing barcode"
 msgstr "Ajouter un nouveau prix en saisissant le code-barre"
 
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/StoreSelector.tsx
-msgid "Add new store"
-msgstr "Ajouter un nouveau magasin"
-
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/AddStoreModal.tsx
 msgid "Add New Store"
 msgstr "Ajouter un nouveau magasin"
@@ -96,16 +92,13 @@ msgid "Brand"
 msgstr "Marque"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ProductDetailsModal.tsx
 msgid "Cancel"
 msgstr "Annuler"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/StoreSelector.tsx
 msgid "Clear"
 msgstr "Effacer"
-
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/StoreSelector.tsx
-msgid "Clear selection"
-msgstr "Effacer la sélection"
 
 #: src/applications/Profile/Ui/Settings/Avatar.tsx
 msgid "Click on the avatar to upload a custom one from your files."
@@ -128,6 +121,7 @@ msgid "confirm"
 msgstr "Confirmer"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ProductDetailsModal.tsx
 msgid "Create Product"
 msgstr "Créer un produit"
 
@@ -155,6 +149,14 @@ msgstr "Sombre"
 #: src/applications/Authentication/Ui/Signin/SignButton/ProfileButton.tsx
 msgid "Dashboard"
 msgstr "Dashboard"
+
+#: src/app/[locale]/page.tsx
+msgid "Deazl Compare prices of many products"
+msgstr ""
+
+#: src/app/[locale]/page.tsx
+msgid "Deazl is the price comparator for foods, cosmetic and more"
+msgstr ""
 
 #: src/applications/Profile/Ui/Settings/DeleteAccount.tsx
 msgid "Delete Account"
@@ -207,7 +209,13 @@ msgid "Environment"
 msgstr "Environnement"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShareList.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShoppingListShare.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShoppingListShare.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/useQuickAdd.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/useShoppingListActions.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/useShoppingListActions.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/useShoppingListActions.tsx
 msgid "Error"
 msgstr "Erreur"
 
@@ -227,11 +235,16 @@ msgstr "Échec de la création du magasin"
 msgid "Failed to delete shopping list"
 msgstr "Échec de la suppression de la liste de courses"
 
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShoppingListShare.tsx
+msgid "Failed to load collaborators"
+msgstr "Échec du chargement des collaborateurs"
+
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/useShoppingListActions.tsx
 msgid "Failed to remove item"
 msgstr "Échec de la suppression de l'article"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShareList.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShoppingListShare.tsx
 msgid "Failed to send invitation"
 msgstr "Échec de l'envoi de l'invitation"
 
@@ -285,6 +298,10 @@ msgstr "Numéro de téléphone invalide."
 msgid "Invitation sent"
 msgstr "Invitation envoyée"
 
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShoppingListShare.tsx
+msgid "Invitation sent successfully"
+msgstr "Invitation envoyée avec succès"
+
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/useQuickAdd.tsx
 msgid "Item added"
 msgstr "Article ajouté"
@@ -321,6 +338,7 @@ msgstr "Article mis à jour"
 msgid "Light"
 msgstr "Clair"
 
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/QrCodeTab.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShareList.tsx
 msgid "Link copied"
 msgstr "Lien copié"
@@ -328,10 +346,6 @@ msgstr "Lien copié"
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListDetailsHeader.tsx
 msgid "List deleted"
 msgstr "Liste supprimée"
-
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/StoreSelector.tsx
-msgid "Loading..."
-msgstr "Chargement..."
 
 #: src/applications/Prices/Ui/NewPrice/NewPiceModal.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/AddStoreModal.tsx
@@ -447,10 +461,6 @@ msgstr "Précédent"
 msgid "Price"
 msgstr "Prix"
 
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
-msgid "Price (optional)"
-msgstr "Prix (facultatif)"
-
 #: src/core/Tabbar.tsx
 msgid "Price added"
 msgstr "Prix ajouté"
@@ -501,8 +511,8 @@ msgid "Product Not Found"
 msgstr "Produit non trouvé"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/QrCodeTab.tsx
-msgid "QR Code copied"
-msgstr "QR Code copié"
+msgid "QR Code downloaded"
+msgstr "QR Code téléchargé"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
 msgid "Quantity"
@@ -511,6 +521,14 @@ msgstr "Quantité"
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListQuickAddBar.tsx
 msgid "Quick Add"
 msgstr "Ajout rapide"
+
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ProductDetailsModal.tsx
+msgid "Reference Price"
+msgstr "Prix de référence"
+
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ProductDetailsModal.tsx
+msgid "Reference Unit"
+msgstr "Unité de référence"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/useShoppingListActions.tsx
 msgid "Removed {0}"
@@ -547,14 +565,6 @@ msgstr "Scanner code-barre"
 msgid "Search"
 msgstr "Recherche"
 
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/StoreSelector.tsx
-msgid "Select a store"
-msgstr "Sélectionnez un magasin"
-
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/StoreSelector.tsx
-msgid "Select store"
-msgstr "Sélectionner un magasin"
-
 #: src/components/Inputs/File/File.spec.tsx
 #: src/components/Inputs/File/File.tsx
 msgid "Select your file"
@@ -571,10 +581,6 @@ msgstr "Lien de partage copié dans le presse-papiers"
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/StoreSelector.tsx
 msgid "Shopping at"
 msgstr "Magasin à"
-
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/StoreSelector.tsx
-msgid "Shopping at:"
-msgstr "Shopping à :"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListDetailsHeader.tsx
 msgid "Shopping list deleted successfully"
@@ -600,6 +606,10 @@ msgstr "Magasin créé"
 msgid "Store Name"
 msgstr "Nom du magasin"
 
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShoppingListShare.tsx
+msgid "Success"
+msgstr "Succès"
+
 #: src/components/ThemeSwitcher/ThemeSwitcher.tsx
 msgid "System"
 msgstr "Système"
@@ -611,6 +621,10 @@ msgstr "Prendre un photo"
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/QrCodeTab.tsx
 msgid "The link has been copied to clipboard"
 msgstr "Le lien a été copié dans le presse-papiers"
+
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/QrCodeTab.tsx
+msgid "The QR code has been downloaded"
+msgstr "Le QR code a été téléchargé"
 
 #: src/applications/Prices/Ui/ListPrices/CardPrice/DeletePriceModal/DeletePriceModal.tsx
 msgid "This action <0>CANNOT be undone</0>. Please be certain about your decision."
@@ -632,6 +646,10 @@ msgstr "Cela créera un nouveau produit dans votre base de données avec le nom,
 msgid "Total Items"
 msgstr "Total des articles"
 
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
+msgid "Total Price"
+msgstr "Prix total"
+
 #: src/applications/Prices/Ui/ListPrices/CardPrice/DeletePriceModal/DeletePriceModal.tsx
 msgid "Type \"confirm\" to confirm"
 msgstr "Saisissez \"confirmer\" pour confirmer"
@@ -648,6 +666,10 @@ msgstr "Unité"
 #: src/components/Inputs/File/useFileHandler.ts
 msgid "You can only add a maximum of {maxFile} files"
 msgstr "Vous ne pouvez ajouter que {maxFile} fichiers maximum"
+
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListContainer.tsx
+msgid "You have view-only access to this list. Contact the owner to make changes."
+msgstr "Vous avez un accès en lecture seule à cette liste. Contactez le propriétaire pour apporter des modifications."
 
 #: src/components/Inputs/File/useFileHandler.ts
 #: src/components/Inputs/File/useFileHandler.ts
@@ -677,7 +699,3 @@ msgstr "Votre nouveau magasin a été ajouté et sélectionné"
 #: src/components/Inputs/Phone/Phone.tsx
 msgid "Your phone number is not valid"
 msgstr "Votre numéro de téléphone n'est pas valide."
-
-#: src/app/[locale]/shopping-lists/page.tsx
-msgid "Your Shopping Lists"
-msgstr "Vos listes de courses"

@@ -43,7 +43,10 @@ export const createShoppingList = async (data: {
     return list.toObject();
   } catch (error) {
     console.error("Error creating shopping list", error);
-    throw new Error("Failed to create shopping list");
+    if (error instanceof Error && error.message === "User not found")
+      throw new Error("User not found", { cause: "FormError" });
+
+    throw new Error("Failed to create shopping list", { cause: "FormError" });
   }
 };
 
@@ -62,27 +65,10 @@ export const addItemToList = async (
     return item.toObject();
   } catch (error) {
     console.error("Error adding item to list", error);
-    throw new Error("Failed to add item to list");
-  }
-};
-
-export const updateListItem = async (
-  itemId: string,
-  data: {
-    customName?: string | null;
-    quantity?: number;
-    unit?: string;
-    isCompleted?: boolean;
-    price?: number | null;
-    notes?: string | null;
-  }
-) => {
-  try {
-    const item = await shoppingListService.updateShoppingListItem(itemId, data);
-    return item.toObject();
-  } catch (error) {
-    console.error("Error updating shopping list item", error);
-    throw new Error("Failed to update shopping list item");
+    if (error instanceof Error) {
+      if (error.message === "Shopping list not found") throw new Error(error.message, { cause: "FormError" });
+    }
+    throw new Error("Failed to add item to list", { cause: "FormError" });
   }
 };
 
@@ -92,7 +78,10 @@ export const deleteShoppingList = async (id: string) => {
     return { success: true };
   } catch (error) {
     console.error("Error deleting shopping list", error);
-    throw new Error("Failed to delete shopping list");
+    if (error instanceof Error) {
+      if (error.message === "Shopping list not found") throw new Error(error.message, { cause: "FormError" });
+    }
+    throw new Error("Failed to delete shopping list", { cause: "FormError" });
   }
 };
 
@@ -102,6 +91,14 @@ export const removeItemFromList = async (itemId: string) => {
     return { success: true };
   } catch (error) {
     console.error("Error removing item from list", error);
-    throw new Error("Failed to remove item from list");
+    if (error instanceof Error) {
+      if (
+        error.message === "Item not found" ||
+        error.message === "Shopping list not found" ||
+        error.message === "You need edit rights to modify this list"
+      )
+        throw new Error(error.message, { cause: "FormError" });
+    }
+    throw new Error("Failed to remove item from list", { cause: "FormError" });
   }
 };

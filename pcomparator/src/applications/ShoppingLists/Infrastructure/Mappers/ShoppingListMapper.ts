@@ -20,12 +20,24 @@ export class ShoppingListMapper {
         )
       ) || [];
 
+    const collaborators =
+      raw.collaborators?.map((c: any) => ({
+        id: c.id,
+        listId: c.listId,
+        userId: c.userId,
+        role: c.role,
+        createdAt: c.createdAt,
+        updatedAt: c.updatedAt,
+        user: c.user
+      })) || [];
+
     return ShoppingList.create(
       {
         name: raw.name,
         description: raw.description,
         userId: raw.userId,
-        items: itemEntities
+        items: itemEntities,
+        collaborators: collaborators
       },
       raw.id
     );

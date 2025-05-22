@@ -2,8 +2,6 @@ import { z } from "zod";
 
 export const UnitSchema = z.enum(["unit", "kg", "g", "l", "ml", "piece"]);
 
-export type Unit = z.infer<typeof UnitSchema>;
-
 export const ShoppingListItemSchema = z.object({
   id: z.string().uuid(),
   shoppingListId: z.string().uuid(),
@@ -12,10 +10,9 @@ export const ShoppingListItemSchema = z.object({
   unit: UnitSchema.default("unit"),
   isCompleted: z.boolean().default(false),
   customName: z.string().nullable().optional(),
-  price: z.number().positive().optional(), // Champ pour stocker le prix d'un article
+  price: z.number().positive().optional(),
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
-  // Add product relationship information
   product: z
     .object({
       id: z.string().uuid(),
@@ -26,12 +23,3 @@ export const ShoppingListItemSchema = z.object({
     .nullable()
     .optional()
 });
-
-export const CreateShoppingListItemSchema = ShoppingListItemSchema.omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true
-});
-
-export type ShoppingListItem = z.infer<typeof ShoppingListItemSchema>;
-export type CreateShoppingListItem = z.infer<typeof CreateShoppingListItemSchema>;

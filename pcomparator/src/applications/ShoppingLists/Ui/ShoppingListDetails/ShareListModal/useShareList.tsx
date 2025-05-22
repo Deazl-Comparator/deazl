@@ -37,8 +37,6 @@ export const useShareList = (shareLink: string) => {
     try {
       setIsInviting(true);
 
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
       setCollaborators([
         ...collaborators,
         {

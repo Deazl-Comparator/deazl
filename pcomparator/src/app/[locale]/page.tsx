@@ -21,12 +21,12 @@ const HomePage = async () => {
         <div className="flex flex-col items-center max-w-2xl">
           <h1 className="text-center font-display text-5xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-7xl md:leading-[5rem]">
             <Balancer>
-              <Trans>PComparator Compare prices of many products</Trans>
+              <Trans>Deazl Compare prices of many products</Trans>
             </Balancer>
           </h1>
           <p className="mt-6 text-center text-gray-500 dark:text-gray-300 md:text-xl">
             <Balancer>
-              <Trans>PComparator is the price comparator for foods, cosmetic and more</Trans>
+              <Trans>Deazl is the price comparator for foods, cosmetic and more</Trans>
             </Balancer>
           </p>
         </div>

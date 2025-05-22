@@ -1,14 +1,16 @@
 import { addToast } from "@heroui/react";
 import { Trans } from "@lingui/macro";
 import { useCallback, useState } from "react";
-import { deleteItem, toggleItemComplete, updateItem } from "~/app/[locale]/shopping-lists/[id]/action";
-import type { ShoppingList } from "~/applications/ShoppingLists/Domain/Entities/ShoppingList";
-import type { ShoppingListItem } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListItem";
+import { deleteItem } from "~/app/[locale]/shopping-lists/[id]/action";
+import { toggleItemComplete } from "~/applications/ShoppingLists/Api/toggleItemComplete.api";
+import { updateShoppingListItem } from "~/applications/ShoppingLists/Api/updateShoppingListItem";
+import type { ShoppingListPayload } from "~/applications/ShoppingLists/Domain/Entities/ShoppingList.entity";
+import type { ShoppingListItemPayload } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
 
-export const useShoppingListActions = (initialList: ShoppingList) => {
-  const [items, setItems] = useState<ShoppingListItem[]>(initialList.items || []);
+export const useShoppingListActions = (initialList: ShoppingListPayload) => {
+  const [items, setItems] = useState<ShoppingListItemPayload[]>(initialList.items || []);
 
-  const handleAddItem = (newItem: ShoppingListItem) => {
+  const handleAddItem = (newItem: ShoppingListItemPayload) => {
     setItems((prevItems) => [...prevItems, newItem]);
   };
 
@@ -41,8 +43,9 @@ export const useShoppingListActions = (initialList: ShoppingList) => {
     }
   }, []);
 
-  const handleUpdateItem = useCallback(async (itemId: string, data: Partial<ShoppingListItem>) => {
+  const handleUpdateItem = useCallback(async (itemId: string, data: Partial<ShoppingListItemPayload>) => {
     try {
+      console.log("Updating item with ID:", itemId, "with data:", data);
       const currentItem = items.find((item) => item.id === itemId);
       if (!currentItem) return;
 
@@ -50,7 +53,7 @@ export const useShoppingListActions = (initialList: ShoppingList) => {
         currentItems.map((item) => (item.id === itemId ? { ...item, ...data } : item))
       );
 
-      await updateItem(itemId, data);
+      await updateShoppingListItem(itemId, data);
 
       addToast({
         title: <Trans>Item updated</Trans>,

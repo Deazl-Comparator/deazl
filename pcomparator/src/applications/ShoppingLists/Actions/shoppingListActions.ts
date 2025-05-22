@@ -1,13 +1,13 @@
 "use server";
 
+import type { CreateShoppingListUseCase } from "~/applications/ShoppingLists/Application/UseCases/CreateShoppingList.usecase";
+import { CollaboratorRole } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListCollaborator.entity";
 import { auth } from "~/libraries/nextauth/authConfig";
-import type { CreateShoppingList } from "../Domain/Entities/ShoppingList";
-import type { CreateShoppingListItem } from "../Domain/Entities/ShoppingListItem";
 import { PrismaShoppingListRepository } from "../Infrastructure/Repositories/PrismaShoppingListRepository";
 
 const repository = new PrismaShoppingListRepository();
 
-export async function createShoppingList(data: Omit<CreateShoppingList, "userId">) {
+export async function createShoppingList(data: Omit<any, "userId">) {
   const session = await auth();
 
   if (!session?.user?.id) {
@@ -39,15 +39,18 @@ export async function getShoppingList(id: string) {
   }
 
   const list = await repository.findById(id);
+  if (!list) return null;
 
-  if (list?.userId !== session.user.id) {
-    throw new Error("Unauthorized");
+  if (list.userId !== session.user.id) {
+    const collaborators = await repository.getCollaborators(id);
+
+    if (!collaborators.some((c) => c.userId === session.user.id)) throw new Error("Unauthorized");
   }
 
   return list;
 }
 
-export async function updateShoppingList(id: string, data: Partial<CreateShoppingList>) {
+export async function updateShoppingList(id: string, data: Partial<CreateShoppingListUseCase>) {
   const session = await auth();
 
   if (!session?.user?.id) {
@@ -55,9 +58,14 @@ export async function updateShoppingList(id: string, data: Partial<CreateShoppin
   }
 
   const list = await repository.findById(id);
+  if (!list) throw new Error("List not found");
 
-  if (!list || list.userId !== session.user.id) {
-    throw new Error("Unauthorized");
+  if (list.userId !== session.user.id) {
+    const collaborators = await repository.getCollaborators(id);
+    const userRole = collaborators.find((c) => c.userId === session.user.id)?.role;
+
+    if (!userRole || userRole === CollaboratorRole.VIEWER)
+      throw new Error("You need edit rights to modify this list");
   }
 
   // @ts-ignore
@@ -81,7 +89,7 @@ export async function deleteShoppingList(id: string) {
   return { success: true };
 }
 
-export async function addItemToList(listId: string, item: Omit<CreateShoppingListItem, "shoppingListId">) {
+export async function addItemToList(listId: string, item: Omit<any, "shoppingListId">) {
   const session = await auth();
 
   if (!session?.user?.id) {
@@ -90,25 +98,43 @@ export async function addItemToList(listId: string, item: Omit<CreateShoppingLis
 
   const list = await repository.findById(listId);
 
-  if (!list || list.userId !== session.user.id) {
-    throw new Error("Unauthorized");
+  if (!list) throw new Error("List not found");
+
+  if (list.userId !== session.user.id) {
+    const collaborators = await repository.getCollaborators(listId);
+    const userRole = collaborators.find((c) => c.userId === session.user.id)?.role;
+
+    if (!userRole || userRole === CollaboratorRole.VIEWER)
+      throw new Error("You need edit rights to modify this list");
   }
 
   // @ts-ignore
   const newItem = await repository.addItem(listId, { ...item, shoppingListId: listId });
 
-  // Retourner le nouvel élément ajouté pour permettre la mise à jour UI côté client
   return newItem.toObject();
 }
 
-export async function updateListItem(itemId: string, data: Partial<CreateShoppingListItem>) {
+export async function updateListItem(itemId: string, data: Partial<any>) {
   const session = await auth();
 
   if (!session?.user?.id) {
     throw new Error("User not authenticated");
   }
 
-  // Note: For a real app, would need to check if user owns the list containing this item
+  const item = await repository.findItemById(itemId);
+  if (!item) throw new Error("Item not found");
+
+  const list = await repository.findById(item.shoppingListId);
+  if (!list) throw new Error("List not found");
+
+  if (list.userId !== session.user.id) {
+    const collaborators = await repository.getCollaborators(list.id);
+    const userRole = collaborators.find((c) => c.userId === session.user.id)?.role;
+
+    if (!userRole || userRole === CollaboratorRole.VIEWER)
+      throw new Error("You need edit rights to modify this list");
+  }
+
   // @ts-ignore
   return repository.updateItem({ ...data, id: itemId });
 }
@@ -120,7 +146,20 @@ export async function removeItemFromList(itemId: string) {
     throw new Error("User not authenticated");
   }
 
-  // Note: For a real app, would need to check if user owns the list containing this item
+  const item = await repository.findItemById(itemId);
+  if (!item) throw new Error("Item not found");
+
+  const list = await repository.findById(item.shoppingListId);
+  if (!list) throw new Error("List not found");
+
+  if (list.userId !== session.user.id) {
+    const collaborators = await repository.getCollaborators(list.id);
+    const userRole = collaborators.find((c) => c.userId === session.user.id)?.role;
+
+    if (!userRole || userRole === CollaboratorRole.VIEWER)
+      throw new Error("You need edit rights to modify this list");
+  }
+
   await repository.removeItem(itemId);
   return { success: true };
 }

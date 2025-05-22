@@ -25,16 +25,16 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { createProductFromItem } from "~/applications/ShoppingLists/Api/createProductFromItem";
-import type { ShoppingListItem } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListItem";
-import { UnitSchema } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListItem";
+import type { ShoppingListItemPayload } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
+import { UnitType } from "~/applications/ShoppingLists/Domain/ValueObjects/Unit";
 import { useStore } from "../Contexts/StoreContext";
 import { ProductDetailsModal } from "./ProductDetailsModal";
 
 interface EditItemModalProps {
   isOpen: boolean;
   onClose: () => void;
-  item: ShoppingListItem;
-  onUpdate: (data: Partial<ShoppingListItem>) => Promise<void>;
+  item: ShoppingListItemPayload;
+  onUpdate: (data: Partial<ShoppingListItemPayload>) => Promise<void>;
 }
 
 export const EditItemModal = ({ isOpen, onClose, item, onUpdate }: EditItemModalProps) => {
@@ -51,6 +51,7 @@ export const EditItemModal = ({ isOpen, onClose, item, onUpdate }: EditItemModal
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
+    console.log("Submitting item update");
     try {
       await onUpdate({
         customName: name,
@@ -66,7 +67,11 @@ export const EditItemModal = ({ isOpen, onClose, item, onUpdate }: EditItemModal
     }
   };
 
-  const handleCreateProduct = async (brandName: string) => {
+  const handleCreateProduct = async ({
+    brandName,
+    referencePrice,
+    referenceUnit
+  }: { brandName: string; referencePrice: number; referenceUnit: string }) => {
     if (!name || !price) {
       addToast({
         title: <Trans>Missing information</Trans>,
@@ -89,15 +94,16 @@ export const EditItemModal = ({ isOpen, onClose, item, onUpdate }: EditItemModal
 
     setIsCreatingProduct(true);
     try {
-      // @ts-ignore
       await createProductFromItem({
         name,
-        price: Number.parseFloat(price),
+        price: Number.parseFloat(price || "0"),
         unit,
         quantity: Number.parseFloat(quantity),
-        brandName: brandName,
+        brandName,
         storeName: selectedStore.name,
-        storeLocation: selectedStore.location
+        storeLocation: selectedStore.location,
+        referencePrice,
+        referenceUnit
       });
 
       addToast({
@@ -195,13 +201,11 @@ export const EditItemModal = ({ isOpen, onClose, item, onUpdate }: EditItemModal
                     className="w-full"
                     id="unit"
                     selectedKeys={[unit]}
-                    // @ts-ignore
-                    onChange={(e) => setUnit(e.target.value)}
+                    onChange={(e: { target: { value: string } }) => setUnit(e.target.value as UnitType)}
                     aria-label="Select unit"
                   >
-                    {Object.values(UnitSchema.Values).map((unitValue) => (
-                      // @ts-ignore
-                      <SelectItem key={unitValue} value={unitValue}>
+                    {Object.values(UnitType).map((unitValue) => (
+                      <SelectItem key={unitValue} textValue={unitValue}>
                         {unitValue}
                       </SelectItem>
                     ))}
@@ -212,7 +216,7 @@ export const EditItemModal = ({ isOpen, onClose, item, onUpdate }: EditItemModal
               <div className="space-y-2">
                 <label htmlFor="price" className="text-sm font-medium flex items-center gap-1">
                   <CoinsIcon size={16} className="text-green-600" />
-                  <Trans>Price (optional)</Trans>
+                  <Trans>Total Price</Trans>
                 </label>
                 <Input
                   id="price"
@@ -322,7 +326,7 @@ export const EditItemModal = ({ isOpen, onClose, item, onUpdate }: EditItemModal
         </ModalContent>
       </Modal>
 
-      {/* Modal séparée pour les détails du produit */}
+      {/* Modal for product details */}
       <ProductDetailsModal
         isOpen={isProductDetailsModalOpen}
         onClose={() => setIsProductDetailsModalOpen(false)}

@@ -18,7 +18,7 @@ export const Header = ({ rightArea }: HeaderProps) => {
       <NavbarBrand>
         <Link href="/" className="flex-[0_0_auto]">
           <Image src={Logo.src} fallbackSrc={Logo.blurDataURL} width={35} height={35} />
-          <p className="text-xl text-inherit ml-2">PComparator</p>
+          <p className="text-xl text-inherit ml-2">Deazl</p>
         </Link>
       </NavbarBrand>
 

@@ -1,13 +1,21 @@
 "use server";
-
-import type { ProductInformation } from "~/applications/ShoppingLists/Domain/ValueObjects/ProductInformation";
 import { auth } from "~/libraries/nextauth/authConfig";
 import { ShoppingListService } from "../Application/ShoppingList.service";
 import { PrismaShoppingListRepository } from "../Infrastructure/Repositories/PrismaShoppingListRepository";
 
 const shoppingListService = new ShoppingListService(new PrismaShoppingListRepository());
 
-export async function createProductFromItem(data: ProductInformation): Promise<any> {
+export async function createProductFromItem(data: {
+  name: string;
+  price: number;
+  unit: string;
+  quantity: number;
+  brandName: string;
+  storeName: string;
+  storeLocation: string;
+  referencePrice: number;
+  referenceUnit: string;
+}): Promise<any> {
   try {
     const session = await auth();
     if (!session?.user?.id) {

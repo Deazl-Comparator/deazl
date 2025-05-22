@@ -1,4 +1,6 @@
+import type { z } from "zod";
 import { ValueObject } from "~/applications/Shared/Domain/Core/ValueObject";
+import type { UnitSchema } from "~/applications/ShoppingLists/Domain/Schemas/ShoppingListItem.schema";
 
 export enum UnitType {
   UNIT = "unit",
@@ -8,6 +10,8 @@ export enum UnitType {
   ML = "ml",
   PIECE = "piece"
 }
+
+export type UnitPayload = z.infer<typeof UnitSchema>;
 
 interface UnitProps {
   value: UnitType;

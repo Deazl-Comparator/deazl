@@ -2,12 +2,37 @@
 
 import { Divider, Modal, ModalBody, ModalContent, ModalHeader, Tab, Tabs } from "@heroui/react";
 import { Share2Icon } from "lucide-react";
-import {} from "react";
+import { useCallback, useEffect, useState } from "react";
 import { InviteTab } from "~/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/InviteTab";
 import { LinkTab } from "~/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/LinkTab";
 import { QrCodeTab } from "~/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/QrCodeTab";
 import { SocialTab } from "~/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/SocialTab";
 import { useShareList } from "~/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShareList";
+import { useShoppingListShare } from "~/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShoppingListShare";
+
+const transformRole = (role: "EDITOR" | "VIEWER" | "OWNER"): "editor" | "viewer" | "owner" => {
+  const roleMap = {
+    EDITOR: "editor",
+    VIEWER: "viewer",
+    OWNER: "owner"
+  } as const;
+  return roleMap[role];
+};
+
+const transformCollaborators = (
+  collaborators: Array<{
+    id: string;
+    name: string;
+    email: string;
+    avatar?: string;
+    role: "EDITOR" | "VIEWER" | "OWNER";
+  }>
+) => {
+  return collaborators.map((c) => ({
+    ...c,
+    role: transformRole(c.role)
+  }));
+};
 
 interface ShareListModalProps {
   isOpen: boolean;
@@ -17,14 +42,22 @@ interface ShareListModalProps {
 }
 
 export default function ShareListModal({ isOpen, onClose, listId, listName }: ShareListModalProps) {
-  const shareLink = `https://deazl.fr/shared-lists/${listId}`;
+  const {
+    isLoading: backendLoading,
+    shareLink: dbShareLink,
+    collaborators: dbCollaborators,
+    generateLink,
+    inviteCollaborator
+  } = useShoppingListShare(listId);
+  const [localCollaborators, setLocalCollaborators] = useState(() =>
+    dbCollaborators ? transformCollaborators(dbCollaborators) : []
+  );
   const {
     email,
     setEmail,
     activeTab,
-    collaborators,
     onCopyShareLink,
-    onInvite,
+    onInvite: handleInvite,
     onRemoveCollaborator,
     openShareWindow,
     setActiveTab,
@@ -35,8 +68,31 @@ export default function ShareListModal({ isOpen, onClose, listId, listName }: Sh
     setIsPublicLink,
     setRole,
     isPublicLink
-  } = useShareList(shareLink);
+  } = useShareList(dbShareLink || "");
 
+  const onInvite = useCallback(async () => {
+    try {
+      await inviteCollaborator(email, role.toUpperCase() as "EDITOR" | "VIEWER");
+      await handleInvite();
+    } catch (error) {
+      console.error("Failed to invite:", error);
+    }
+  }, [email, role, inviteCollaborator, handleInvite]);
+
+  // Update collaborators when they change in the backend
+  useEffect(() => {
+    if (dbCollaborators) {
+      setLocalCollaborators(transformCollaborators(dbCollaborators));
+    }
+  }, [dbCollaborators]);
+
+  useEffect(() => {
+    if (isOpen && !dbShareLink) {
+      generateLink();
+    }
+  }, [isOpen, dbShareLink, generateLink]);
+
+  const shareLink = dbShareLink || "";
   const encodedListName = encodeURIComponent(listName);
   const whatsappLink = `https://wa.me/?text=Check out my shopping list "${encodedListName}": ${shareLink}`;
   const twitterLink = `https://twitter.com/intent/tweet?text=Check out my shopping list "${encodedListName}"&url=${shareLink}`;
@@ -71,9 +127,9 @@ export default function ShareListModal({ isOpen, onClose, listId, listName }: Sh
             size="sm"
           >
             <Tab key="invite" title="Invite People" />
-            <Tab key="link" title="Share Link" />
+            {/* <Tab key="link" title="Share Link" />
             <Tab key="social" title="Social Media" />
-            <Tab key="qr" title="QR Code" />
+            <Tab key="qr" title="QR Code" /> */}
           </Tabs>
         </ModalHeader>
 
@@ -82,11 +138,11 @@ export default function ShareListModal({ isOpen, onClose, listId, listName }: Sh
         <ModalBody className="p-4">
           {activeTab === "invite" && (
             <InviteTab
-              collaborators={collaborators}
+              collaborators={localCollaborators}
               onRemoveCollaborator={(id) => onRemoveCollaborator(id)}
               email={email}
               onEmailChange={(email) => setEmail(email)}
-              isInviting={isInviting}
+              isInviting={isInviting || backendLoading}
               onInvite={onInvite}
               role={role}
               onRoleChange={(role) => setRole(role)}
@@ -98,7 +154,10 @@ export default function ShareListModal({ isOpen, onClose, listId, listName }: Sh
             <LinkTab
               inputLinkRef={inputLinkRef}
               onCopyShareLink={onCopyShareLink}
-              onIsPublicLinkChange={(value) => setIsPublicLink(value)}
+              onIsPublicLinkChange={async (value) => {
+                setIsPublicLink(value);
+                await generateLink();
+              }}
               isPublicLink={isPublicLink}
               shareLink={shareLink}
               emailLink={emailLink}

@@ -2,7 +2,7 @@ import { addToast } from "@heroui/react";
 import { Trans } from "@lingui/macro";
 import { type KeyboardEvent, useRef, useState } from "react";
 import { addItemToList } from "~/applications/ShoppingLists/Api/shoppingListActions";
-import { UnitSchema } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListItem";
+import { UnitType } from "~/applications/ShoppingLists/Domain/ValueObjects/Unit";
 
 export const useQuickAdd = (listId: string, onItemAdded?: (item: any) => void) => {
   const [inputValue, setInputValue] = useState("");
@@ -30,7 +30,7 @@ export const useQuickAdd = (listId: string, onItemAdded?: (item: any) => void) =
 
       if (unit in unitMapping) unit = unitMapping[unit];
 
-      const validUnit = Object.values(UnitSchema.Values).includes(unit as any) ? unit : "unit";
+      const validUnit = Object.values(UnitType).includes(unit as any) ? unit : "unit";
 
       return {
         quantity: Number.isNaN(quantity) ? 1 : quantity,
@@ -72,8 +72,7 @@ export const useQuickAdd = (listId: string, onItemAdded?: (item: any) => void) =
 
       const newItem = await addItemToList(listId, itemData);
 
-      // if (onItemAdded && newItem) {
-      // onItemAdded(newItem);
+      if (onItemAdded && newItem) onItemAdded(newItem);
       let successMessage = `${parsedInput.name} (${parsedInput.quantity} ${parsedInput.unit})`;
 
       if (parsedInput.price) successMessage += ` - ${parsedInput.price.toFixed(2)}€`;

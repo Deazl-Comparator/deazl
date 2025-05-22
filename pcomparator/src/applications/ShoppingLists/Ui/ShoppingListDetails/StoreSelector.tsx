@@ -6,6 +6,7 @@ import { MapPinIcon, PlusIcon, SearchIcon, StoreIcon } from "lucide-react";
 import { useState } from "react";
 import { CollapsibleCard } from "~/components/CollapsibleCard/CollapsibleCard";
 import { useStore } from "../Contexts/StoreContext";
+import { useStorageStore } from "../Hooks/useStorageStore";
 import { useStoreData } from "../Hooks/useStoreData";
 import { AddStoreModal } from "./AddStoreModal";
 
@@ -15,7 +16,8 @@ interface StoreGroup {
 }
 
 export const StoreSelector = () => {
-  const { selectedStore, setSelectedStore, stores, isLoading } = useStore();
+  const { setSelectedStore, stores, isLoading } = useStore();
+  const { selectedStore } = useStorageStore();
   useStoreData();
 
   const [isAddStoreModalOpen, setIsAddStoreModalOpen] = useState(false);
@@ -51,7 +53,7 @@ export const StoreSelector = () => {
               <span className="font-medium text-primary-600">{selectedStore.name}</span>
             </div>
           ) : (
-            <span className="text-gray-400">
+            <span className="text-gray-400 text-xs">
               <Trans>No store selected</Trans>
             </span>
           )
@@ -130,6 +132,7 @@ export const StoreSelector = () => {
         )}
       </CollapsibleCard>
 
+      {/* AddStoreModal */}
       <AddStoreModal isOpen={isAddStoreModalOpen} onClose={() => setIsAddStoreModalOpen(false)} />
     </>
   );

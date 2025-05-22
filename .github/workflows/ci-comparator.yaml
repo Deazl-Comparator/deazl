@@ -58,7 +58,10 @@ jobs:
           key: ${{ runner.os }}-turbo-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-turbo-
-            
+      
+      - name: Generate Prisma client
+        run: yarn prisma generate
+
       - name: Check coding standards
         run: yarn format:check
         

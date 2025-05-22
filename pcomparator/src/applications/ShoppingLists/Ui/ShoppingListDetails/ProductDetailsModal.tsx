@@ -1,4 +1,14 @@
-import { Button, Input, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@heroui/react";
+import {
+  Button,
+  Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  Select,
+  SelectItem
+} from "@heroui/react";
 import { Trans } from "@lingui/macro";
 import { DatabaseIcon, SaveIcon, TagIcon } from "lucide-react";
 import { useState } from "react";
@@ -7,7 +17,11 @@ import { useStore } from "../Contexts/StoreContext";
 interface ProductDetailsModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (brandName: string) => Promise<void>;
+  onSubmit: (productDetails: {
+    brandName: string;
+    referencePrice: number;
+    referenceUnit: string;
+  }) => Promise<void>;
   isLoading: boolean;
   initialData: {
     productName?: string;
@@ -22,11 +36,20 @@ export const ProductDetailsModal = ({
   isLoading,
   initialData
 }: ProductDetailsModalProps) => {
-  const [brandName, setBrandName] = useState<string>();
+  const [brandName, setBrandName] = useState<string>("");
+  const [referencePrice, setReferencePrice] = useState<string>("");
+  const [referenceUnit, setReferenceUnit] = useState<string>("kg");
   const { selectedStore } = useStore();
 
   const handleSubmit = async () => {
-    await onSubmit(brandName!);
+    if (!brandName || !referencePrice) {
+      return;
+    }
+    await onSubmit({
+      brandName,
+      referencePrice: Number.parseFloat(referencePrice),
+      referenceUnit
+    });
   };
 
   return (
@@ -67,6 +90,43 @@ export const ProductDetailsModal = ({
                 autoFocus
               />
             </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <label htmlFor="referencePrice" className="text-sm font-medium">
+                  <Trans>Reference Price</Trans>
+                </label>
+                <Input
+                  id="referencePrice"
+                  type="number"
+                  placeholder="Enter price per kg/unit"
+                  value={referencePrice}
+                  onChange={(e) => setReferencePrice(e.target.value)}
+                  min="0"
+                  step="0.01"
+                  startContent={<span className="text-gray-500">€</span>}
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label htmlFor="referenceUnit" className="text-sm font-medium">
+                  <Trans>Reference Unit</Trans>
+                </label>
+                <Select
+                  className="w-full"
+                  id="referenceUnit"
+                  selectedKeys={[referenceUnit]}
+                  onChange={(e: { target: { value: string } }) => setReferenceUnit(e.target.value)}
+                  aria-label="Select reference unit"
+                >
+                  {["kg", "L", "unit"].map((unitValue) => (
+                    <SelectItem key={unitValue} textValue={unitValue}>
+                      {unitValue}
+                    </SelectItem>
+                  ))}
+                </Select>
+              </div>
+            </div>
           </div>
         </ModalBody>
         <ModalFooter>
@@ -79,7 +139,7 @@ export const ProductDetailsModal = ({
             isLoading={isLoading}
             startContent={<SaveIcon size={16} />}
             className="flex-1"
-            isDisabled={!brandName || !selectedStore}
+            isDisabled={!brandName || !referencePrice || !selectedStore}
           >
             <Trans>Create Product</Trans>
           </Button>
