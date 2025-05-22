@@ -73,8 +73,12 @@ jobs:
       - name: Check build
         run: yarn build
         env:
-          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          PCOMPARATOR_ENV: ${{ secrets.PCOMPARATOR_ENV }}
+          PCOMPARATOR_API_ENDPOINT: ${{ secrets.PCOMPARATOR_API_ENDPOINT }}
+          OPEN_FOOD_FACT_API_ENDPOINT: ${{ secrets.OPEN_FOOD_FACT_API_ENDPOINT }}
+          OPEN_FOOD_FACT_PRICES_API_ENDPOINT: ${{ secrets.OPEN_FOOD_FACT_PRICES_API_ENDPOINT }}
+          ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
+          ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
           
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
@@ -156,8 +160,12 @@ jobs:
       - name: Build application
         run: yarn build
         env:
-          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          PCOMPARATOR_ENV: ${{ secrets.PCOMPARATOR_ENV }}
+          PCOMPARATOR_API_ENDPOINT: ${{ secrets.PCOMPARATOR_API_ENDPOINT }}
+          OPEN_FOOD_FACT_API_ENDPOINT: ${{ secrets.OPEN_FOOD_FACT_API_ENDPOINT }}
+          OPEN_FOOD_FACT_PRICES_API_ENDPOINT: ${{ secrets.OPEN_FOOD_FACT_PRICES_API_ENDPOINT }}
+          ALGOLIA_APP_ID: ${{ secrets.ALGOLIA_APP_ID }}
+          ALGOLIA_API_KEY: ${{ secrets.ALGOLIA_API_KEY }}
           
       - name: Check bundle size
         uses: preactjs/compressed-size-action@v2
