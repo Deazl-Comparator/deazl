@@ -16,6 +16,7 @@ defaults:
   run:
     working-directory: pcomparator
 
+
 jobs:
   quality:
     name: Quality Checks
@@ -94,6 +95,9 @@ jobs:
     name: Validate Prisma Schema
     runs-on: ubuntu-latest
     needs: [quality]
+    environment: Preview
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
     
     steps:
       - uses: actions/checkout@v4
