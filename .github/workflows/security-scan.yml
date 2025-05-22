@@ -43,9 +43,9 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Run SNYK security scan
-        run: |
-          cd $GITHUB_WORKSPACE/pcomparator
-          snyk test --all-projects
+        uses: snyk/actions/node@master
+        with:
+          command: cd $GITHUB_WORKSPACE/pcomparator && snyk test
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
