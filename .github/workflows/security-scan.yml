@@ -8,6 +8,10 @@ on:
   schedule:
     - cron: '0 0 * * 0'  # Run weekly
 
+defaults:
+  run:
+    working-directory: pcomparator
+
 jobs:
   security:
     name: Security Scan
