@@ -59,14 +59,14 @@ jobs:
             ${{ runner.os }}-turbo-
             
       - name: Check coding standards
-        run: yarn run format:check
+        run: yarn format:check
         
       - name: Run ESLint
-        run: yarn run lint
+        run: yarn lint:check
         
       - name: TypeScript type checking
-        run: yarn run typescript:check
-        
+        run: yarn typescript:check
+
       - name: Check for duplicate dependencies
         run: yarn dedupe --check
         

@@ -1,17 +1,17 @@
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["driverAdapters"]
 }
 
 model User {
-  id            String          @id @default(uuid())
+  id            String         @id @default(uuid())
   name          String?
-  email         String          @unique
+  email         String         @unique
   emailVerified DateTime?
   image         String?
   phone         String?
@@ -63,42 +63,42 @@ model VerificationToken {
 }
 
 model Product {
-  id             String   @id @default(uuid()) @db.Uuid
-  barcode        String   @unique
-  name           String
-  description    String?
-  category_id    String?  @db.Uuid
-  brand_id       String?  @db.Uuid
-  nutrition_score Json?   @db.JsonB
-  created_at     DateTime @default(now())
-  updated_at     DateTime @updatedAt
+  id              String   @id @default(uuid()) @db.Uuid
+  barcode         String   @unique
+  name            String
+  description     String?
+  category_id     String?  @db.Uuid
+  brand_id        String?  @db.Uuid
+  nutrition_score Json?    @db.JsonB
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
 
   // Relations
-  category       Category? @relation(fields: [category_id], references: [id])
-  brand          Brand?    @relation(fields: [brand_id], references: [id])
-  prices         Price[]
+  category Category? @relation(fields: [category_id], references: [id])
+  brand    Brand?    @relation(fields: [brand_id], references: [id])
+  prices   Price[]
 
   ShoppingListItem ShoppingListItem[]
 }
 
 model Category {
-  id          String   @id @default(uuid()) @db.Uuid
-  name        String   @unique
-  description String?
+  id                 String  @id @default(uuid()) @db.Uuid
+  name               String  @unique
+  description        String?
   parent_category_id String? @db.Uuid
 
   // Relations
-  products    Product[]
+  products Product[]
 }
 
 model Brand {
-  id          String   @id @default(uuid()) @db.Uuid
-  name        String   @unique
+  id          String  @id @default(uuid()) @db.Uuid
+  name        String  @unique
   description String?
   website_url String?
 
   // Relations
-  products    Product[]
+  products Product[]
 }
 
 enum Currency {
@@ -114,12 +114,12 @@ enum Currency {
 }
 
 model Price {
-  id             String   @id @default(uuid()) @db.Uuid
-  product_id     String   @db.Uuid
-  store_id       String   @db.Uuid
-  amount         Float
-  currency       Currency
-  date_recorded  DateTime @default(now())
+  id                String   @id @default(uuid()) @db.Uuid
+  product_id        String   @db.Uuid
+  store_id          String   @db.Uuid
+  amount            Float
+  currency          Currency
+  date_recorded     DateTime @default(now())
   price_proof_image String?
 
   // Relations
@@ -128,13 +128,13 @@ model Price {
 }
 
 model Store {
-  id          String   @id @default(uuid()) @db.Uuid
+  id          String  @id @default(uuid()) @db.Uuid
   name        String
   location    String
   website_url String?
 
   // Relations
-  prices      Price[]
+  prices Price[]
 
   @@unique([name, location])
 }
@@ -148,8 +148,8 @@ model ShoppingList {
   updatedAt   DateTime @updatedAt
 
   // Relations
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  items       ShoppingListItem[]
+  user  User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items ShoppingListItem[]
 }
 
 model ShoppingListItem {
@@ -160,11 +160,11 @@ model ShoppingListItem {
   unit           String?  @default("unit")
   isCompleted    Boolean  @default(false)
   customName     String?
-  price          Float?   // Champ pour stocker le prix d'un article
+  price          Float? // Champ pour stocker le prix d'un article
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
   // Relations
-  shoppingList   ShoppingList @relation(fields: [shoppingListId], references: [id], onDelete: Cascade)
-  product        Product?     @relation(fields: [productId], references: [id])
+  shoppingList ShoppingList @relation(fields: [shoppingListId], references: [id], onDelete: Cascade)
+  product      Product?     @relation(fields: [productId], references: [id])
 }
