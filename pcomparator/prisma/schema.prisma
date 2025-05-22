@@ -120,6 +120,7 @@ model Price {
   store_id          String   @db.Uuid
   amount            Float
   currency          Currency
+  unit              String   @default("kg")
   date_recorded     DateTime @default(now())
   price_proof_image String?
 
@@ -153,7 +154,7 @@ model ShoppingList {
   // Relations
   user                     User                       @relation(fields: [userId], references: [id], onDelete: Cascade)
   items                    ShoppingListItem[]
-  ShoppingListCollaborator ShoppingListCollaborator[]
+  collaborators             ShoppingListCollaborator[]
 }
 
 model ShoppingListItem {
