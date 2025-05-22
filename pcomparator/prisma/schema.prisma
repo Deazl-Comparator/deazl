@@ -152,9 +152,9 @@ model ShoppingList {
   shareToken  String?  @unique
 
   // Relations
-  user                     User                       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  items                    ShoppingListItem[]
-  collaborators             ShoppingListCollaborator[]
+  user          User                       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items         ShoppingListItem[]
+  collaborators ShoppingListCollaborator[]
 }
 
 model ShoppingListItem {
