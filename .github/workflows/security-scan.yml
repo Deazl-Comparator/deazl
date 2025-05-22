@@ -16,10 +16,6 @@ jobs:
   security:
     name: Security Scan
     runs-on: ubuntu-latest
-    environment: Preview
-    defaults:
-      run:
-        working-directory: pcomparator
     
     steps:
       - name: Checkout code
@@ -29,10 +25,22 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-          cache: 'yarn'
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+
+      - name: Cache yarn dependencies
+        uses: actions/cache@v4
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
 
       - name: Install dependencies
-        run: yarn install
+        run: yarn install -- frozen-lockfile
 
       - name: Run SNYK security scan
         uses: snyk/actions/node@master
