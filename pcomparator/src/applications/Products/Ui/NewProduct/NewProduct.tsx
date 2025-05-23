@@ -8,7 +8,7 @@ import {
   ModalFooter,
   ModalHeader
 } from "@heroui/react";
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 import { Info } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useActionState } from "react";

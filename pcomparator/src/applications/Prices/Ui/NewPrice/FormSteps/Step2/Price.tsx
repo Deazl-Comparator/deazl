@@ -1,4 +1,4 @@
-import { Trans, t } from "@lingui/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { Euro } from "lucide-react";
 import useForm from "~/components/Form/useForm";
 import { Input } from "~/components/Inputs/Input/Input";
@@ -10,6 +10,7 @@ interface PriceProps {
 
 export const Price = ({ onNextStep, onPrevious }: PriceProps) => {
   const form = useForm<{ price: string }>();
+  const { i18n } = useLingui();
 
   return (
     <>
@@ -35,7 +36,7 @@ export const Price = ({ onNextStep, onPrevious }: PriceProps) => {
           placeholder="9.99"
           label={<Trans>Price</Trans>}
           endContent={<Euro />}
-          required={t`Please enter a valid price.`}
+          required={i18n._("Please enter a valid price.")}
         />
       </form.Form>
     </>

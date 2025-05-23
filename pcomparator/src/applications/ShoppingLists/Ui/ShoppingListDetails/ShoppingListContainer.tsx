@@ -1,4 +1,4 @@
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 import { useMemo } from "react";
 import type { ShoppingListPayload } from "~/applications/ShoppingLists/Domain/Entities/ShoppingList.entity";
 import { ShoppingListItemCard } from "~/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListItemCard";

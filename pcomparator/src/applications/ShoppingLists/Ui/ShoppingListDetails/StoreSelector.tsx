@@ -1,7 +1,7 @@
 "use client";
 
 import { Autocomplete, AutocompleteItem, Button, Chip } from "@heroui/react";
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 import { MapPinIcon, PlusIcon, SearchIcon, StoreIcon } from "lucide-react";
 import { useState } from "react";
 import { CollapsibleCard } from "~/components/CollapsibleCard/CollapsibleCard";

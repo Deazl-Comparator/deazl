@@ -1,6 +1,5 @@
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@heroui/react";
-import { i18n } from "@lingui/core";
-import { Trans, t } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 import { Plus, ScanBarcode, Type } from "lucide-react";
 
 interface NewPriceButtonDekstopProps {
@@ -23,7 +22,7 @@ export const NewPriceButtonDesktop = ({ onOpenForm, onOpenModal }: NewPriceButto
           onOpenModal("with");
           onOpenForm();
         }}
-        description={t(i18n)`Add new price by scanning barcode`}
+        description={<Trans>Add new price by scanning barcode</Trans>}
         shortcut="⌘C"
       >
         <Trans>Scan barcode</Trans>
@@ -37,7 +36,7 @@ export const NewPriceButtonDesktop = ({ onOpenForm, onOpenModal }: NewPriceButto
           onOpenModal("without");
           onOpenForm();
         }}
-        description={t(i18n)`Add new price by typing barcode`}
+        description={<Trans>Add new price by typing barcode</Trans>}
         shortcut="⌘N"
       >
         <Trans>Type barcode</Trans>

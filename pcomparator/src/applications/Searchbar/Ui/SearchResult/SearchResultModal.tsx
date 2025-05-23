@@ -11,7 +11,7 @@ import {
   Spinner,
   useDisclosure
 } from "@heroui/react";
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 import { useEffect, useState, useTransition } from "react";
 import type { Price } from "~/applications/Prices/Domain/Entities/Price";
 import type { Product } from "~/applications/Prices/Domain/Entities/Product";

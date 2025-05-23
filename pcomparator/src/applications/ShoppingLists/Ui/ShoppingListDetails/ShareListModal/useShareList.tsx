@@ -1,5 +1,5 @@
 import { addToast } from "@heroui/react";
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 import { useSession } from "next-auth/react";
 import { useCallback, useRef, useState } from "react";
 

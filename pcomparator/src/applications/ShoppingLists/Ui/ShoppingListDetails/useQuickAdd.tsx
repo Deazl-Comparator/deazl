@@ -1,5 +1,5 @@
 import { addToast } from "@heroui/react";
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 import { type KeyboardEvent, useRef, useState } from "react";
 import { addItemToList } from "~/applications/ShoppingLists/Api/shoppingListActions";
 import { UnitType } from "~/applications/ShoppingLists/Domain/ValueObjects/Unit";

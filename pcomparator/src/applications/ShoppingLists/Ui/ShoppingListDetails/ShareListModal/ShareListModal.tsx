@@ -36,12 +36,12 @@ const transformCollaborators = (
 
 interface ShareListModalProps {
   isOpen: boolean;
-  onClose: () => void;
+  onCloseAction: () => void;
   listId: string;
   listName: string;
 }
 
-export default function ShareListModal({ isOpen, onClose, listId, listName }: ShareListModalProps) {
+export default function ShareListModal({ isOpen, onCloseAction, listId, listName }: ShareListModalProps) {
   const {
     isLoading: backendLoading,
     shareLink: dbShareLink,
@@ -79,7 +79,6 @@ export default function ShareListModal({ isOpen, onClose, listId, listName }: Sh
     }
   }, [email, role, inviteCollaborator, handleInvite]);
 
-  // Update collaborators when they change in the backend
   useEffect(() => {
     if (dbCollaborators) {
       setLocalCollaborators(transformCollaborators(dbCollaborators));
@@ -102,19 +101,21 @@ export default function ShareListModal({ isOpen, onClose, listId, listName }: Sh
   return (
     <Modal
       isOpen={isOpen}
-      onClose={onClose}
-      size="2xl"
+      onClose={onCloseAction}
+      size="4xl"
+      scrollBehavior="inside"
       classNames={{
-        base: "p-0",
-        header: "p-0",
-        body: "p-0"
+        base: "max-w-3xl md:max-w-4xl md:px-0",
+        closeButton: "hidden md:flex",
+        header: "p-3 md:p-4",
+        body: "p-4 md:p-6"
       }}
     >
       <ModalContent>
-        <ModalHeader className="flex flex-col gap-1 p-3">
+        <ModalHeader className="flex flex-col gap-1">
           <div className="flex items-center gap-2">
             <Share2Icon className="h-5 w-5 text-primary-600" />
-            <span className="text-lg">Share "{listName}"</span>
+            <span className="text-lg md:text-xl">Share "{listName}"</span>
           </div>
 
           <Tabs
@@ -127,15 +128,15 @@ export default function ShareListModal({ isOpen, onClose, listId, listName }: Sh
             size="sm"
           >
             <Tab key="invite" title="Invite People" />
-            {/* <Tab key="link" title="Share Link" />
+            <Tab key="link" title="Share Link" />
             <Tab key="social" title="Social Media" />
-            <Tab key="qr" title="QR Code" /> */}
+            <Tab key="qr" title="QR Code" />
           </Tabs>
         </ModalHeader>
 
         <Divider />
 
-        <ModalBody className="p-4">
+        <ModalBody>
           {activeTab === "invite" && (
             <InviteTab
               collaborators={localCollaborators}

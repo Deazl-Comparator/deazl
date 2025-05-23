@@ -1,8 +1,8 @@
 "use client";
 
 import { Button, Card, CardBody, CardFooter, CardHeader, useDisclosure } from "@heroui/react";
-import { Trans, t } from "@lingui/macro";
 import { useLingui } from "@lingui/react";
+import { Trans } from "@lingui/react/macro";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { deleteAccount } from "~/applications/Profile/Api/deleteAccount";
@@ -62,7 +62,7 @@ export const SettingsDeleteAccount = () => {
                 fullWidth: true,
                 color: "danger",
                 size: "lg",
-                isDisabled: !form.watch("confirm")?.match(t(i18n)`delete my account`)
+                isDisabled: !form.watch("confirm")?.match(i18n._("delete my account"))
               },
               wrapperProps: { className: "justify-end border-t border-t-default -px-4" }
             }}
@@ -78,7 +78,7 @@ export const SettingsDeleteAccount = () => {
                   </span>
                 }
                 name="confirm"
-                placeholder={t(i18n)`delete my account`}
+                placeholder={i18n._("delete my account")}
                 autoComplete="off"
               />
             </div>

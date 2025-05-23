@@ -1,4 +1,4 @@
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 import { Euro, MoveLeft } from "lucide-react";
 import Link from "~/components/Link/Link";
 import { type NextPageProps, withLinguiLayout } from "~/core/withLinguiLayout";

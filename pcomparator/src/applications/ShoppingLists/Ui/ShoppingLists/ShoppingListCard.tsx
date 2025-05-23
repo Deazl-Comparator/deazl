@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { CalendarIcon, GlobeIcon, MoreVerticalIcon, ShoppingBagIcon, UsersIcon } from "lucide-react";
 import Link from "next/link";
 import type { ShoppingListPayload } from "~/applications/ShoppingLists/Domain/Entities/ShoppingList.entity";
-import { Badge } from "~/components/ui/Badge";
 
 export interface ShoppingListCardProps {
   list: ShoppingListPayload;
@@ -18,63 +17,61 @@ export const ShoppingListCard = ({ list, userRole }: ShoppingListCardProps) => {
 
   return (
     <motion.div
+      layout
       style={{
         position: "relative",
         overflow: "hidden",
         borderRadius: "0.75rem",
         border: "1px solid rgb(243 244 246)",
-        backgroundColor: "white",
-        transition: "all 0.2s"
+        backgroundColor: "white"
       }}
-      initial={false}
-      whileHover={{
-        scale: 1.02,
-        boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
-        borderColor: "var(--primary-200)",
-        transition: { type: "spring", stiffness: 400, damping: 17 }
-      }}
-      whileTap={{ scale: 0.98 }}
     >
-      <Link href={`/shopping-lists/${list.id}`} className="block p-4">
-        <div className="mb-3 flex items-start justify-between">
-          <div className="space-y-1.5">
-            <h3 className="font-semibold text-gray-900 group-hover:text-primary-600">{list.name}</h3>
-            <div className="flex flex-wrap items-center gap-1.5">
-              {list.isPublic && (
-                <Badge variant="info" className="gap-1">
-                  <GlobeIcon className="h-3 w-3" />
-                  Public
-                </Badge>
-              )}
-              {hasCollaborators && (
-                <Badge variant="secondary" className="gap-1">
-                  <UsersIcon className="h-3 w-3" />
-                  {list.collaborators!.length} {list.collaborators!.length === 1 ? "membre" : "membres"}
-                </Badge>
-              )}
-              {userRole && !isOwner && (
-                <Badge variant={userRole === "EDITOR" ? "success" : "default"}>
-                  {userRole === "EDITOR" ? "Éditeur" : "Lecteur"}
-                </Badge>
-              )}
-            </div>
+      <Link
+        href={`/shopping-lists/${list.id}`}
+        className="group relative block p-4 transition duration-200 hover:bg-gray-50"
+      >
+        <div className="flex items-center justify-between">
+          <h2 className="font-semibold text-lg text-gray-900 line-clamp-1 group-hover:text-primary-600 transition-colors">
+            {list.name}
+          </h2>
+          <div className="flex items-center gap-2">
+            {hasCollaborators && (
+              <div className="p-1 rounded-full bg-primary-100 text-primary-600" title="Shared list">
+                <UsersIcon className="h-4 w-4" />
+              </div>
+            )}
+            {list.isPublic && (
+              <div className="p-1 rounded-full bg-green-100 text-green-600" title="Public list">
+                <GlobeIcon className="h-4 w-4" />
+              </div>
+            )}
+            {isOwner && (
+              <Dropdown placement="bottom-end">
+                <DropdownTrigger>
+                  <Button
+                    isIconOnly
+                    variant="light"
+                    size="sm"
+                    className="p-1 absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    <MoreVerticalIcon className="h-4 w-4" />
+                  </Button>
+                </DropdownTrigger>
+                <DropdownMenu aria-label="List actions">
+                  <DropdownItem key="share">Share List</DropdownItem>
+                  <DropdownItem key="edit">Edit List</DropdownItem>
+                  <DropdownItem key="duplicate">Duplicate List</DropdownItem>
+                  <DropdownItem className="text-danger" color="danger" key="delete">
+                    Delete List
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+            )}
           </div>
-          <Dropdown placement="bottom-end">
-            <DropdownTrigger>
-              <Button isIconOnly size="sm" variant="light">
-                <MoreVerticalIcon className="h-4 w-4" />
-              </Button>
-            </DropdownTrigger>
-            <DropdownMenu aria-label="List actions">
-              <DropdownItem key="edit">Modifier la liste</DropdownItem>
-              <DropdownItem className="text-danger" color="danger" key="delete">
-                Supprimer la liste
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
         </div>
 
-        <div className="mb-4 flex items-center gap-4 text-sm">
+        <div className="my-4 flex flex-wrap items-center gap-4 text-sm">
           <div className="flex items-center gap-1 text-gray-500">
             <ShoppingBagIcon className="h-4 w-4" />
             <span>{list.totalItems} items</span>
@@ -83,6 +80,12 @@ export const ShoppingListCard = ({ list, userRole }: ShoppingListCardProps) => {
             <CalendarIcon className="h-4 w-4" />
             <span>{new Date(list.createdAt!).toLocaleDateString()}</span>
           </div>
+          {hasCollaborators && (
+            <div className="flex items-center gap-1 text-gray-500">
+              <UsersIcon className="h-4 w-4" />
+              <span>{list.collaborators?.length} collaborators</span>
+            </div>
+          )}
         </div>
 
         <div className="space-y-2">
@@ -90,7 +93,7 @@ export const ShoppingListCard = ({ list, userRole }: ShoppingListCardProps) => {
             <span className="font-medium">Progress</span>
             <motion.span
               style={{
-                color: "var(--primary-600)"
+                color: list.completedItems === list.totalItems ? "#16a34a" : "var(--primary-600)"
               }}
               initial={false}
               animate={{
