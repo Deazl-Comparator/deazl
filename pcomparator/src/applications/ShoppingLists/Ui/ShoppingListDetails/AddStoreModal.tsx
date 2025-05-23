@@ -8,7 +8,7 @@ import {
   ModalHeader,
   addToast
 } from "@heroui/react";
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 import { MapPinIcon, SaveIcon, StoreIcon } from "lucide-react";
 import { useState } from "react";
 import { createStore } from "../../Api/createStore";

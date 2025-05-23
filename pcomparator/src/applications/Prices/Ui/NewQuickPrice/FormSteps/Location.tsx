@@ -1,5 +1,5 @@
 import { Button, ModalBody, ModalFooter, Radio, RadioGroup, Spinner } from "@heroui/react";
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 import { Search } from "lucide-react";
 import { useRef, useState } from "react";
 import useForm from "~/components/Form/useForm";

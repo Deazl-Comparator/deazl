@@ -1,4 +1,4 @@
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 import type { ReactNode } from "react";
 
 export interface StepperProps {

@@ -9,7 +9,7 @@ import {
   Select,
   SelectItem
 } from "@heroui/react";
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 import { DatabaseIcon, SaveIcon, TagIcon } from "lucide-react";
 import { useState } from "react";
 import { useStore } from "../Contexts/StoreContext";

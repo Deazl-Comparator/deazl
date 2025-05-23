@@ -1,7 +1,7 @@
 "use client";
 
 import { Avatar, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@heroui/react";
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 

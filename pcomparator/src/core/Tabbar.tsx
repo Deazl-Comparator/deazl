@@ -1,7 +1,7 @@
 "use client";
 
 import { useDisclosure } from "@heroui/react";
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { toast } from "react-toastify";

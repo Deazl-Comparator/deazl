@@ -1,5 +1,5 @@
 import { Button } from "@heroui/react";
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 import { Plus, ScanBarcode, Type } from "lucide-react";
 import { Modal } from "~/components/Modal/Modal";
 

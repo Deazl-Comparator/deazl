@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, type ButtonProps } from "@heroui/react";
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 import clsx from "clsx";
 import _ from "lodash";
 import type { ComponentType, ReactNode } from "react";

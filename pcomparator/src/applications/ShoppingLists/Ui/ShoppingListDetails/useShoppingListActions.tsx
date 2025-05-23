@@ -1,5 +1,5 @@
 import { addToast } from "@heroui/react";
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 import { useCallback, useState } from "react";
 import { deleteItem } from "~/app/[locale]/shopping-lists/[id]/action";
 import { toggleItemComplete } from "~/applications/ShoppingLists/Api/toggleItemComplete.api";

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Tooltip, addToast, useDisclosure } from "@heroui/react";
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 import { ArrowLeftIcon, MoreVerticalIcon, UserPlusIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { deleteShoppingList } from "~/applications/ShoppingLists/Actions/shoppingListActions";
@@ -94,7 +94,7 @@ export const ShoppingListDetailsHeader = ({ shoppingListId, listName }: Shopping
 
       <ShareListModal
         isOpen={shareModal.isOpen}
-        onClose={shareModal.onClose}
+        onCloseAction={shareModal.onClose}
         listId={shoppingListId}
         listName={listName}
       />

@@ -1,4 +1,4 @@
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 import { ArchiveIcon, ShoppingCartIcon } from "lucide-react";
 
 export interface EmptyStateProps {

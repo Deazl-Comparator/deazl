@@ -12,7 +12,7 @@ import {
   ModalHeader,
   useDisclosure
 } from "@heroui/react";
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 import { ExternalLink, Info } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useEffect } from "react";

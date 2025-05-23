@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Chip, Tab, Tabs } from "@heroui/react";
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArchiveIcon, ListPlusIcon, ShoppingCartIcon } from "lucide-react";
 import Link from "next/link";
@@ -28,15 +28,21 @@ export const ShoppingListsView = ({ lists }: ShoppingListViewProps) => {
   });
 
   return (
-    <div className="mx-auto max-w-3xl">
-      <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">
-          <Trans>Your Lists</Trans>
-        </h1>
+    <div className="mx-auto max-w-5xl md:max-w-6xl px-4">
+      <div className="mb-6 flex items-center justify-between flex-wrap gap-4">
+        <div>
+          <h1 className="text-2xl md:text-3xl font-bold mb-1">
+            <Trans>Your Lists</Trans>
+          </h1>
+          <p className="text-gray-600 text-sm md:text-base">
+            <Trans>Manage and organize your shopping lists</Trans>
+          </p>
+        </div>
         <div className="flex gap-2">
           <Button
             color="primary"
             variant="flat"
+            size="lg"
             startContent={<ListPlusIcon className="h-4 w-4" />}
             as={Link}
             href="/shopping-lists/create"
@@ -51,7 +57,10 @@ export const ShoppingListsView = ({ lists }: ShoppingListViewProps) => {
         onSelectionChange={(key) => setFilter(key as EmptyStateProps["type"])}
         variant="solid"
         color="primary"
-        fullWidth
+        classNames={{
+          tabList: "w-full md:w-auto",
+          tab: "md:px-6"
+        }}
       >
         <Tab
           key="active"
@@ -79,7 +88,7 @@ export const ShoppingListsView = ({ lists }: ShoppingListViewProps) => {
         />
       </Tabs>
 
-      <div className="mt-6 grid gap-4 sm:grid-cols-2">
+      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <AnimatePresence mode="popLayout">
           {(filter === "active" ? activeLists : completedLists).map((list, index) => (
             <motion.div
@@ -102,12 +111,12 @@ export const ShoppingListsView = ({ lists }: ShoppingListViewProps) => {
         </AnimatePresence>
 
         {filter === "active" && activeLists.length === 0 && (
-          <div className="col-span-2">
+          <div className="col-span-full">
             <EmptyState type="active" />
           </div>
         )}
         {filter === "completed" && completedLists.length === 0 && (
-          <div className="col-span-2">
+          <div className="col-span-full">
             <EmptyState type="completed" />
           </div>
         )}

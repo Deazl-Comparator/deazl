@@ -1,5 +1,5 @@
 import { Button, addToast } from "@heroui/react";
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 import { CopyIcon, DownloadIcon } from "lucide-react";
 import { QRCodeCanvas } from "qrcode.react";
 import { useRef } from "react";

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Tooltip } from "@heroui/react";
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 import { PlusIcon } from "lucide-react";
 import Link from "next/link";
 

@@ -1,47 +1,75 @@
-import { Button } from "@heroui/react";
-import { Trans } from "@lingui/macro";
-import { signIn } from "next-auth/react";
+"use client";
 
-export const SigninWithGoogleButton = () => (
-  <form
-    action={async () => {
-      await signIn("google");
-    }}
-  >
-    <Button
-      type="submit"
-      startContent={
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width={46}
-          height={46}
-          viewBox="-3 0 262 262"
-          preserveAspectRatio="xMidYMid"
-        >
-          <title>Google</title>
-          <path
-            d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"
-            fill="#4285F4"
-          />
-          <path
-            d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"
-            fill="#34A853"
-          />
-          <path
-            d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"
-            fill="#FBBC05"
-          />
-          <path
-            d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"
-            fill="#EB4335"
-          />
-        </svg>
-      }
-      variant="solid"
-      size="lg"
-      fullWidth
-    >
-      <Trans>Sign in with Google</Trans>
-    </Button>
-  </form>
-);
+import { Button } from "@heroui/react";
+import { t } from "@lingui/macro";
+import { useLingui } from "@lingui/react";
+import { Loader2 } from "lucide-react";
+import { signIn } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
+import { useState } from "react";
+
+export const SigninWithGoogleButton = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
+  const { i18n } = useLingui();
+
+  const handleSignIn = async () => {
+    try {
+      setIsLoading(true);
+      await signIn("google", { callbackUrl });
+    } catch (error) {
+      console.error("Error signing in:", error);
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <form action={handleSignIn}>
+      <Button
+        type="submit"
+        className="group relative w-full overflow-hidden bg-white hover:bg-gray-50 dark:bg-gray-900 dark:hover:bg-gray-800 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-700 transition-all duration-300"
+        startContent={
+          isLoading ? (
+            <Loader2 className="w-5 h-5 mr-2 animate-spin text-gray-600 dark:text-gray-400" />
+          ) : (
+            <div className="relative flex items-center justify-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width={26}
+                height={26}
+                viewBox="0 0 48 48"
+                className="mr-2"
+              >
+                <title>Google</title>
+                <path
+                  fill="#FFC107"
+                  d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"
+                />
+                <path
+                  fill="#FF3D00"
+                  d="m6.306 14.691 6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"
+                />
+                <path
+                  fill="#4CAF50"
+                  d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"
+                />
+                <path
+                  fill="#1976D2"
+                  d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"
+                />
+              </svg>
+            </div>
+          )
+        }
+        size="lg"
+        variant="bordered"
+        isDisabled={isLoading}
+      >
+        <span className="relative z-10 text-base">
+          {isLoading ? t(i18n)`Signing in...` : t(i18n)`Sign in with Google`}
+        </span>
+      </Button>
+    </form>
+  );
+};

@@ -1,5 +1,5 @@
 import { Card, CardBody, ModalBody, ModalFooter } from "@heroui/react";
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 import { Info } from "lucide-react";
 import useForm from "~/components/Form/useForm";
 import { Input } from "~/components/Inputs/Input/Input";
