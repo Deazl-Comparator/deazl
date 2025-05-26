@@ -1,6 +1,7 @@
 import { listUserShoppingList } from "~/ShoppingLists/Api/listUserShoppingList.api";
 import { ShoppingListsView } from "~/ShoppingLists/Ui/ShoppingLists/ShoppingListsView";
 import { withLinguiPage } from "~/core/withLinguiLayout";
+import { GridBackground } from "~/views/Home/components/GridBackground";
 
 export const metadata = {
   title: "Shopping Lists | PComparator",
@@ -11,11 +12,12 @@ const ShoppingListsPage = async () => {
   const lists = await listUserShoppingList();
 
   return (
-    <main className="flex w-full justify-center p-4">
-      <div className="flex flex-col gap-y-8 max-w-4xl w-full">
-        <div className="max-w-3xl mx-auto w-full pb-8">
-          <ShoppingListsView lists={lists} />
-        </div>
+    <main className="relative -mt-[4rem] flex flex-1 w-full flex-col min-h-screen">
+      <div className="absolute isolate overflow-hidden min-h-[calc(100dvh)] w-full flex items-center">
+        <GridBackground />
+      </div>
+      <div className="relative z-10 pt-[4rem]">
+        <ShoppingListsView lists={lists} />
       </div>
     </main>
   );
