@@ -54,6 +54,7 @@ const nextConfig = (): NextConfig => {
 
 const withPWA = withPWAInit({
   dest: "public",
+  disable: false
 });
 
-module.exports = nextConfig();
+module.exports = withPWA(nextConfig());

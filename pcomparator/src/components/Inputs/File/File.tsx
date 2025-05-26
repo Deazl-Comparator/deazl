@@ -1,7 +1,7 @@
+import { Avatar, AvatarGroup } from "@heroui/avatar";
+import { Input, type InputProps as InputPropsNextUi } from "@heroui/input";
 import { t } from "@lingui/macro";
 import { useLingui } from "@lingui/react";
-import { Avatar, AvatarGroup } from "@nextui-org/avatar";
-import { Input, type InputProps as InputPropsNextUi } from "@nextui-org/input";
 import clsx from "clsx";
 import { useState } from "react";
 import { Controller, type FieldValues, type RegisterOptions, useFormContext } from "react-hook-form";

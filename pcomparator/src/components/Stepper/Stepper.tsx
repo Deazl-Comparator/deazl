@@ -1,4 +1,4 @@
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 import type { ReactNode } from "react";
 
 export interface StepperProps {
@@ -23,7 +23,7 @@ export const Stepper = ({ currentStep, steps, size = "md" }: StepperProps) => {
   const offset = circumference - (progress / 100) * circumference;
 
   return (
-    <div className="flex items-center gap-x-4 w-full justify-between">
+    <div className="flex items-center gap-x-4 w-full justify-between mt-4">
       <div className="relative">
         <svg width={svgSize} height={svgSize} data-testid="stepper-svg" viewBox={`0 0 ${svgSize} ${svgSize}`}>
           <title>Step</title>
@@ -51,15 +51,13 @@ export const Stepper = ({ currentStep, steps, size = "md" }: StepperProps) => {
             cy={svgSize / 2}
           />
         </svg>
-        <div
-          className={`absolute inset-0 flex items-center justify-center font-semibold text-gray-700 ${fontSize}`}
-        >
+        <div className={`absolute inset-0 flex items-center justify-center font-semibold ${fontSize}`}>
           {currentStep} of {totalSteps}
         </div>
       </div>
 
       <div className="text-right">
-        <h2 className="font-semibold text-gray-800 text-xl">{steps[currentStep - 1].label}</h2>
+        <h2 className="font-semibold text-xl">{steps[currentStep - 1].label}</h2>
         <p className="text-gray-500 text-small">
           Next: {steps.at(currentStep)?.label ?? <Trans>Done</Trans>}
         </p>

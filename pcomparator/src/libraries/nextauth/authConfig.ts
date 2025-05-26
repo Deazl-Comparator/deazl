@@ -9,12 +9,12 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   providers: [Google],
   trustHost: true,
 
-  callbacks: {
-    async session({ session, user }) {
-      session.user = user;
-      return session;
-    }
-  }
+  // callbacks: {
+  //   async session({ session, user }) {
+  //     session.user = user;
+  //     return session;
+  //   }
+  // }
 });
 
 export const withAuthentication = (callback: Parameters<typeof auth>[0]) =>

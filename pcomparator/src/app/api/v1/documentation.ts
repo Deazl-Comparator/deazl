@@ -1,4 +1,6 @@
 import { paths as pathPrices } from "~/app/api/v1/prices/documentation";
+import { paths as pathPriceSearch } from "~/app/api/v1/prices/search/documentation";
+import { paths as pathProducts } from "~/app/api/v1/products/[barcode]/documentation";
 import { paths as pathAccount } from "~/app/api/v1/user/[id]/account/documentation";
 import { paths as pathDeleteUserPrice } from "~/app/api/v1/user/[id]/prices/[priceId]/documentation";
 import { paths as pathUserPrices } from "~/app/api/v1/user/[id]/prices/documentation";
@@ -11,7 +13,9 @@ const routePaths = {
   ...pathProfile,
   ...pathProfileAvatar,
   ...pathUserPrices,
-  ...pathDeleteUserPrice
+  ...pathDeleteUserPrice,
+  ...pathPriceSearch,
+  ...pathProducts
 };
 
 export { routePaths as paths };

@@ -14,7 +14,7 @@ class Byte {
     this.size = file.size / 1048576;
 
     if (this.maxSize !== "unlimited" && this.size > this.maxSize)
-      throw new FormError("", "", t`Your file exceeded the limit ${this.maxSize}Mo`);
+      throw new FormError("", "", `Your file exceeded the limit ${this.maxSize}Mo`);
   }
 }
 

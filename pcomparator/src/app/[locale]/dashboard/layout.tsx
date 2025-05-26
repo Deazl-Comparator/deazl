@@ -1,11 +1,11 @@
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 import { Euro, MoveLeft } from "lucide-react";
 import Link from "~/components/Link/Link";
 import { type NextPageProps, withLinguiLayout } from "~/core/withLinguiLayout";
 
 const DashboardLayout = ({ children }: NextPageProps) => {
   return (
-    <div className="flex">
+    <div className="flex flex-1">
       <aside className="sticky top-24 w-72 h-[calc(100dvh-96px)] p-6 mt-8 flex-col hidden md:flex">
         <nav className="h-auto flex-1">
           <ul>

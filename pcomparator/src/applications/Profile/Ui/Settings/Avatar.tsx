@@ -1,7 +1,7 @@
 "use client";
 
-import { Trans } from "@lingui/macro";
-import { Avatar, Card, CardBody, CardFooter, CardHeader } from "@nextui-org/react";
+import { Avatar, Card, CardBody, CardFooter, CardHeader } from "@heroui/react";
+import { Trans } from "@lingui/react/macro";
 import { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { updateAvatar } from "~/applications/Profile/Api/updateAvatar";

@@ -1,50 +1,69 @@
 "use client";
 
+import { useDisclosure } from "@heroui/react";
 import { t } from "@lingui/macro";
 import { useLingui } from "@lingui/react";
-import { Button, Input } from "@nextui-org/react";
+import clsx from "clsx";
 import { Send } from "lucide-react";
-import type { ReactNode } from "react";
-import useForm from "~/components/Form/useForm";
+import { type ReactNode, useActionState } from "react";
+import { useFormStatus } from "react-dom";
+import { search } from "~/applications/Searchbar/Api/search";
+import { SearchResultModal } from "~/applications/Searchbar/Ui/SearchResult/SearchResultModal";
+
+const SubmitButton = () => {
+  const { pending } = useFormStatus();
+
+  return (
+    <div className="absolute top-1 right-1.5">
+      <button
+        type="submit"
+        color="primary"
+        className="bg-primary rounded-full p-2"
+        disabled={pending}
+        aria-disabled={pending}
+        aria-valuetext="Search button"
+      >
+        <Send />
+      </button>
+    </div>
+  );
+};
 
 interface SearchbarProps {
   startContent: ReactNode;
 }
 
 export const Searchbar = ({ startContent }: SearchbarProps) => {
-  const form = useForm<{ search: string }>("search");
+  const [state, formAction] = useActionState(search, null);
   const { i18n } = useLingui();
+  const { onOpen } = useDisclosure();
 
   return (
-    // <form.Form
-    //   methods={form.methods}
-    //   onSubmit={(data) => {}}
-    //   disableActions
-    //   className="w-full mt-8"
-    // >
-    <Input
-      type="search"
-      name="search"
-      radius="full"
-      size="lg"
-      placeholder={t(i18n)`Enter your codebar`}
-      classNames={{ inputWrapper: "px-2" }}
-      // pattern={{
-      //   value: /^(?:\d{12}|\d{13}|[A-Z0-9\-\. \$\/\+%]{1,43}|[\x20-\x7E]{1,48})$/,
-      //   message: t(i18n)`Please enter a valid barcode.`
-      // }}
-      startContent={startContent}
-      endContent={
-        <Button
-          startContent={<Send />}
-          type="submit"
-          color="primary"
-          radius="full"
-          isDisabled={!form.watch("search")?.length}
-          isIconOnly
-        />
-      }
-    />
-    // </form.Form>
+    <form
+      action={async (formData) => {
+        formAction(formData);
+        onOpen();
+      }}
+      className="w-full"
+    >
+      <div className="relative w-full">
+        <label>
+          <input
+            name="search"
+            className={clsx("rounded-full bg-default-100 border-none shadow-sm w-full h-12 pl-12 pr-16")}
+            placeholder={t(i18n)`Enter your product name`}
+          />
+          {!state?.success && state?.errors.fieldErrors.search ? (
+            <p aria-live="polite" className="text-danger">
+              {state?.errors.fieldErrors.search}
+            </p>
+          ) : null}
+        </label>
+        <div className="absolute top-1 left-1.5">{startContent}</div>
+        <SubmitButton />
+      </div>
+
+      {state?.success && <SearchResultModal search={state.search} />}
+    </form>
   );
 };

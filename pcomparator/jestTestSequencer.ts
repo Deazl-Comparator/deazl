@@ -1,5 +1,3 @@
-import { a } from "@lingui/react/dist/shared/react.e5f95de8";
-
 const Sequencer = require("@jest/test-sequencer").default;
 // import { Sequencer } from "@jest/test-sequencer";
 

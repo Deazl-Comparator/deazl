@@ -1,7 +1,7 @@
 "use client";
 
-import { Trans } from "@lingui/macro";
-import { Button, Listbox, ListboxItem, Popover, PopoverContent, PopoverTrigger } from "@nextui-org/react";
+import { Button, Listbox, ListboxItem, Popover, PopoverContent, PopoverTrigger } from "@heroui/react";
+import { Trans } from "@lingui/react/macro";
 import { Moon, Settings, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { type Dispatch, type SetStateAction, useEffect, useState } from "react";

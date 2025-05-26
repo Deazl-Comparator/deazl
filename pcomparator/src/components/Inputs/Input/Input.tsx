@@ -1,4 +1,4 @@
-import { Input as InputNextUi, type InputProps as InputPropsNextUi } from "@nextui-org/input";
+import { Input as InputNextUi, type InputProps as InputPropsNextUi } from "@heroui/input";
 import { Controller, type FieldValues, type RegisterOptions, useFormContext } from "react-hook-form";
 
 export interface InputProps extends Omit<InputPropsNextUi, keyof RegisterOptions<FieldValues, any>> {

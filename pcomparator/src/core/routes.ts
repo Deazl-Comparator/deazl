@@ -8,3 +8,5 @@ export const productPageRoute = (productId: string): Route => `/product/${produc
 
 export const searchPageRoute = (categoryId: string, search: string): Route =>
   `/category/${categoryId}/${search}`;
+
+export const shoppingListPageRoute = (listId: string): Route => `/shopping-lists/${listId}`;

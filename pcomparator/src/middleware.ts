@@ -1,11 +1,10 @@
 import { cookies } from "next/headers";
-import { NextResponse, userAgent } from "next/server";
+import { type NextRequest, NextResponse, userAgent } from "next/server";
 import { AVAILABLE_LOCALES } from "~/core/locale";
-import { auth as middleware } from "~/libraries/nextauth/authConfig";
 
 const locales = ["en", "fr"];
 
-export default middleware(async (request) => {
+export default async (request: NextRequest) => {
   const locale = (await cookies()).get("locale")?.value ?? AVAILABLE_LOCALES.fr;
   const { device } = userAgent(request);
   const viewport = device.type === "mobile" ? "mobile" : "desktop";
@@ -34,8 +33,8 @@ export default middleware(async (request) => {
   return NextResponse.next({
     headers: headers
   });
-});
+};
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|manifest|static/*).*)"]
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|manifest|static/*|robots|sw|workbox-*).*)"]
 };

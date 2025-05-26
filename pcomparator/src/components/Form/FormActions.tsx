@@ -1,7 +1,7 @@
 "use client";
 
-import { Trans } from "@lingui/macro";
-import { Button, type ButtonProps } from "@nextui-org/react";
+import { Button, type ButtonProps } from "@heroui/react";
+import { Trans } from "@lingui/react/macro";
 import clsx from "clsx";
 import _ from "lodash";
 import type { ComponentType, ReactNode } from "react";
@@ -52,7 +52,8 @@ const FormActions = ({
             color={device === "desktop" ? "default" : "default"}
             type="button"
             fullWidth={device === "mobile"}
-            disabled={form.formState.isSubmitting}
+            size="lg"
+            isDisabled={form.formState.isSubmitting}
             {..._.omit(prevProps, "title", "as")}
             className={clsx("md:underline md:text-black-primary", prevProps.className)}
           >
@@ -62,9 +63,10 @@ const FormActions = ({
       ) : null}
       <Button
         type="submit"
+        size="lg"
         fullWidth={device === "mobile"}
         isLoading={form.formState.isSubmitting}
-        disabled={Object.keys(form.formState.errors)
+        isDisabled={Object.keys(form.formState.errors)
           .filter((key) => form.formState.errors[key])
           .some((v) => v)}
         {..._.omit(nextProps, "title")}

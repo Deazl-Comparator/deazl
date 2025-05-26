@@ -1,5 +1,5 @@
-import { Trans } from "@lingui/macro";
-import { Button, ModalBody, ModalFooter, Radio, RadioGroup, Spinner } from "@nextui-org/react";
+import { Button, Radio, RadioGroup, Spinner } from "@heroui/react";
+import { Trans } from "@lingui/react/macro";
 import { Search } from "lucide-react";
 import { useRef, useState } from "react";
 import useForm from "~/components/Form/useForm";
@@ -28,45 +28,42 @@ export const Location = ({ onNextStep, onPrevious }: LocationProps) => {
       }}
       actions={{
         nextProps: { title: <Trans>Next</Trans>, color: "primary" },
-        prevProps: { title: <Trans>Previous</Trans>, onPress: onPrevious },
-        wrapper: ModalFooter
+        prevProps: { title: <Trans>Previous</Trans>, onPress: onPrevious }
       }}
     >
-      <ModalBody>
-        <RadioGroup label="Select the store" color="default">
-          {loading ? (
-            <Spinner />
-          ) : (
-            location?.map(({ name, address }) => (
-              <Radio
-                value={name}
-                description={address}
-                key={name}
-                onChange={() => {
-                  setChoosenLocation({ storeName: name, location: address });
-                }}
-              >
-                {name}
-              </Radio>
-            ))
-          )}
-        </RadioGroup>
-        <Input
-          name="location"
-          label={<Trans>Custom location</Trans>}
-          placeholder="4 rue du dôme, 67000, Strasbourg"
-          endContent={
-            <Button
-              startContent={<Search />}
-              variant="flat"
-              onPress={() => getLocation(searchRef.current?.value)}
+      <RadioGroup label="Select the store" color="default">
+        {loading ? (
+          <Spinner />
+        ) : (
+          location?.map(({ name, address }) => (
+            <Radio
+              value={name}
+              description={address}
+              key={name}
+              onChange={() => {
+                setChoosenLocation({ storeName: name, location: address });
+              }}
             >
-              <Trans>Search</Trans>
-            </Button>
-          }
-          ref={searchRef}
-        />
-      </ModalBody>
+              {name}
+            </Radio>
+          ))
+        )}
+      </RadioGroup>
+      <Input
+        name="location"
+        label={<Trans>Custom location</Trans>}
+        placeholder="4 rue du dôme, 67000, Strasbourg"
+        endContent={
+          <Button
+            startContent={<Search />}
+            variant="flat"
+            onPress={() => getLocation(searchRef.current?.value)}
+          >
+            <Trans>Search</Trans>
+          </Button>
+        }
+        ref={searchRef}
+      />
     </form.Form>
   );
 };

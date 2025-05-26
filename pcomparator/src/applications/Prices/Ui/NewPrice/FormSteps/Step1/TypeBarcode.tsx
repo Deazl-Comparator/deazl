@@ -1,5 +1,5 @@
-import { Trans } from "@lingui/macro";
-import { ModalBody, ModalFooter } from "@nextui-org/react";
+import {} from "@heroui/react";
+import { Trans } from "@lingui/react/macro";
 import _ from "lodash";
 import type { Barcode as BarcodeT } from "~/applications/Prices/Domain/ValueObjects/Barcode";
 import useForm from "~/components/Form/useForm";
@@ -29,15 +29,12 @@ export const TypeBarcode = ({ onNextStep, barcode }: TypeBarcodeProps) => {
           }
         }}
         actions={{
-          nextProps: { title: <Trans>Next</Trans>, color: "primary", type: "submit" },
-          wrapper: ModalFooter
+          nextProps: { title: <Trans>Next</Trans>, color: "primary", type: "submit" }
         }}
       >
-        <ModalBody>
-          {/* NOTE – Adding this hidden input to fix nextui modal error... */}
-          <Input name="empty" className="hidden" hidden />
-          <Barcode name="barcode" defaultValue={barcode?.barcode} />
-        </ModalBody>
+        {/* NOTE – Adding this hidden input to fix nextui modal error... */}
+        <Input name="empty" className="hidden" hidden />
+        <Barcode name="barcode" defaultValue={barcode?.barcode} />
       </form.Form>
     </>
   );

@@ -1,5 +1,5 @@
-import { Trans } from "@lingui/macro";
-import { Button, ModalBody, ModalFooter, useDisclosure } from "@nextui-org/react";
+import { Button, ModalBody, ModalFooter, useDisclosure } from "@heroui/react";
+import { Trans } from "@lingui/react/macro";
 import { Camera } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";

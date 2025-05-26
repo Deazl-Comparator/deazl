@@ -1,4 +1,4 @@
-import { Trans } from "@lingui/macro";
+import { Trans } from "@lingui/react/macro";
 import { SettingsAvatar } from "~/applications/Profile/Ui/Settings/Avatar";
 import { SettingsDeleteAccount } from "~/applications/Profile/Ui/Settings/DeleteAccount";
 import { SettingsDisplayName } from "~/applications/Profile/Ui/Settings/DisplayName";

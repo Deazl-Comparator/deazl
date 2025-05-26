@@ -1,7 +1,4 @@
-/**
- * @jest-environment jsdom
- */
-import { t } from "@lingui/macro";
+import { useLingui } from "@lingui/react/macro";
 import type React from "react";
 import useForm from "~/components/Form/useForm";
 import { fireEvent, render } from "~/test/componentUtils";
@@ -85,13 +82,14 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => {
 
 describe("File Component", () => {
   it("should render the file input", () => {
+    const { i18n } = useLingui();
     const { getByPlaceholderText } = render(
       <Wrapper>
         <FileComponent name="testFile" />
       </Wrapper>
     );
 
-    expect(getByPlaceholderText(t`Select your file`)).toBeInTheDocument();
+    expect(getByPlaceholderText(i18n._("Select your file"))).toBeInTheDocument();
   });
 
   it("should display file names when files are selected", () => {
@@ -116,6 +114,7 @@ describe("File Component", () => {
 
   it("should display an error message when file size exceeds limit", () => {
     const maxSize = 1;
+    const { i18n } = useLingui();
 
     const { container, getByText } = render(
       <Wrapper>
@@ -132,7 +131,7 @@ describe("File Component", () => {
     dataTransfer.items.add(file);
     fireEvent.change(fileInput, { target: { files: dataTransfer.files } });
 
-    expect(getByText(t`Your file exceeded the limit ${maxSize}Mo`)).toBeInTheDocument();
+    expect(getByText(i18n._("Your file exceeded the limit ${maxSize}Mo"))).toBeInTheDocument();
   });
 
   it("should display multiple file previews when multiple files are selected", () => {
