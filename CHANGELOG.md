@@ -1,3 +1,10 @@
+# [4.10.0-beta.2](https://github.com/Deazl-Comparator/deazl/compare/v4.10.0-beta.1...v4.10.0-beta.2) (2025-05-26)
+
+
+### Bug Fixes
+
+* correct syntax for Vercel token usage in deployment steps ([af5f9a0](https://github.com/Deazl-Comparator/deazl/commit/af5f9a0680876c662cb07a1393761788e127590b))
+
 # [4.10.0-beta.1](https://github.com/Deazl-Comparator/deazl/compare/v4.9.0...v4.10.0-beta.1) (2025-05-26)
 
 
