@@ -8,8 +8,8 @@ const os = require('os');
 function getLocalIP() {
   const interfaces = os.networkInterfaces();
   for (const name of Object.keys(interfaces)) {
-    for (const interface of interfaces[name]) {
-      const { address, family, internal } = interface;
+    for (const iinterface of interfaces[name]) {
+      const { address, family, internal } = iinterface;
       if (family === 'IPv4' && !internal) {
         return address;
       }

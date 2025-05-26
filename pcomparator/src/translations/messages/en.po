@@ -201,6 +201,7 @@ msgid "Back to Home"
 msgstr "Back to Home"
 
 #: src/components/Inputs/Input/Barcode.tsx
+#: src/applications/Prices/Ui/NewPrice/NewPiceModal.tsx
 msgid "Barcode"
 msgstr "Barcode"
 
@@ -216,7 +217,10 @@ msgstr "Brand"
 msgid "By signing in, you agree to our <0>terms of service</0> and <1>privacy policy</1>."
 msgstr "By signing in, you agree to our <0>terms of service</0> and <1>privacy policy</1>."
 
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ProductDetailsModal.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/AddStoreModal.tsx
+#: src/applications/Prices/Ui/ListPrices/CardPrice/DeletePriceModal/DeletePriceModal.tsx
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -277,10 +281,6 @@ msgstr "Comparez les prix dans les plus grandes enseignes de distribution franç
 msgid "Completed"
 msgstr "Completed"
 
-#: src/applications/ShoppingLists/Ui/ShoppingLists/EmptyState.tsx
-msgid "Completed lists will appear here"
-msgstr "Completed lists will appear here"
-
 #: src/applications/Prices/Ui/ListPrices/CardPrice/DeletePriceModal/DeletePriceModal.tsx
 msgid "confirm"
 msgstr "confirm"
@@ -333,6 +333,11 @@ msgstr "Create and share your shopping lists with your family or friends. Collab
 msgid "Create and share your shopping lists. Track prices and collaborate with your loved ones."
 msgstr "Create and share your shopping lists. Track prices and collaborate with your loved ones."
 
+#: src/applications/ShoppingLists/Ui/ShoppingLists/ShoppingListsView.tsx
+msgid "Create New List"
+msgstr "Create New List"
+
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ProductDetailsModal.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
 msgid "Create Product"
 msgstr "Create Product"
@@ -346,8 +351,12 @@ msgid "Create Store"
 msgstr "Create Store"
 
 #: src/applications/ShoppingLists/Ui/ShoppingLists/EmptyState.tsx
-msgid "Create your first shopping list to get started"
-msgstr "Create your first shopping list to get started"
+msgid "Create Your First List"
+msgstr "Create Your First List"
+
+#: src/applications/ShoppingLists/Ui/ShoppingLists/EmptyState.tsx
+msgid "Create your first shopping list to start organizing your purchases and comparing prices across different stores."
+msgstr "Create your first shopping list to start organizing your purchases and comparing prices across different stores."
 
 #: src/views/Home/components/HowItWorks/HowItWorksSection.tsx
 msgid "Create your free account in seconds"
@@ -356,6 +365,10 @@ msgstr "Create your free account in seconds"
 #: src/views/Home/components/HowItWorks/HowItWorksSection.tsx
 msgid "Create your lists"
 msgstr "Create your lists"
+
+#: src/applications/ShoppingLists/Ui/ShoppingLists/ShoppingListsView.tsx
+msgid "Create, organize, and share your shopping lists with ease. Compare prices and find the best deals automatically."
+msgstr "Create, organize, and share your shopping lists with ease. Compare prices and find the best deals automatically."
 
 #: src/applications/Prices/Ui/NewQuickPrice/FormSteps/Location.tsx
 #: src/applications/Prices/Ui/NewPrice/FormSteps/Step4/Location.tsx
@@ -465,6 +478,10 @@ msgstr "Environment"
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/useQuickAdd.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListDetailsHeader.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/AddStoreModal.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShoppingListShare.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShoppingListShare.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShareList.tsx
 msgid "Error"
 msgstr "Error"
 
@@ -505,6 +522,7 @@ msgid "Failed to remove item"
 msgstr "Failed to remove item"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShoppingListShare.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShareList.tsx
 msgid "Failed to send invitation"
 msgstr "Failed to send invitation"
 
@@ -711,6 +729,7 @@ msgid "List deleted"
 msgstr "List deleted"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/AddStoreModal.tsx
+#: src/applications/Prices/Ui/NewPrice/NewPiceModal.tsx
 msgid "Location"
 msgstr "Location"
 
@@ -721,10 +740,6 @@ msgstr "Made with ❤️ in France"
 #: src/app/[locale]/features/page.tsx
 msgid "Major chains and local stores"
 msgstr "Major chains and local stores"
-
-#: src/applications/ShoppingLists/Ui/ShoppingLists/ShoppingListsView.tsx
-msgid "Manage and organize your shopping lists"
-msgstr "Manage and organize your shopping lists"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
 msgid "Mark as completed"
@@ -738,6 +753,7 @@ msgstr "Maybe later"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/AddStoreModal.tsx
 msgid "Missing information"
 msgstr "Missing information"
 
@@ -757,7 +773,7 @@ msgstr "Name and price are required to create a product"
 msgid "National coverage"
 msgstr "National coverage"
 
-#: src/applications/ShoppingLists/Ui/ShoppingLists/ShoppingListsView.tsx
+#: src/applications/ShoppingLists/Ui/NewShoppingListButton/NewShoppingListButton.tsx
 msgid "New List"
 msgstr "New List"
 
@@ -778,6 +794,7 @@ msgstr "No active shopping lists"
 msgid "No completed lists"
 msgstr "No completed lists"
 
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/StoreSelector.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
 msgid "No store selected"
@@ -850,6 +867,7 @@ msgid "Please select a store to associate with this product"
 msgstr "Please select a store to associate with this product"
 
 #: src/applications/Profile/Ui/Settings/PhoneNumber.tsx
+#: src/applications/Profile/Ui/Settings/DisplayName.tsx
 msgid "Please use 32 characters at maximum."
 msgstr "Please use 32 characters at maximum."
 
@@ -862,6 +880,7 @@ msgstr "Previous"
 
 #: src/components/DesktopNav.tsx
 #: src/applications/Prices/Ui/NewQuickPrice/FormSteps/Price.tsx
+#: src/applications/Prices/Ui/NewPrice/NewPiceModal.tsx
 #: src/applications/Prices/Ui/NewPrice/FormSteps/Step2/Price.tsx
 msgid "Price"
 msgstr "Price"
@@ -996,6 +1015,7 @@ msgid "Return to the app"
 msgstr "Return to the app"
 
 #: src/applications/Profile/Ui/Settings/PhoneNumber.tsx
+#: src/applications/Profile/Ui/Settings/DisplayName.tsx
 msgid "Save"
 msgstr "Save"
 
@@ -1094,6 +1114,10 @@ msgstr "Smart product suggestions"
 #: src/views/Home/components/Features/FeaturesSection.tsx
 msgid "Smart shopping lists"
 msgstr "Smart shopping lists"
+
+#: src/applications/ShoppingLists/Ui/ShoppingLists/ShoppingListsView.tsx
+msgid "Smart Shopping Lists"
+msgstr "Smart Shopping Lists"
 
 #: src/views/Home/components/Hero/HeroSection.tsx
 #: src/app/[locale]/pricing/page.tsx
@@ -1278,6 +1302,10 @@ msgstr "What our users say"
 msgid "What would you like to do today?"
 msgstr "What would you like to do today?"
 
+#: src/applications/ShoppingLists/Ui/ShoppingLists/EmptyState.tsx
+msgid "When you complete shopping lists, they will appear here for your reference."
+msgstr "When you complete shopping lists, they will appear here for your reference."
+
 #: src/views/Home/components/Features/FeaturesSection.tsx
 msgid "Why choose Deazl?"
 msgstr "Why choose Deazl?"
@@ -1303,10 +1331,6 @@ msgstr "You must add more than {minFile} files"
 msgid "Your criteria"
 msgstr "Your criteria"
 
-#: src/applications/ShoppingLists/Ui/ShoppingLists/ShoppingListsView.tsx
-msgid "Your Lists"
-msgstr "Your Lists"
-
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/AddStoreModal.tsx
 msgid "Your new store has been added and selected"
 msgstr "Your new store has been added and selected"
@@ -1314,3 +1338,7 @@ msgstr "Your new store has been added and selected"
 #: src/components/Inputs/Phone/Phone.tsx
 msgid "Your phone number is not valid"
 msgstr "Your phone number is not valid"
+
+#: src/applications/ShoppingLists/Ui/ShoppingLists/ShoppingListsView.tsx
+msgid "Your Shopping Lists"
+msgstr "Your Shopping Lists"
