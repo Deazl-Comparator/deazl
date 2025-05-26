@@ -21,32 +21,12 @@ jobs:
     name: Deploy to Staging
     runs-on: ubuntu-latest
     if: github.event.release.prerelease == true || (github.event_name == 'workflow_dispatch' && inputs.environment == 'staging')
-    environment:
-      name: staging
-      url: https://staging.pcomparator.app
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "lts/*"
-          cache: yarn
-          cache-dependency-path: './pcomparator/yarn.lock'
-          
-      - name: Install dependencies
-        working-directory: ./pcomparator
-        run: yarn install --frozen-lockfile
-        
-      - name: Build application
-        working-directory: ./pcomparator
-        run: yarn build
-        env:
-          NODE_ENV: production
           
       - name: Deploy to staging
-        working-directory: ./pcomparator
         run: |
           echo "🚀 Deploying to staging environment..."
           npx vercel --token ${{ secrets.VERCEL_TOKEN }} --yes
@@ -60,32 +40,12 @@ jobs:
     name: Deploy to Production
     runs-on: ubuntu-latest
     if: github.event.release.prerelease == false || (github.event_name == 'workflow_dispatch' && inputs.environment == 'production')
-    environment:
-      name: production
-      url: https://pcomparator.app
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "lts/*"
-          cache: yarn
-          cache-dependency-path: './pcomparator/yarn.lock'
-          
-      - name: Install dependencies
-        working-directory: ./pcomparator
-        run: yarn install --frozen-lockfile
-        
-      - name: Build application
-        working-directory: ./pcomparator
-        run: yarn build
-        env:
-          NODE_ENV: production
           
       - name: Deploy to production
-        working-directory: ./pcomparator
         run: |
           echo "🚀 Deploying to production environment..."
           npx vercel --token ${{ secrets.VERCEL_TOKEN }} --yes
