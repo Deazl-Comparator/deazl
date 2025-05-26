@@ -14,10 +14,10 @@ interface HeaderProps {
 
 export const Header = ({ rightArea }: HeaderProps) => {
   const device = useDevice();
-  const isScrolled = useScroll(64);
+  const isScrolled = useScroll(device === "desktop" ? 64 : 0);
 
   return (
-    <Navbar isBlurred={isScrolled} className="bg-transparent" shouldHideOnScroll>
+    <Navbar isBlurred={isScrolled} className="bg-transparent" shouldHideOnScroll={device === "desktop"}>
       <NavbarBrand>
         <Link href="/" className="flex-[0_0_auto]">
           <Image src={Logo.src} fallbackSrc={Logo.blurDataURL} width={35} height={35} />
@@ -26,12 +26,16 @@ export const Header = ({ rightArea }: HeaderProps) => {
       </NavbarBrand>
 
       <NavbarContent>
-        <Link href="/about">
-          <Trans>About</Trans>
-        </Link>
-        <Link href="/pricing">
-          <Trans>Pricing</Trans>
-        </Link>
+        {device === "desktop" ? (
+          <>
+            <Link href="/about">
+              <Trans>About</Trans>
+            </Link>
+            <Link href="/pricing">
+              <Trans>Pricing</Trans>
+            </Link>
+          </>
+        ) : null}
       </NavbarContent>
 
       <NavbarContent justify="end">

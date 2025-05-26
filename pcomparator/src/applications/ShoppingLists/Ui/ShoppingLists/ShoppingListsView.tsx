@@ -2,8 +2,7 @@
 
 import { Button, Chip, Tab, Tabs } from "@heroui/react";
 import { Trans } from "@lingui/react/macro";
-import { AnimatePresence, motion } from "framer-motion";
-import { ArchiveIcon, ListPlusIcon, ShoppingCartIcon } from "lucide-react";
+import { ArchiveIcon, ListPlusIcon, ShoppingCartIcon, SparklesIcon } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import type { ShoppingListPayload } from "~/ShoppingLists/Domain/Entities/ShoppingList.entity";
@@ -28,99 +27,108 @@ export const ShoppingListsView = ({ lists }: ShoppingListViewProps) => {
   });
 
   return (
-    <div className="mx-auto max-w-5xl md:max-w-6xl px-4">
-      <div className="mb-6 flex items-center justify-between flex-wrap gap-4">
-        <div>
-          <h1 className="text-2xl md:text-3xl font-bold mb-1">
-            <Trans>Your Lists</Trans>
-          </h1>
-          <p className="text-gray-600 text-sm md:text-base">
-            <Trans>Manage and organize your shopping lists</Trans>
-          </p>
-        </div>
-        <div className="flex gap-2">
-          <Button
-            color="primary"
-            variant="flat"
-            size="lg"
-            startContent={<ListPlusIcon className="h-4 w-4" />}
-            as={Link}
-            href="/shopping-lists/create"
-          >
-            <Trans>New List</Trans>
-          </Button>
-        </div>
-      </div>
-
-      <Tabs
-        selectedKey={filter}
-        onSelectionChange={(key) => setFilter(key as EmptyStateProps["type"])}
-        variant="solid"
-        color="primary"
-        classNames={{
-          tabList: "w-full md:w-auto",
-          tab: "md:px-6"
-        }}
-      >
-        <Tab
-          key="active"
-          title={
-            <div className="flex items-center gap-2 px-2">
-              <ShoppingCartIcon className="h-4 w-4" />
-              <span>Active</span>
-              <Chip size="sm" variant="flat" color="primary">
-                {activeLists.length}
-              </Chip>
+    <div className="relative w-full">
+      {/* Hero Section */}
+      <section className="relative py-16 md:py-24 px-4">
+        <div className="mx-auto max-w-7xl text-center">
+          <div className="mx-auto max-w-3xl">
+            <div className="mb-6 flex justify-center">
+              <div className="flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary backdrop-blur-sm">
+                <SparklesIcon className="h-4 w-4" />
+                <Trans>Smart Shopping Lists</Trans>
+              </div>
             </div>
-          }
-        />
-        <Tab
-          key="completed"
-          title={
-            <div className="flex items-center gap-2 px-2">
-              <ArchiveIcon className="h-4 w-4" />
-              <span>Completed</span>
-              <Chip size="sm" variant="flat" color="default">
-                {completedLists.length}
-              </Chip>
-            </div>
-          }
-        />
-      </Tabs>
 
-      <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <AnimatePresence mode="popLayout">
-          {(filter === "active" ? activeLists : completedLists).map((list, index) => (
-            <motion.div
-              key={list.id}
-              layout
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{
-                type: "spring",
-                stiffness: 500,
-                damping: 30,
-                opacity: { duration: 0.2 },
-                delay: index * 0.05
+            <h1 className="mb-6 text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-5xl md:text-6xl">
+              <Trans>Your Shopping Lists</Trans>
+            </h1>
+
+            <p className="mb-8 text-lg text-gray-600 dark:text-gray-300 sm:text-xl">
+              <Trans>
+                Create, organize, and share your shopping lists with ease. Compare prices and find the best
+                deals automatically.
+              </Trans>
+            </p>
+
+            <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
+              <Button
+                color="primary"
+                size="lg"
+                startContent={<ListPlusIcon className="h-5 w-5" />}
+                as={Link}
+                href="/shopping-lists/create"
+                className="text-base font-semibold"
+              >
+                <Trans>Create New List</Trans>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Lists Section */}
+      <section className="relative px-4 pb-16">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-8">
+            <Tabs
+              selectedKey={filter}
+              onSelectionChange={(key) => setFilter(key as EmptyStateProps["type"])}
+              variant="solid"
+              color="primary"
+              classNames={{
+                tabList:
+                  "bg-gray-100/50 dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50",
+                tab: "data-[selected=true]:bg-primary data-[selected=true]:text-white transition-all duration-200",
+                cursor: "bg-primary shadow-lg"
               }}
             >
-              <ShoppingListCard list={list} userRole={list.userRole} />
-            </motion.div>
-          ))}
-        </AnimatePresence>
+              <Tab
+                key="active"
+                title={
+                  <div className="flex items-center gap-2 px-3">
+                    <ShoppingCartIcon className="h-4 w-4" />
+                    <span className="font-medium">Active Lists</span>
+                    <Chip size="sm" variant="flat" color="primary" className="ml-1">
+                      {activeLists.length}
+                    </Chip>
+                  </div>
+                }
+              />
+              <Tab
+                key="completed"
+                title={
+                  <div className="flex items-center gap-2 px-3">
+                    <ArchiveIcon className="h-4 w-4" />
+                    <span className="font-medium">Completed</span>
+                    <Chip size="sm" variant="flat" color="success" className="ml-1">
+                      {completedLists.length}
+                    </Chip>
+                  </div>
+                }
+              />
+            </Tabs>
+          </div>
 
-        {filter === "active" && activeLists.length === 0 && (
-          <div className="col-span-full">
-            <EmptyState type="active" />
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {(filter === "active" ? activeLists : completedLists).map((list) => (
+              <div key={list.id} className="group">
+                <ShoppingListCard list={list} userRole={list.userRole} />
+              </div>
+            ))}
+
+            {filter === "active" && activeLists.length === 0 && (
+              <div className="col-span-full">
+                <EmptyState type="active" />
+              </div>
+            )}
+            {filter === "completed" && completedLists.length === 0 && (
+              <div className="col-span-full">
+                <EmptyState type="completed" />
+              </div>
+            )}
           </div>
-        )}
-        {filter === "completed" && completedLists.length === 0 && (
-          <div className="col-span-full">
-            <EmptyState type="completed" />
-          </div>
-        )}
-      </div>
+        </div>
+      </section>
     </div>
   );
 };
