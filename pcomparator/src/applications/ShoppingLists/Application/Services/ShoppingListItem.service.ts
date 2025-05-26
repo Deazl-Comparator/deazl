@@ -1,10 +1,9 @@
+import { ShoppingListItem } from "~/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
+import type { ShoppingListItemRepository } from "~/ShoppingLists/Domain/Repositories/ShoppingListItemRepository";
+import type { ShoppingListRepository } from "~/ShoppingLists/Domain/Repositories/ShoppingListRepository";
+import { ShoppingListDomainService } from "~/ShoppingLists/Domain/Services/ShoppingListDomainService";
+import { UnitType } from "~/ShoppingLists/Domain/ValueObjects/Unit.vo";
 import { auth } from "~/libraries/nextauth/authConfig";
-import type { ShoppingListItemEntity } from "../../Domain/Entities/ShoppingListItem.entity";
-import { ShoppingListItemEntity as ShoppingListItem } from "../../Domain/Entities/ShoppingListItem.entity";
-import type { ShoppingListItemRepository } from "../../Domain/Repositories/ShoppingListItemRepository";
-import type { ShoppingListRepository } from "../../Domain/Repositories/ShoppingListRepository";
-import { ShoppingListDomainService } from "../../Domain/Services/ShoppingListDomainService";
-import { UnitType } from "../../Domain/ValueObjects/Unit.vo";
 
 /**
  * Service d'application pour la gestion des articles de listes de courses
@@ -33,7 +32,7 @@ export class ShoppingListItemApplicationService {
       price?: number | null;
       notes?: string | null;
     }
-  ): Promise<ShoppingListItemEntity> {
+  ): Promise<ShoppingListItem> {
     try {
       const session = await auth();
       if (!session?.user?.id) throw new Error("User not authenticated");
@@ -85,7 +84,7 @@ export class ShoppingListItemApplicationService {
       isCompleted: boolean;
       notes: string | null;
     }>
-  ): Promise<ShoppingListItemEntity> {
+  ): Promise<ShoppingListItem> {
     try {
       const session = await auth();
       if (!session?.user?.id) throw new Error("User not authenticated");
@@ -168,7 +167,7 @@ export class ShoppingListItemApplicationService {
   /**
    * Bascule l'état de completion d'un article
    */
-  async toggleItemCompletion(itemId: string): Promise<ShoppingListItemEntity> {
+  async toggleItemCompletion(itemId: string): Promise<ShoppingListItem> {
     try {
       const session = await auth();
       if (!session?.user?.id) throw new Error("User not authenticated");

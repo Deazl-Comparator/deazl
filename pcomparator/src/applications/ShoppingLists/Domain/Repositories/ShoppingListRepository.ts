@@ -1,4 +1,4 @@
-import type { ShoppingList } from "../Entities/ShoppingList.entity";
+import type { ShoppingList } from "~/ShoppingLists/Domain/Entities/ShoppingList.entity";
 
 /**
  * Repository interface pour la gestion des listes de courses

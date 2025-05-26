@@ -1,4 +1,4 @@
-import { DomainError } from "~/applications/Shared/Domain/Core/DomainError";
+import { DomainError } from "~/Shared/Domain/Core/DomainError";
 
 export class BusinessRuleViolationError extends DomainError {
   constructor(message: string) {

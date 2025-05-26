@@ -1,8 +1,7 @@
+import type { ShoppingList } from "~/ShoppingLists/Domain/Entities/ShoppingList.entity";
+import type { ShoppingListRepository } from "~/ShoppingLists/Domain/Repositories/ShoppingListRepository";
+import { ShoppingListMapper } from "~/ShoppingLists/Infrastructure/Mappers/ShoppingListMapper";
 import { prisma } from "~/libraries/prisma";
-import type { ShoppingList } from "../../Domain/Entities/ShoppingList.entity";
-import type { ShoppingListRepository } from "../../Domain/Repositories/ShoppingListRepository";
-import { ShoppingListItemMapper } from "../Mappers/ShoppingListItemMapper";
-import { ShoppingListMapper } from "../Mappers/ShoppingListMapper";
 
 export class PrismaShoppingListRepository implements ShoppingListRepository {
   async create(list: ShoppingList): Promise<ShoppingList> {

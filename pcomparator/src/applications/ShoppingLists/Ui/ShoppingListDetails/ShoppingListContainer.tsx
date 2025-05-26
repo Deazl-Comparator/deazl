@@ -1,9 +1,9 @@
 import { Trans } from "@lingui/react/macro";
 import { useMemo } from "react";
-import type { ShoppingListPayload } from "~/applications/ShoppingLists/Domain/Entities/ShoppingList.entity";
-import { ShoppingListItemCard } from "~/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListItemCard";
-import { ShoppingListQuickAddBar } from "~/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListQuickAddBar";
-import { useShoppingListActions } from "~/applications/ShoppingLists/Ui/ShoppingListDetails/useShoppingListActions";
+import type { ShoppingListPayload } from "~/ShoppingLists/Domain/Entities/ShoppingList.entity";
+import { ShoppingListItemCard } from "~/ShoppingLists/Ui/ShoppingListDetails/ShoppingListItemCard";
+import { ShoppingListQuickAddBar } from "~/ShoppingLists/Ui/ShoppingListDetails/ShoppingListQuickAddBar";
+import { useShoppingListActions } from "~/ShoppingLists/Ui/ShoppingListDetails/useShoppingListActions";
 
 interface ShoppingListContainerProps {
   initialList: ShoppingListPayload;

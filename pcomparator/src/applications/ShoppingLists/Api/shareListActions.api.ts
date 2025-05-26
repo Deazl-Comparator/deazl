@@ -1,9 +1,9 @@
 "use server";
 
+import { ShoppingListSharingApplicationService } from "~/ShoppingLists/Application/Services/ShoppingListSharing.service";
+import { PrismaShoppingListRepository } from "~/ShoppingLists/Infrastructure/Repositories/PrismaShoppingList.infrastructure";
+import { PrismaShoppingListSharingRepository } from "~/ShoppingLists/Infrastructure/Repositories/PrismaShoppingListSharing.infrastructure";
 import { auth } from "~/libraries/nextauth/authConfig";
-import { ShoppingListSharingApplicationService } from "../Application/Services/ShoppingListSharing.service";
-import { PrismaShoppingListRepository } from "../Infrastructure/Repositories/PrismaShoppingList.infrastructure";
-import { PrismaShoppingListSharingRepository } from "../Infrastructure/Repositories/PrismaShoppingListSharing.infrastructure";
 
 const shoppingListSharingService = new ShoppingListSharingApplicationService(
   new PrismaShoppingListRepository(),

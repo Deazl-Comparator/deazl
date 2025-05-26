@@ -4,8 +4,8 @@ import { Button } from "@heroui/react";
 import { ArrowLeftIcon } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { createShoppingList } from "~/applications/ShoppingLists/Api/createShoppingList.api";
-import { ShoppingListCreateForm } from "~/applications/ShoppingLists/Ui/ShoppingListCreateForm";
+import { createShoppingList } from "~/ShoppingLists/Api/createShoppingList.api";
+import { ShoppingListCreateForm } from "~/ShoppingLists/Ui/ShoppingListCreateForm";
 
 async function handleCreateList(formData: FormData) {
   const name = formData.get("name") as string;

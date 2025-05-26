@@ -1,11 +1,11 @@
 import type { z } from "zod";
-import { DomainError } from "~/applications/Shared/Domain/Core/DomainError";
-import { Entity } from "~/applications/Shared/Domain/Core/Entity";
-import { UniqueEntityID } from "~/applications/Shared/Domain/Core/UniqueEntityId";
-import type { ShoppingListCollaboratorPayload } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListCollaborator.entity";
-import type { ShoppingListSchema } from "~/applications/ShoppingLists/Domain/Schemas/ShoppingList.schema";
-import type { UserRoleEnum } from "~/applications/ShoppingLists/Domain/Schemas/UserRole.schema";
-import type { ShoppingListItemEntity } from "./ShoppingListItem.entity";
+import { DomainError } from "~/Shared/Domain/Core/DomainError";
+import { Entity } from "~/Shared/Domain/Core/Entity";
+import { UniqueEntityID } from "~/Shared/Domain/Core/UniqueEntityId";
+import type { ShoppingListCollaboratorPayload } from "~/ShoppingLists/Domain/Entities/ShoppingListCollaborator.entity";
+import type { ShoppingListItem } from "~/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
+import type { ShoppingListSchema } from "~/ShoppingLists/Domain/Schemas/ShoppingList.schema";
+import type { UserRoleEnum } from "~/ShoppingLists/Domain/Schemas/UserRole.schema";
 
 export class ListNameTooShortError extends DomainError {
   constructor() {
@@ -29,7 +29,7 @@ interface ShoppingListProps {
   name: string;
   description?: string;
   userId: string;
-  items: ShoppingListItemEntity[];
+  items: ShoppingListItem[];
   collaborators?: ShoppingListCollaboratorPayload[];
   isPublic: boolean;
   createdAt?: Date;
@@ -46,7 +46,7 @@ export class ShoppingList extends Entity<ShoppingListProps> {
       name: string;
       description?: string;
       userId: string;
-      items?: ShoppingListItemEntity[];
+      items?: ShoppingListItem[];
       collaborators?: ShoppingListCollaboratorPayload[];
       isPublic?: boolean;
     },
@@ -91,7 +91,7 @@ export class ShoppingList extends Entity<ShoppingListProps> {
     return this.props.collaborators;
   }
 
-  get items(): ShoppingListItemEntity[] {
+  get items(): ShoppingListItem[] {
     return this.props.items;
   }
 
@@ -120,7 +120,7 @@ export class ShoppingList extends Entity<ShoppingListProps> {
     this.props.updatedAt = new Date();
   }
 
-  public addItem(item: ShoppingListItemEntity): void {
+  public addItem(item: ShoppingListItem): void {
     this.props.items.push(item);
     this.props.updatedAt = new Date();
   }
@@ -130,11 +130,11 @@ export class ShoppingList extends Entity<ShoppingListProps> {
     this.props.updatedAt = new Date();
   }
 
-  public getItemById(itemId: string): ShoppingListItemEntity | undefined {
+  public getItemById(itemId: string): ShoppingListItem | undefined {
     return this.props.items.find((item) => item.id === itemId);
   }
 
-  public updateItem(itemId: string, updateFn: (item: ShoppingListItemEntity) => void): void {
+  public updateItem(itemId: string, updateFn: (item: ShoppingListItem) => void): void {
     const item = this.getItemById(itemId);
     if (!item) return;
 
@@ -142,11 +142,11 @@ export class ShoppingList extends Entity<ShoppingListProps> {
     this.props.updatedAt = new Date();
   }
 
-  public getCompletedItems(): ShoppingListItemEntity[] {
+  public getCompletedItems(): ShoppingListItem[] {
     return this.props.items.filter((item) => item.isCompleted);
   }
 
-  public getPendingItems(): ShoppingListItemEntity[] {
+  public getPendingItems(): ShoppingListItem[] {
     return this.props.items.filter((item) => !item.isCompleted);
   }
 

@@ -1,8 +1,8 @@
-import { ShoppingListItemEntity } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
+import { ShoppingListItem } from "~/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
 
 export class ShoppingListItemMapper {
-  static toDomain(raw: any): ShoppingListItemEntity {
-    return ShoppingListItemEntity.create(
+  static toDomain(raw: any): ShoppingListItem {
+    return ShoppingListItem.create(
       {
         shoppingListId: raw.shoppingListId,
         productId: raw.productId,
@@ -17,7 +17,7 @@ export class ShoppingListItemMapper {
     );
   }
 
-  static toPersistence(entity: ShoppingListItemEntity): any {
+  static toPersistence(entity: ShoppingListItem): any {
     return {
       id: entity.id,
       shoppingListId: entity.shoppingListId,

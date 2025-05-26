@@ -1,7 +1,7 @@
 // Services de domaine pour les listes de courses
 // Ces services encapsulent la logique métier pure
 
-import type { ShoppingList } from "../Entities/ShoppingList.entity";
+import type { ShoppingList } from "~/ShoppingLists/Domain/Entities/ShoppingList.entity";
 
 /**
  * Service de domaine contenant la logique métier pure pour les listes de courses

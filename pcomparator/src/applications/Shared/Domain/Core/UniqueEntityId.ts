@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { Identifier } from "~/applications/Shared/Domain/Core/Identifier";
+import { Identifier } from "~/Shared/Domain/Core/Identifier";
 
 export class UniqueEntityID extends Identifier<string | number> {
   constructor(id?: string | number) {

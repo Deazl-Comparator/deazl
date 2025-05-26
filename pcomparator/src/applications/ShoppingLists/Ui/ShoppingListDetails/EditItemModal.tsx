@@ -24,9 +24,9 @@ import {
   StoreIcon
 } from "lucide-react";
 import { useState } from "react";
-import { createProductFromItem } from "~/applications/ShoppingLists/Api/createProductFromItem.api";
-import type { ShoppingListItemPayload } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
-import { UnitType } from "~/applications/ShoppingLists/Domain/ValueObjects/Unit.vo";
+import { createProductFromItem } from "~/ShoppingLists/Api/createProductFromItem.api";
+import type { ShoppingListItemPayload } from "~/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
+import { UnitType } from "~/ShoppingLists/Domain/ValueObjects/Unit.vo";
 import { useStore } from "../Contexts/StoreContext";
 import { ProductDetailsModal } from "./ProductDetailsModal";
 

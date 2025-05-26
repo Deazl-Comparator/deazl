@@ -1,10 +1,10 @@
+import type { ShoppingListItem } from "~/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
+import type { ShoppingListItemRepository } from "~/ShoppingLists/Domain/Repositories/ShoppingListItemRepository";
+import { ShoppingListItemMapper } from "~/ShoppingLists/Infrastructure/Mappers/ShoppingListItemMapper";
 import { prisma } from "~/libraries/prisma";
-import type { ShoppingListItemEntity } from "../../Domain/Entities/ShoppingListItem.entity";
-import type { ShoppingListItemRepository } from "../../Domain/Repositories/ShoppingListItemRepository";
-import { ShoppingListItemMapper } from "../Mappers/ShoppingListItemMapper";
 
 export class PrismaShoppingListItemRepository implements ShoppingListItemRepository {
-  async addItem(listId: string, item: ShoppingListItemEntity): Promise<ShoppingListItemEntity> {
+  async addItem(listId: string, item: ShoppingListItem): Promise<ShoppingListItem> {
     const itemData = ShoppingListItemMapper.toPersistence(item);
 
     const newItem = await prisma.shoppingListItem.create({
@@ -23,7 +23,7 @@ export class PrismaShoppingListItemRepository implements ShoppingListItemReposit
     return ShoppingListItemMapper.toDomain(newItem);
   }
 
-  async updateItem(item: ShoppingListItemEntity): Promise<ShoppingListItemEntity> {
+  async updateItem(item: ShoppingListItem): Promise<ShoppingListItem> {
     const itemData = ShoppingListItemMapper.toPersistence(item);
 
     const updatedItem = await prisma.shoppingListItem.update({
@@ -48,7 +48,7 @@ export class PrismaShoppingListItemRepository implements ShoppingListItemReposit
     });
   }
 
-  async findItemById(id: string): Promise<ShoppingListItemEntity | null> {
+  async findItemById(id: string): Promise<ShoppingListItem | null> {
     const item = await prisma.shoppingListItem.findUnique({
       where: { id }
     });

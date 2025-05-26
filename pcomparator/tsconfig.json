@@ -28,9 +28,15 @@
     ],
     "baseUrl": ".",
     "paths": {
+      "~/ShoppingLists/*": [
+        "src/applications/ShoppingLists/*"
+      ],
+      "~/Shared/*": [
+        "src/applications/Shared/*"
+      ],
       "~/*": [
         "src/*"
-      ]
+      ],
     }
   },
   "include": [
