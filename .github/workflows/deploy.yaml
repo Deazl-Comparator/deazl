@@ -29,8 +29,8 @@ jobs:
       - name: Deploy to staging
         run: |
           echo "🚀 Deploying to staging environment..."
-          npx vercel --token ${{ secrets.VERCEL_TOKEN }} --yes
-          npx vercel --token ${{ secrets.VERCEL_TOKEN }} --prod=false
+          npx vercel --token=${{ secrets.VERCEL_TOKEN }} --yes
+          npx vercel --token=${{ secrets.VERCEL_TOKEN }} --prod=false
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
@@ -48,8 +48,8 @@ jobs:
       - name: Deploy to production
         run: |
           echo "🚀 Deploying to production environment..."
-          npx vercel --token ${{ secrets.VERCEL_TOKEN }} --yes
-          npx vercel --token ${{ secrets.VERCEL_TOKEN }} --prod
+          npx vercel --token=${{ secrets.VERCEL_TOKEN }} --yes
+          npx vercel --token=${{ secrets.VERCEL_TOKEN }} --prod
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
