@@ -46,10 +46,15 @@ jobs:
           NODE_ENV: production
           
       - name: Deploy to staging
+        working-directory: ./pcomparator
         run: |
           echo "🚀 Deploying to staging environment..."
-          # Ajoute ici tes commandes de déploiement staging
-          # Par exemple: rsync, docker push, kubectl apply, etc.
+          npx vercel --token ${{ secrets.VERCEL_TOKEN }} --yes
+          npx vercel --token ${{ secrets.VERCEL_TOKEN }} --prod=false
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
   deploy-production:
     name: Deploy to Production
@@ -80,7 +85,12 @@ jobs:
           NODE_ENV: production
           
       - name: Deploy to production
+        working-directory: ./pcomparator
         run: |
           echo "🚀 Deploying to production environment..."
-          # Ajoute ici tes commandes de déploiement production
-          # Par exemple: rsync, docker push, kubectl apply, etc.
+          npx vercel --token ${{ secrets.VERCEL_TOKEN }} --yes
+          npx vercel --token ${{ secrets.VERCEL_TOKEN }} --prod
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
