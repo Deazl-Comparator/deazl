@@ -4,10 +4,10 @@ import { Entity } from "~/applications/Shared/Domain/Core/Entity";
 import { UniqueEntityID } from "~/applications/Shared/Domain/Core/UniqueEntityId";
 import { BusinessRuleViolationError } from "~/applications/ShoppingLists/Domain/Errors/ShoppingListItemEntity.error";
 import type { ShoppingListItemSchema } from "~/applications/ShoppingLists/Domain/Schemas/ShoppingListItem.schema";
-import { ItemQuantity } from "../ValueObjects/ItemQuantity";
-import { ItemStatus } from "../ValueObjects/ItemStatus";
-import { Price } from "../ValueObjects/Price";
-import { Unit } from "../ValueObjects/Unit";
+import { ItemQuantity } from "../ValueObjects/ItemQuantity.vo";
+import { ItemStatus } from "../ValueObjects/ItemStatus.vo";
+import { Price } from "../ValueObjects/Price.vo";
+import { Unit } from "../ValueObjects/Unit.vo";
 
 export class ItemNameTooShortError extends DomainError {
   constructor() {

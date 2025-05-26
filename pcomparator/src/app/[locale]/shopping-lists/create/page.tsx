@@ -3,8 +3,41 @@
 import { Button } from "@heroui/react";
 import { ArrowLeftIcon } from "lucide-react";
 import Link from "next/link";
-import { handleCreateList } from "~/app/[locale]/shopping-lists/create/action";
+import { redirect } from "next/navigation";
+import { createShoppingList } from "~/applications/ShoppingLists/Api/createShoppingList.api";
 import { ShoppingListCreateForm } from "~/applications/ShoppingLists/Ui/ShoppingListCreateForm";
+
+async function handleCreateList(formData: FormData) {
+  const name = formData.get("name") as string;
+  const description = formData.get("description") as string;
+  const itemsJson = formData.get("items") as string;
+
+  if (!name) {
+    return { error: "Name is required" };
+  }
+
+  let items = [];
+  if (itemsJson) {
+    try {
+      items = JSON.parse(itemsJson);
+    } catch (error) {
+      console.error("Error parsing items:", error);
+    }
+  }
+
+  const list = await createShoppingList({
+    name,
+    description: description || null,
+    items: items.map((item: any) => ({
+      customName: item.customName,
+      quantity: item.quantity,
+      unit: item.unit,
+      isCompleted: false
+    }))
+  });
+
+  redirect(`/shopping-lists/${list.id}`);
+}
 
 export default function CreateShoppingListPage() {
   return (

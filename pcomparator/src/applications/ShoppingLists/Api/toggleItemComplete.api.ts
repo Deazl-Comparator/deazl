@@ -1,13 +1,17 @@
 "use server";
 
-import { ShoppingListService } from "~/applications/ShoppingLists/Application/ShoppingList.service";
-import { PrismaShoppingListRepository } from "~/applications/ShoppingLists/Infrastructure/Repositories/PrismaShoppingListRepository";
+import { ShoppingListItemApplicationService } from "~/applications/ShoppingLists/Application/Services/ShoppingListItem.service";
+import { PrismaShoppingListRepository } from "~/applications/ShoppingLists/Infrastructure/Repositories/PrismaShoppingList.infrastructure";
+import { PrismaShoppingListItemRepository } from "~/applications/ShoppingLists/Infrastructure/Repositories/PrismaShoppingListItem.infrastructure";
 
-const shoppingListService = new ShoppingListService(new PrismaShoppingListRepository());
+const shoppingListItemService = new ShoppingListItemApplicationService(
+  new PrismaShoppingListRepository(),
+  new PrismaShoppingListItemRepository()
+);
 
 export const toggleItemComplete = async (itemId: string, isCompleted: boolean): Promise<void> => {
   try {
-    await shoppingListService.updateShoppingListItem(itemId, { isCompleted });
+    await shoppingListItemService.updateShoppingListItem(itemId, { isCompleted });
   } catch (error) {
     console.error("Server error toggling item completion:", error);
     throw new Error("Failed to update item status");

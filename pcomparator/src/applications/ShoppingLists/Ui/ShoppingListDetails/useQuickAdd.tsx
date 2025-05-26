@@ -1,8 +1,8 @@
 import { addToast } from "@heroui/react";
 import { Trans } from "@lingui/react/macro";
 import { type KeyboardEvent, useRef, useState } from "react";
-import { addItemToList } from "~/applications/ShoppingLists/Api/shoppingListActions";
-import { UnitType } from "~/applications/ShoppingLists/Domain/ValueObjects/Unit";
+import { addItemToList } from "~/applications/ShoppingLists/Api/addItemToList.api";
+import { UnitType } from "~/applications/ShoppingLists/Domain/ValueObjects/Unit.vo";
 
 export const useQuickAdd = (listId: string, onItemAdded?: (item: any) => void) => {
   const [inputValue, setInputValue] = useState("");

@@ -1,9 +1,8 @@
 "use server";
 import { auth } from "~/libraries/nextauth/authConfig";
-import { ShoppingListService } from "../Application/ShoppingList.service";
-import { PrismaShoppingListRepository } from "../Infrastructure/Repositories/PrismaShoppingListRepository";
 
-const shoppingListService = new ShoppingListService(new PrismaShoppingListRepository());
+// TODO: Cette fonctionnalité devrait être déplacée vers un service Products dédié
+// plutôt que d'être dans les services ShoppingLists
 
 export async function createProductFromItem(data: {
   name: string;
@@ -22,8 +21,9 @@ export async function createProductFromItem(data: {
       throw new Error("User not authenticated");
     }
 
-    const result = await shoppingListService.createProductFromItem(data);
-    return result;
+    // TODO: Implementer cette fonctionnalité dans un service Products dédié
+    // const result = await productService.createProductFromItem(data);
+    throw new Error("Feature not implemented - should be moved to Products service");
   } catch (error) {
     console.error("Error creating product from item:", error);
     throw new Error("Failed to create product", { cause: "FormError" });

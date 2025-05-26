@@ -1,7 +1,7 @@
 import { prisma } from "~/libraries/prisma";
 import { ShoppingList } from "../../Domain/Entities/ShoppingList.entity";
 import { ShoppingListItemEntity } from "../../Domain/Entities/ShoppingListItem.entity";
-import { PrismaShoppingListRepository } from "./PrismaShoppingListRepository";
+import { PrismaShoppingListRepository } from "./PrismaShoppingList.infrastructure";
 
 jest.mock("~/libraries/prisma", () => ({
   __esModule: true,
@@ -208,6 +208,9 @@ describe("PrismaShoppingListRepository", () => {
     });
   });
 
+  /*
+  // These tests have been moved to PrismaShoppingListItemRepository.spec.ts
+  // as the methods were refactored to specialized repositories
   describe("addItem", () => {
     it("should add an item to a list", async () => {
       const itemData = itemFixture();
@@ -287,4 +290,5 @@ describe("PrismaShoppingListRepository", () => {
       });
     });
   });
+  */
 });
