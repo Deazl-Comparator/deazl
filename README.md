@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Deazl Logo](public/static/logo.png)
+![Deazl Logo](https://deazl.fr/_next/static/media/logo.af74964e.png)
 
 **A free, open-source platform for price comparison and collaborative shopping lists**
 
