@@ -43,8 +43,9 @@ jobs:
       - name: Create promotion branch
         if: ${{ inputs.create_pr }}
         run: |
-          git checkout -b promote/v${{ inputs.version }}
           git checkout dev
+          git pull origin dev
+          git checkout -b promote/v${{ inputs.version }}
           git merge --no-ff v${{ inputs.version }} -m "chore: promote v${{ inputs.version }} to production"
           git push origin promote/v${{ inputs.version }}
 
@@ -54,32 +55,30 @@ jobs:
         with:
           github-token: ${{ secrets.PAT_TOKEN }}
           script: |
+            const version = '${{ inputs.version }}';
+            const prTitle = '🚀 Promote v' + version + ' to Production';
+            const prBody = '## 🚀 Production Promotion\n\n' +
+              'This PR promotes version **v' + version + '** from staging (dev) to production (master).\n\n' +
+              '### What\'s included:\n' +
+              '- All features and fixes from v' + version + '\n' +
+              '- Updated changelog\n' +
+              '- Version bump\n\n' +
+              '### Checklist:\n' +
+              '- [ ] All tests are passing\n' +
+              '- [ ] Staging environment is stable\n' +
+              '- [ ] No critical issues reported\n\n' +
+              'After merging, this will trigger a production release.';
+            
             const { data: pr } = await github.rest.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: `🚀 Promote v${{ inputs.version }} to Production`,
-              head: `promote/v${{ inputs.version }}`,
+              title: prTitle,
+              head: 'promote/v' + version,
               base: 'master',
-              body: `
-                ## 🚀 Production Promotion
-                
-                This PR promotes version **v${{ inputs.version }}** from staging (dev) to production (master).
-                
-                ### What's included:
-                - All features and fixes from v${{ inputs.version }}
-                - Updated changelog
-                - Version bump
-                
-                ### Checklist:
-                - [ ] All tests are passing
-                - [ ] Staging environment is stable
-                - [ ] No critical issues reported
-                
-                After merging, this will trigger a production release.
-              `
+              body: prBody
             });
             
-            console.log(\`Pull request created: \${pr.html_url}\`);
+            console.log('Pull request created: ' + pr.html_url);
 
       - name: Direct merge to master
         if: ${{ !inputs.create_pr }}
