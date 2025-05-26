@@ -29,13 +29,12 @@ jobs:
         with:
           node-version: "lts/*"
           cache: yarn
+          cache-dependency-path: './yarn.lock'
       
       - name: Install dependencies
-        run: |
-          yarn init -y
-          yarn add @semantic-release/changelog @semantic-release/commit-analyzer @semantic-release/exec @semantic-release/git @semantic-release/github @semantic-release/release-notes-generator
+        run: yarn install --frozen-lockfile
       
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release
+        run: yarn semantic-release
