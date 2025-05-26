@@ -33,6 +33,7 @@ jobs:
         with:
           node-version: "lts/*"
           cache: yarn
+          cache-dependency-path: './pcomparator/yarn.lock'
           
       - name: Install dependencies
         working-directory: ./pcomparator
@@ -66,6 +67,7 @@ jobs:
         with:
           node-version: "lts/*"
           cache: yarn
+          cache-dependency-path: './pcomparator/yarn.lock'
           
       - name: Install dependencies
         working-directory: ./pcomparator

@@ -4,6 +4,9 @@
   "main": "index.js",
   "repository": "https://github.com/Clement-Muth/pcomparator",
   "license": "MIT",
+  "scripts": {
+    "semantic-release": "semantic-release"
+  },
   "dependencies": {
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^13.0.0",
