@@ -216,7 +216,6 @@ msgstr "Brand"
 msgid "By signing in, you agree to our <0>terms of service</0> and <1>privacy policy</1>."
 msgstr "By signing in, you agree to our <0>terms of service</0> and <1>privacy policy</1>."
 
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ProductDetailsModal.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/AddStoreModal.tsx
 msgid "Cancel"
@@ -335,7 +334,6 @@ msgstr "Create and share your shopping lists with your family or friends. Collab
 msgid "Create and share your shopping lists. Track prices and collaborate with your loved ones."
 msgstr "Create and share your shopping lists. Track prices and collaborate with your loved ones."
 
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ProductDetailsModal.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
 msgid "Create Product"
 msgstr "Create Product"
@@ -471,7 +469,6 @@ msgstr "Environment"
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/AddStoreModal.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShoppingListShare.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShoppingListShare.tsx
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShareList.tsx
 msgid "Error"
 msgstr "Error"
 
@@ -512,7 +509,6 @@ msgid "Failed to remove item"
 msgstr "Failed to remove item"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShoppingListShare.tsx
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShareList.tsx
 msgid "Failed to send invitation"
 msgstr "Failed to send invitation"
 
@@ -788,7 +784,6 @@ msgstr "No active shopping lists"
 msgid "No completed lists"
 msgstr "No completed lists"
 
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/StoreSelector.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
 msgid "No store selected"
@@ -998,7 +993,6 @@ msgstr "Reference Unit"
 msgid "Referenced products"
 msgstr "Referenced products"
 
-#. placeholder {0}: removedItem.customName
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/useShoppingListActions.tsx
 msgid "Removed {0}"
 msgstr "Removed {0}"
@@ -1189,8 +1183,6 @@ msgstr "This action <0>CANNOT be undone</0>. Please be certain about your decisi
 msgid "This is your avatar."
 msgstr "This is your avatar."
 
-#. placeholder {0}: selectedStore.name
-#. placeholder {1}: selectedStore.location
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
 msgid "This product will be associated with <0>{0}</0> in <1>{1}</1>"
 msgstr "This product will be associated with <0>{0}</0> in <1>{1}</1>"
