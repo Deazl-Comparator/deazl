@@ -1,3 +1,10 @@
+# [4.10.0-beta.3](https://github.com/Deazl-Comparator/deazl/compare/v4.10.0-beta.2...v4.10.0-beta.3) (2025-05-26)
+
+
+### Bug Fixes
+
+* update Vercel deployment commands for staging and production environments ([50f0179](https://github.com/Deazl-Comparator/deazl/commit/50f01792c15a05ee354062c7b1173962ac6f800b))
+
 # [4.10.0-beta.2](https://github.com/Deazl-Comparator/deazl/compare/v4.10.0-beta.1...v4.10.0-beta.2) (2025-05-26)
 
 
