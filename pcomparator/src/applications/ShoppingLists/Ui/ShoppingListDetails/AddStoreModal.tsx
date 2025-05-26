@@ -11,7 +11,7 @@ import {
 import { Trans } from "@lingui/react/macro";
 import { MapPinIcon, SaveIcon, StoreIcon } from "lucide-react";
 import { useState } from "react";
-import { createStore } from "../../Api/createStore";
+import { createStore } from "../../Api/createStore.api";
 import { useStore } from "../Contexts/StoreContext";
 import type { StoreInfo } from "../Contexts/StoreContext";
 

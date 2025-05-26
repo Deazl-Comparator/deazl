@@ -16,7 +16,7 @@ export function useStoreData() {
 
     try {
       // Importer dynamiquement la fonction pour éviter les problèmes d'HMR
-      const { getStores } = await import("../../Api/getStores");
+      const { getStores } = await import("../../Api/getStores.api");
       const storesData = await getStores();
       setStores(storesData);
     } catch (err) {

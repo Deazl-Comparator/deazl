@@ -1,7 +1,7 @@
 import { addToast } from "@heroui/react";
 import { Trans } from "@lingui/react/macro";
 import { useCallback, useEffect, useState } from "react";
-import { addCollaborator, generateShareLink, getCollaborators } from "../../../Api/shareListActions";
+import { addCollaborator, generateShareLink, getCollaborators } from "../../../Api/shareListActions.api";
 import type { ShoppingListCollaborator } from "../../../Domain/Entities/ShoppingListCollaborator.entity";
 
 type Collaborator = {

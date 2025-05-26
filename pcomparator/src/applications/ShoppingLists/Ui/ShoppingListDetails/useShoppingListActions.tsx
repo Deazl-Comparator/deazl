@@ -1,9 +1,9 @@
 import { addToast } from "@heroui/react";
 import { Trans } from "@lingui/react/macro";
 import { useCallback, useState } from "react";
-import { deleteItem } from "~/app/[locale]/shopping-lists/[id]/action";
+import { removeItemFromList } from "~/applications/ShoppingLists/Api/removeItemFromList.api";
 import { toggleItemComplete } from "~/applications/ShoppingLists/Api/toggleItemComplete.api";
-import { updateShoppingListItem } from "~/applications/ShoppingLists/Api/updateShoppingListItem";
+import { updateShoppingListItem } from "~/applications/ShoppingLists/Api/updateShoppingListItem.api";
 import type { ShoppingListPayload } from "~/applications/ShoppingLists/Domain/Entities/ShoppingList.entity";
 import type { ShoppingListItemPayload } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
 
@@ -80,7 +80,7 @@ export const useShoppingListActions = (initialList: ShoppingListPayload) => {
       const removedItem = items.find((item) => item.id === itemId);
       setItems((currentItems) => currentItems.filter((item) => item.id !== itemId));
 
-      await deleteItem(itemId);
+      await removeItemFromList(itemId);
 
       addToast({
         title: <Trans>Item removed</Trans>,

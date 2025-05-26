@@ -1,17 +1,21 @@
 "use server";
 
-import { ShoppingListService } from "~/applications/ShoppingLists/Application/ShoppingList.service";
+import { ShoppingListItemApplicationService } from "~/applications/ShoppingLists/Application/Services/ShoppingListItem.service";
 import type { ShoppingListItemPayload } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
-import { PrismaShoppingListRepository } from "~/applications/ShoppingLists/Infrastructure/Repositories/PrismaShoppingListRepository";
+import { PrismaShoppingListRepository } from "~/applications/ShoppingLists/Infrastructure/Repositories/PrismaShoppingList.infrastructure";
+import { PrismaShoppingListItemRepository } from "~/applications/ShoppingLists/Infrastructure/Repositories/PrismaShoppingListItem.infrastructure";
 
-const shoppingListService = new ShoppingListService(new PrismaShoppingListRepository());
+const shoppingListItemService = new ShoppingListItemApplicationService(
+  new PrismaShoppingListRepository(),
+  new PrismaShoppingListItemRepository()
+);
 
 export const updateShoppingListItem = async (
   itemId: string,
   data: Partial<Pick<ShoppingListItemPayload, "customName" | "quantity" | "unit" | "price" | "isCompleted">>
 ): Promise<any> => {
   try {
-    const updatedItem = await shoppingListService.updateShoppingListItem(itemId, data);
+    const updatedItem = await shoppingListItemService.updateShoppingListItem(itemId, data);
     return updatedItem.toObject();
   } catch (error) {
     console.error("Error updating shopping list item:", error);
