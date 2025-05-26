@@ -1,7 +1,7 @@
 import type { z } from "zod";
-import { Entity } from "~/applications/Shared/Domain/Core/Entity";
-import { UniqueEntityID } from "~/applications/Shared/Domain/Core/UniqueEntityId";
-import type { ShoppingListCollaboratorSchema } from "~/applications/ShoppingLists/Domain/Schemas/ShoppingList.schema";
+import { Entity } from "~/Shared/Domain/Core/Entity";
+import { UniqueEntityID } from "~/Shared/Domain/Core/UniqueEntityId";
+import type { ShoppingListCollaboratorSchema } from "~/ShoppingLists/Domain/Schemas/ShoppingList.schema";
 
 export enum CollaboratorRole {
   OWNER = "OWNER",

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import type { ShoppingListPayload } from "~/applications/ShoppingLists/Domain/Entities/ShoppingList.entity";
-import type { ShoppingListItemPayload } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
+import type { ShoppingListPayload } from "~/ShoppingLists/Domain/Entities/ShoppingList.entity";
+import type { ShoppingListItemPayload } from "~/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
 
 export const useShoppingListItems = (list: ShoppingListPayload) => {
   const [items, setItems] = useState<ShoppingListItemPayload[]>(list.items || []);

@@ -217,7 +217,6 @@ msgid "By signing in, you agree to our <0>terms of service</0> and <1>privacy po
 msgstr "By signing in, you agree to our <0>terms of service</0> and <1>privacy policy</1>."
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/AddStoreModal.tsx
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -466,9 +465,6 @@ msgstr "Environment"
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/useQuickAdd.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListDetailsHeader.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/AddStoreModal.tsx
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShoppingListShare.tsx
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShoppingListShare.tsx
 msgid "Error"
 msgstr "Error"
 
@@ -742,7 +738,6 @@ msgstr "Maybe later"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/AddStoreModal.tsx
 msgid "Missing information"
 msgstr "Missing information"
 
@@ -763,7 +758,6 @@ msgid "National coverage"
 msgstr "National coverage"
 
 #: src/applications/ShoppingLists/Ui/ShoppingLists/ShoppingListsView.tsx
-#: src/applications/ShoppingLists/Ui/NewShoppingListButton/NewShoppingListButton.tsx
 msgid "New List"
 msgstr "New List"
 

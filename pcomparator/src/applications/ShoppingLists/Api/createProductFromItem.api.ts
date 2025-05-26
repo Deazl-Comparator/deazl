@@ -1,4 +1,5 @@
 "use server";
+
 import { auth } from "~/libraries/nextauth/authConfig";
 
 // TODO: Cette fonctionnalité devrait être déplacée vers un service Products dédié

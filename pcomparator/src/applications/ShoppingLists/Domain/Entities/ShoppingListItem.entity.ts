@@ -1,13 +1,13 @@
 import { z } from "zod";
-import { DomainError } from "~/applications/Shared/Domain/Core/DomainError";
-import { Entity } from "~/applications/Shared/Domain/Core/Entity";
-import { UniqueEntityID } from "~/applications/Shared/Domain/Core/UniqueEntityId";
-import { BusinessRuleViolationError } from "~/applications/ShoppingLists/Domain/Errors/ShoppingListItemEntity.error";
-import type { ShoppingListItemSchema } from "~/applications/ShoppingLists/Domain/Schemas/ShoppingListItem.schema";
-import { ItemQuantity } from "../ValueObjects/ItemQuantity.vo";
-import { ItemStatus } from "../ValueObjects/ItemStatus.vo";
-import { Price } from "../ValueObjects/Price.vo";
-import { Unit } from "../ValueObjects/Unit.vo";
+import { DomainError } from "~/Shared/Domain/Core/DomainError";
+import { Entity } from "~/Shared/Domain/Core/Entity";
+import { UniqueEntityID } from "~/Shared/Domain/Core/UniqueEntityId";
+import { BusinessRuleViolationError } from "~/ShoppingLists/Domain/Errors/ShoppingListItemEntity.error";
+import type { ShoppingListItemSchema } from "~/ShoppingLists/Domain/Schemas/ShoppingListItem.schema";
+import { ItemQuantity } from "~/ShoppingLists/Domain/ValueObjects/ItemQuantity.vo";
+import { ItemStatus } from "~/ShoppingLists/Domain/ValueObjects/ItemStatus.vo";
+import { Price } from "~/ShoppingLists/Domain/ValueObjects/Price.vo";
+import { Unit } from "~/ShoppingLists/Domain/ValueObjects/Unit.vo";
 
 export class ItemNameTooShortError extends DomainError {
   constructor() {
@@ -30,7 +30,7 @@ export interface ShoppingListItemProps {
   updatedAt: Date;
 }
 
-export class ShoppingListItemEntity extends Entity<ShoppingListItemProps> {
+export class ShoppingListItem extends Entity<ShoppingListItemProps> {
   private constructor(props: ShoppingListItemProps, id?: UniqueEntityID) {
     super(props, id);
   }
@@ -47,12 +47,12 @@ export class ShoppingListItemEntity extends Entity<ShoppingListItemProps> {
       notes?: string | null;
     },
     id?: string
-  ): ShoppingListItemEntity {
+  ): ShoppingListItem {
     if (props.customName && props.customName.length < 2) {
       throw new ItemNameTooShortError();
     }
 
-    const itemEntity = new ShoppingListItemEntity(
+    const itemEntity = new ShoppingListItem(
       {
         shoppingListId: props.shoppingListId,
         productId: props.productId,
@@ -76,11 +76,11 @@ export class ShoppingListItemEntity extends Entity<ShoppingListItemProps> {
       Pick<ShoppingListItemPayload, "customName" | "quantity" | "unit" | "price" | "isCompleted">
     >,
     shoppingListItemId: string
-  ): ShoppingListItemEntity {
+  ): ShoppingListItem {
     try {
       // Check if user has editor or owner role to update the item
 
-      return ShoppingListItemEntity.create(
+      return ShoppingListItem.create(
         {
           shoppingListId: this.shoppingListId,
           productId: this.productId,

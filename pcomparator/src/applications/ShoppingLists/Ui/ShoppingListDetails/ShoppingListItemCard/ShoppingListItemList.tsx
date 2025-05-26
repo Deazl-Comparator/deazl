@@ -1,7 +1,7 @@
 import { Button, Checkbox } from "@heroui/react";
 import { CheckIcon, TrashIcon } from "lucide-react";
 import { useCallback } from "react";
-import type { ShoppingListItemPayload } from "~/applications/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
+import type { ShoppingListItemPayload } from "~/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
 
 interface ShoppingListItemListProps {
   items: ShoppingListItemPayload[];

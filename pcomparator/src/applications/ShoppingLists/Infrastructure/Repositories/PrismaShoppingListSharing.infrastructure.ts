@@ -1,12 +1,12 @@
 import { v4 as uuidv4 } from "uuid";
-import type { ShoppingList } from "~/applications/ShoppingLists/Domain/Entities/ShoppingList.entity";
+import type { ShoppingList } from "~/ShoppingLists/Domain/Entities/ShoppingList.entity";
 import type {
   CollaboratorRole,
   ShoppingListCollaborator
-} from "~/applications/ShoppingLists/Domain/Entities/ShoppingListCollaborator.entity";
-import type { ShoppingListSharingRepository } from "~/applications/ShoppingLists/Domain/Repositories/ShoppingListSharingRepository";
-import { ShoppingListCollaboratorMapper } from "~/applications/ShoppingLists/Infrastructure/Mappers/ShoppingListCollaboratorMapper";
-import { ShoppingListMapper } from "~/applications/ShoppingLists/Infrastructure/Mappers/ShoppingListMapper";
+} from "~/ShoppingLists/Domain/Entities/ShoppingListCollaborator.entity";
+import type { ShoppingListSharingRepository } from "~/ShoppingLists/Domain/Repositories/ShoppingListSharingRepository";
+import { ShoppingListCollaboratorMapper } from "~/ShoppingLists/Infrastructure/Mappers/ShoppingListCollaboratorMapper";
+import { ShoppingListMapper } from "~/ShoppingLists/Infrastructure/Mappers/ShoppingListMapper";
 import { prisma } from "~/libraries/prisma";
 
 export class PrismaShoppingListSharingRepository implements ShoppingListSharingRepository {

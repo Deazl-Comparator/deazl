@@ -1,7 +1,7 @@
+import { ShoppingList } from "~/ShoppingLists/Domain/Entities/ShoppingList.entity";
+import { ShoppingListItem } from "~/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
+import { PrismaShoppingListRepository } from "~/ShoppingLists/Infrastructure/Repositories/PrismaShoppingList.infrastructure";
 import { prisma } from "~/libraries/prisma";
-import { ShoppingList } from "../../Domain/Entities/ShoppingList.entity";
-import { ShoppingListItemEntity } from "../../Domain/Entities/ShoppingListItem.entity";
-import { PrismaShoppingListRepository } from "./PrismaShoppingList.infrastructure";
 
 jest.mock("~/libraries/prisma", () => ({
   __esModule: true,
@@ -101,7 +101,7 @@ describe("PrismaShoppingListRepository", () => {
       (prisma.shoppingListItem.create as jest.Mock).mockResolvedValue(mockCreatedItem);
       (prisma.shoppingList.findUnique as jest.Mock).mockResolvedValue(mockCompleteList);
 
-      const item = ShoppingListItemEntity.create({
+      const item = ShoppingListItem.create({
         shoppingListId: itemData.shoppingListId,
         customName: itemData.customName,
         quantity: itemData.quantity,

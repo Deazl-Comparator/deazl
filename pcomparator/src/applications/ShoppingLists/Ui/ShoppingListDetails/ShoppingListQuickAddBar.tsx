@@ -3,7 +3,7 @@
 import { Input, Tooltip } from "@heroui/react";
 import { Trans } from "@lingui/react/macro";
 import { HelpCircleIcon, PlusIcon, SparklesIcon } from "lucide-react";
-import { useQuickAdd } from "~/applications/ShoppingLists/Ui/ShoppingListDetails/useQuickAdd";
+import { useQuickAdd } from "~/ShoppingLists/Ui/ShoppingListDetails/useQuickAdd";
 
 interface ShoppingListQuickAddBarProps {
   listId: string;

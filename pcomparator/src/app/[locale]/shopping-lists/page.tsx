@@ -1,5 +1,5 @@
-import { listUserShoppingList } from "~/applications/ShoppingLists/Api/listUserShoppingList.api";
-import { ShoppingListsView } from "~/applications/ShoppingLists/Ui/ShoppingLists/ShoppingListsView";
+import { listUserShoppingList } from "~/ShoppingLists/Api/listUserShoppingList.api";
+import { ShoppingListsView } from "~/ShoppingLists/Ui/ShoppingLists/ShoppingListsView";
 import { withLinguiPage } from "~/core/withLinguiLayout";
 
 export const metadata = {

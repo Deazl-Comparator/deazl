@@ -1,11 +1,11 @@
-import { ShoppingList } from "../../Domain/Entities/ShoppingList.entity";
-import { ShoppingListItemEntity } from "../../Domain/Entities/ShoppingListItem.entity";
+import { ShoppingList } from "~/ShoppingLists/Domain/Entities/ShoppingList.entity";
+import { ShoppingListItem } from "~/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
 
 export class ShoppingListMapper {
   static toDomain(raw: any): ShoppingList {
     const itemEntities =
       raw.items?.map((item: any) =>
-        ShoppingListItemEntity.create(
+        ShoppingListItem.create(
           {
             shoppingListId: raw.id,
             productId: item.productId,

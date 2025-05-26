@@ -1,6 +1,9 @@
-import { ShoppingList } from "./ShoppingList.entity";
-import { CollaboratorRole, ShoppingListCollaborator } from "./ShoppingListCollaborator.entity";
-import { ShoppingListItemEntity } from "./ShoppingListItem.entity";
+import { ShoppingList } from "~/ShoppingLists/Domain/Entities/ShoppingList.entity";
+import {
+  CollaboratorRole,
+  ShoppingListCollaborator
+} from "~/ShoppingLists/Domain/Entities/ShoppingListCollaborator.entity";
+import { ShoppingListItem } from "~/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
 
 describe("ShoppingList", () => {
   describe("create", () => {
@@ -30,7 +33,7 @@ describe("ShoppingList", () => {
         isCompleted: false
       };
 
-      const item = ShoppingListItemEntity.create(itemData);
+      const item = ShoppingListItem.create(itemData);
 
       const list = ShoppingList.create({
         name: "Test List",
@@ -39,7 +42,7 @@ describe("ShoppingList", () => {
       });
 
       expect(list.items).toHaveLength(1);
-      expect(list.items[0]).toBeInstanceOf(ShoppingListItemEntity);
+      expect(list.items[0]).toBeInstanceOf(ShoppingListItem);
     });
   });
 
@@ -51,7 +54,7 @@ describe("ShoppingList", () => {
         items: []
       });
 
-      const item = ShoppingListItemEntity.create({
+      const item = ShoppingListItem.create({
         shoppingListId: list.id,
         customName: "Test Item",
         quantity: 1,
@@ -67,7 +70,7 @@ describe("ShoppingList", () => {
 
   describe("removeItem", () => {
     it("should remove an item from the list", () => {
-      const item = ShoppingListItemEntity.create({
+      const item = ShoppingListItem.create({
         shoppingListId: "list-123",
         customName: "Test Item",
         quantity: 1,
@@ -100,9 +103,9 @@ describe("ShoppingListItem", () => {
         notes: "Test notes"
       };
 
-      const item = ShoppingListItemEntity.create(itemData);
+      const item = ShoppingListItem.create(itemData);
 
-      expect(item).toBeInstanceOf(ShoppingListItemEntity);
+      expect(item).toBeInstanceOf(ShoppingListItem);
       expect(item.customName).toBe(itemData.customName);
       expect(item.quantity).toBe(itemData.quantity);
       expect(item.unit).toBe(itemData.unit);
@@ -114,7 +117,7 @@ describe("ShoppingListItem", () => {
 
   describe("toggleComplete", () => {
     it("should toggle completion status", () => {
-      const item = ShoppingListItemEntity.create({
+      const item = ShoppingListItem.create({
         shoppingListId: "list-123",
         customName: "Test Item",
         quantity: 1,
@@ -132,7 +135,7 @@ describe("ShoppingListItem", () => {
 
   describe("update", () => {
     it("should update item properties", () => {
-      const item = ShoppingListItemEntity.create({
+      const item = ShoppingListItem.create({
         shoppingListId: "list-123",
         customName: "Test Item",
         quantity: 1,

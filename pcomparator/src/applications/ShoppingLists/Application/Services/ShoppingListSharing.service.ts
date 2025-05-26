@@ -1,8 +1,8 @@
+import type { CollaboratorRole } from "~/ShoppingLists/Domain/Entities/ShoppingListCollaborator.entity";
+import type { ShoppingListRepository } from "~/ShoppingLists/Domain/Repositories/ShoppingListRepository";
+import type { ShoppingListSharingRepository } from "~/ShoppingLists/Domain/Repositories/ShoppingListSharingRepository";
+import { ShoppingListDomainService } from "~/ShoppingLists/Domain/Services/ShoppingListDomainService";
 import { auth } from "~/libraries/nextauth/authConfig";
-import type { CollaboratorRole } from "../../Domain/Entities/ShoppingListCollaborator.entity";
-import type { ShoppingListRepository } from "../../Domain/Repositories/ShoppingListRepository";
-import type { ShoppingListSharingRepository } from "../../Domain/Repositories/ShoppingListSharingRepository";
-import { ShoppingListDomainService } from "../../Domain/Services/ShoppingListDomainService";
 
 /**
  * Service d'application pour la gestion du partage des listes de courses

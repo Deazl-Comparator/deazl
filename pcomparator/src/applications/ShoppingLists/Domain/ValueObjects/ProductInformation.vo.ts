@@ -1,4 +1,4 @@
-import { ValueObject } from "~/applications/Shared/Domain/Core/ValueObject";
+import { ValueObject } from "~/Shared/Domain/Core/ValueObject";
 
 interface ProductInformationProps {
   name: string;

@@ -1,8 +1,8 @@
 "use server";
 
-import { ShoppingListItemApplicationService } from "~/applications/ShoppingLists/Application/Services/ShoppingListItem.service";
-import { PrismaShoppingListRepository } from "~/applications/ShoppingLists/Infrastructure/Repositories/PrismaShoppingList.infrastructure";
-import { PrismaShoppingListItemRepository } from "~/applications/ShoppingLists/Infrastructure/Repositories/PrismaShoppingListItem.infrastructure";
+import { ShoppingListItemApplicationService } from "~/ShoppingLists/Application/Services/ShoppingListItem.service";
+import { PrismaShoppingListRepository } from "~/ShoppingLists/Infrastructure/Repositories/PrismaShoppingList.infrastructure";
+import { PrismaShoppingListItemRepository } from "~/ShoppingLists/Infrastructure/Repositories/PrismaShoppingListItem.infrastructure";
 
 const shoppingListItemService = new ShoppingListItemApplicationService(
   new PrismaShoppingListRepository(),

@@ -1,9 +1,9 @@
 "use client";
 
+import type { ShoppingListPayload } from "~/ShoppingLists/Domain/Entities/ShoppingList.entity";
+import { ShoppingListContainer } from "~/ShoppingLists/Ui/ShoppingListDetails/ShoppingListContainer";
+import { ShoppingListDetailsHeader } from "~/ShoppingLists/Ui/ShoppingListDetails/ShoppingListDetailsHeader";
 import type { User } from "~/applications/Authentication/Domain/User";
-import type { ShoppingListPayload } from "~/applications/ShoppingLists/Domain/Entities/ShoppingList.entity";
-import { ShoppingListContainer } from "~/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListContainer";
-import { ShoppingListDetailsHeader } from "~/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListDetailsHeader";
 import { StoreProvider } from "../Contexts/StoreContext";
 
 export const ShoppingListDetails = ({ list, user }: { list: ShoppingListPayload; user: User }) => {

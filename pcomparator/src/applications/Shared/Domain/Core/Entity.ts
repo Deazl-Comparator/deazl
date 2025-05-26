@@ -1,4 +1,4 @@
-import { UniqueEntityID } from "~/applications/Shared/Domain/Core/UniqueEntityId";
+import { UniqueEntityID } from "~/Shared/Domain/Core/UniqueEntityId";
 
 const isEntity = (v: any): v is Entity<any> => {
   return v instanceof Entity;
