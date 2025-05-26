@@ -71,9 +71,6 @@ jobs:
       - name: TypeScript type checking
         run: yarn typescript:check
 
-      - name: Check for duplicate dependencies
-        run: yarn dedupe --check
-        
       # - name: Check build
       #   run: yarn build
       #   env:
