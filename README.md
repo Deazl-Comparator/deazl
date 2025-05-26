@@ -10,6 +10,8 @@
 [![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
 [![Prisma](https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white)](https://prisma.io/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://postgresql.org/)
+[![Release](https://img.shields.io/github/v/release/Clement-Muth/pcomparator?style=for-the-badge)](https://github.com/Clement-Muth/pcomparator/releases)
+[![CI/CD](https://img.shields.io/github/actions/workflow/status/Clement-Muth/pcomparator/release.yaml?style=for-the-badge&label=CI/CD)](https://github.com/Clement-Muth/pcomparator/actions)
 
 [**🌐 Live Demo**](https://deazl.fr/en) • [**📖 Documentation**](docs/DEVELOPER.md) • [**🐛 Report Bug**](https://github.com/Deazl-Comparator/deazl/issues) • [**💡 Request Feature**](https://github.com/Deazl-Comparator/deazl/issues)
 
@@ -18,6 +20,34 @@
 ## 🚀 About Deazl
 
 Deazl is a community-driven price comparison platform that helps you save money on your groceries and daily purchases. Compare prices across different stores, create collaborative shopping lists, and track price trends - all completely free and open source.
+
+## 🔄 Release Management
+
+This project uses an automated release system with semantic versioning:
+
+### 🎯 Quick Commands
+
+```bash
+# Check release status
+make status
+
+# Promote staging to production
+make promote
+
+# Deploy to staging
+make deploy
+
+# View unreleased changes
+make changelog
+```
+
+### 📋 Workflow Overview
+
+1. **Development** → Feature branches merged to `dev`
+2. **Staging** → Auto pre-releases on `dev` (e.g., `1.2.0-beta.1`)
+3. **Production** → Promote stable releases to `master`
+
+See [Release Documentation](docs/RELEASE.md) for detailed workflow information.
 
 ### ✨ Key Features
 
