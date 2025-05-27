@@ -47,7 +47,13 @@ export class ShoppingListItemApplicationService {
       }
 
       // Validation métier
-      const validation = this.domainService.validateNewItem(itemData);
+      const validation = this.domainService.validateNewItem({
+        customName: itemData.customName,
+        productId: itemData.productId,
+        quantity: itemData.quantity,
+        unit: itemData.unit,
+        price: itemData.price
+      });
       if (!validation.isValid) {
         throw new Error(`Validation failed: ${validation.errors.join(", ")}`);
       }

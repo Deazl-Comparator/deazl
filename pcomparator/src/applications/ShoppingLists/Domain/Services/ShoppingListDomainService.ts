@@ -72,15 +72,16 @@ export class ShoppingListDomainService {
    */
   validateNewItem(itemData: {
     customName?: string | null;
+    productId?: string | null;
     quantity: number;
     unit: string;
     price?: number | null;
   }): { isValid: boolean; errors: string[] } {
     const errors: string[] = [];
 
-    // Validation du nom personnalisé ou productId requis
-    if (!itemData.customName?.trim()) {
-      errors.push("Item name is required");
+    // Validation du nom personnalisé ou productId requis (au moins l'un des deux)
+    if (!itemData.customName?.trim() && !itemData.productId?.trim()) {
+      errors.push("Either item name or product ID is required");
     }
 
     // Validation de la quantité
