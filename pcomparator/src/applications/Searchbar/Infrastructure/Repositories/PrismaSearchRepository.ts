@@ -7,7 +7,17 @@ export class PrismaSearchRepository implements SearchRepository {
   async search(query: string): Promise<Price[] | null> {
     const prices = await prisma.price.findMany({
       where: { product: { name: { contains: query, mode: "insensitive" } } },
-      include: { product: true, store: true }
+      include: {
+        product: {
+          include: {
+            brand: true,
+            category: true
+          }
+        },
+        store: true
+      },
+      orderBy: [{ date_recorded: "desc" }, { amount: "asc" }],
+      take: 50 // Limiter pour les performances
     });
 
     return prices.length
@@ -19,7 +29,11 @@ export class PrismaSearchRepository implements SearchRepository {
           storeId: price.store_id,
           dateRecorded: price.date_recorded,
           priceProofImage: price.price_proof_image,
-          product: price.product,
+          product: {
+            ...price.product,
+            brand: price.product.brand,
+            category: price.product.category
+          },
           store: price.store
         }))
       : null;

@@ -10,6 +10,7 @@ export const useQuickAdd = (listId: string, onItemAdded?: (item: any) => void) =
   const inputRef = useRef<HTMLInputElement>(null);
 
   const parseInput = (input: string) => {
+    // Regex améliorée pour supporter plus de formats
     const regex = /^([\d.,]+)\s*([a-zA-Z]{1,2})?\s+(.+?)(?:\s+([\d.,]+)(?:€|\$|£)?)?$/;
     const match = input.match(regex);
 
@@ -17,15 +18,23 @@ export const useQuickAdd = (listId: string, onItemAdded?: (item: any) => void) =
       const quantity = Number.parseFloat(match[1].replace(",", "."));
       let unit = match[2]?.toLowerCase() || "unit";
       const name = match[3].trim();
-
       const price = match[4] ? Number.parseFloat(match[4].replace(",", ".")) : undefined;
 
+      // Mapping d'unités plus complet
       const unitMapping: Record<string, string> = {
         g: "g",
+        gr: "g",
         kg: "kg",
+        kilo: "kg",
         l: "l",
+        litre: "l",
         ml: "ml",
-        u: "unit"
+        u: "unit",
+        un: "unit",
+        pc: "unit",
+        pcs: "unit",
+        pièce: "unit",
+        pièces: "unit"
       };
 
       if (unit in unitMapping) unit = unitMapping[unit];
@@ -36,10 +45,11 @@ export const useQuickAdd = (listId: string, onItemAdded?: (item: any) => void) =
         quantity: Number.isNaN(quantity) ? 1 : quantity,
         unit: validUnit,
         name,
-        price
+        price: price && !Number.isNaN(price) ? price : undefined
       };
     }
 
+    // Si pas de match, c'est probablement juste un nom de produit
     return {
       quantity: 1,
       unit: "unit",
@@ -73,12 +83,18 @@ export const useQuickAdd = (listId: string, onItemAdded?: (item: any) => void) =
       const newItem = await addItemToList(listId, itemData);
 
       if (onItemAdded && newItem) onItemAdded(newItem);
-      let successMessage = `${parsedInput.name} (${parsedInput.quantity} ${parsedInput.unit})`;
 
-      if (parsedInput.price) successMessage += ` - ${parsedInput.price.toFixed(2)}€`;
+      // Message de succès plus informatif
+      let successMessage = `${parsedInput.name}`;
+      if (parsedInput.quantity !== 1 || parsedInput.unit !== "unit") {
+        successMessage += ` (${parsedInput.quantity} ${parsedInput.unit})`;
+      }
+      if (parsedInput.price) {
+        successMessage += ` - ${parsedInput.price.toFixed(2)}€`;
+      }
 
       addToast({
-        title: <Trans>Item added</Trans>,
+        title: <Trans>Item added successfully</Trans>,
         description: successMessage,
         variant: "solid",
         color: "success"
@@ -88,9 +104,14 @@ export const useQuickAdd = (listId: string, onItemAdded?: (item: any) => void) =
       setInputValue("");
       inputRef.current?.focus();
     } catch (error) {
+      console.error("Error adding item to list:", error);
+
+      // Message d'erreur plus spécifique
+      const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
+
       addToast({
-        title: <Trans>Error</Trans>,
-        description: <Trans>Failed to add item</Trans>,
+        title: <Trans>Failed to add item</Trans>,
+        description: errorMessage,
         variant: "solid",
         color: "danger"
       });
@@ -103,6 +124,8 @@ export const useQuickAdd = (listId: string, onItemAdded?: (item: any) => void) =
     inputValue,
     setInputValue,
     handleKeyDown,
-    inputRef
+    handleAddItem,
+    inputRef,
+    isSubmitting
   };
 };

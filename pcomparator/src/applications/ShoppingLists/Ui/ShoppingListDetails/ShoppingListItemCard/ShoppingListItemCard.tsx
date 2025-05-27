@@ -23,6 +23,7 @@ export const ShoppingListItemCard = ({
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     stats,
+    completedItems,
     filteredItems,
     loading,
     searchTerm,
@@ -76,7 +77,7 @@ export const ShoppingListItemCard = ({
               </div>
             )}
 
-            <ShoppingListStats stats={stats} />
+            <ShoppingListStats stats={stats} completedItems={completedItems} />
           </div>
         </CardHeader>
 

@@ -1,27 +1,28 @@
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
 generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["driverAdapters"]
 }
 
-model User {
-  id             String                     @id @default(uuid())
-  name           String?
-  email          String                     @unique
-  emailVerified  DateTime?
-  image          String?
-  phone          String?
-  accounts       Account[]
-  sessions       Session[]
-  shoppingLists  ShoppingList[]
-  collaborations ShoppingListCollaborator[]
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model User {
+  id              String                     @id @default(uuid())
+  name            String?
+  email           String                     @unique
+  emailVerified   DateTime?
+  createdAt       DateTime                   @default(now())
+  updatedAt       DateTime                   @updatedAt
+  image           String?
+  phone           String?
+  accounts        Account[]
+  Recipe          Recipe[]
+  sessions        Session[]
+  shoppingLists   ShoppingList[]
+  collaborations  ShoppingListCollaborator[]
+  UserPreferences UserPreferences?
 }
 
 model Account {
@@ -36,11 +37,9 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([provider, providerAccountId])
 }
@@ -49,10 +48,9 @@ model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 model VerificationToken {
@@ -64,69 +62,50 @@ model VerificationToken {
 }
 
 model Product {
-  id              String   @id @default(uuid()) @db.Uuid
-  barcode         String   @unique
-  name            String
-  description     String?
-  category_id     String?  @db.Uuid
-  brand_id        String?  @db.Uuid
-  nutrition_score Json?    @db.JsonB
-  created_at      DateTime @default(now())
-  updated_at      DateTime @updatedAt
-
-  // Relations
-  category Category? @relation(fields: [category_id], references: [id])
-  brand    Brand?    @relation(fields: [brand_id], references: [id])
-  prices   Price[]
-
+  id               String             @id @default(uuid()) @db.Uuid
+  barcode          String             @unique
+  name             String
+  description      String?
+  category_id      String?            @db.Uuid
+  brand_id         String?            @db.Uuid
+  nutrition_score  Json?
+  created_at       DateTime           @default(now())
+  updated_at       DateTime           @updatedAt
+  prices           Price[]
+  brand            Brand?             @relation(fields: [brand_id], references: [id])
+  category         Category?          @relation(fields: [category_id], references: [id])
+  RecipeItem       RecipeItem[]
   ShoppingListItem ShoppingListItem[]
 }
 
 model Category {
-  id                 String  @id @default(uuid()) @db.Uuid
-  name               String  @unique
+  id                 String    @id @default(uuid()) @db.Uuid
+  name               String    @unique
   description        String?
-  parent_category_id String? @db.Uuid
-
-  // Relations
-  products Product[]
+  parent_category_id String?   @db.Uuid
+  products           Product[]
 }
 
 model Brand {
-  id          String  @id @default(uuid()) @db.Uuid
-  name        String  @unique
+  id          String    @id @default(uuid()) @db.Uuid
+  name        String    @unique
   description String?
   website_url String?
-
-  // Relations
-  products Product[]
-}
-
-enum Currency {
-  AED // Dirham des Émirats arabes unis
-  AUD // Dollar australien
-  CAD // Dollar canadien
-  CHF // Franc suisse
-  CNY // Yuan renminbi chinois
-  EUR // Euro
-  GBP // Livre sterling
-  JPY // Yen japonais
-  USD // Dollar américain
+  products    Product[]
 }
 
 model Price {
-  id                String   @id @default(uuid()) @db.Uuid
-  product_id        String   @db.Uuid
-  store_id          String   @db.Uuid
+  id                String       @id @default(uuid()) @db.Uuid
+  product_id        String       @db.Uuid
+  store_id          String       @db.Uuid
   amount            Float
-  currency          Currency
-  unit              String   @default("kg")
-  date_recorded     DateTime @default(now())
+  date_recorded     DateTime     @default(now())
   price_proof_image String?
-
-  // Relations
-  product Product @relation(fields: [product_id], references: [id])
-  store   Store   @relation(fields: [store_id], references: [id])
+  currency          Currency
+  unit              String       @default("kg")
+  product           Product      @relation(fields: [product_id], references: [id])
+  store             Store        @relation(fields: [store_id], references: [id])
+  RecipeItem        RecipeItem[]
 }
 
 model Store {
@@ -134,44 +113,121 @@ model Store {
   name        String
   location    String
   website_url String?
-
-  // Relations
-  prices Price[]
+  prices      Price[]
 
   @@unique([name, location])
 }
 
 model ShoppingList {
-  id          String   @id @default(uuid()) @db.Uuid
-  name        String
-  description String?
-  userId      String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  isPublic    Boolean  @default(false)
-  shareToken  String?  @unique
-
-  // Relations
-  user          User                       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  items         ShoppingListItem[]
-  collaborators ShoppingListCollaborator[]
+  id               String                     @id @default(uuid()) @db.Uuid
+  name             String
+  description      String?
+  userId           String
+  createdAt        DateTime                   @default(now())
+  updatedAt        DateTime                   @updatedAt
+  isPublic         Boolean                    @default(false)
+  shareToken       String?                    @unique
+  ListOptimization ListOptimization?
+  user             User                       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  collaborators    ShoppingListCollaborator[]
+  items            ShoppingListItem[]
 }
 
 model ShoppingListItem {
-  id             String   @id @default(uuid()) @db.Uuid
-  shoppingListId String   @db.Uuid
-  productId      String?  @db.Uuid
-  quantity       Float    @default(1)
-  unit           String?  @default("unit")
-  isCompleted    Boolean  @default(false)
+  id             String       @id @default(uuid()) @db.Uuid
+  shoppingListId String       @db.Uuid
+  productId      String?      @db.Uuid
+  quantity       Float        @default(1)
+  unit           String?      @default("unit")
+  isCompleted    Boolean      @default(false)
   customName     String?
-  price          Float? // Champ pour stocker le prix d'un article
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  price          Float?
+  product        Product?     @relation(fields: [productId], references: [id])
+  shoppingList   ShoppingList @relation(fields: [shoppingListId], references: [id], onDelete: Cascade)
+}
 
-  // Relations
-  shoppingList ShoppingList @relation(fields: [shoppingListId], references: [id], onDelete: Cascade)
-  product      Product?     @relation(fields: [productId], references: [id])
+model ShoppingListCollaborator {
+  id           String           @id @default(uuid()) @db.Uuid
+  listId       String           @db.Uuid
+  userId       String
+  role         CollaboratorRole
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  shoppingList ShoppingList     @relation(fields: [listId], references: [id], onDelete: Cascade)
+  user         User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([listId, userId])
+}
+
+model ListOptimization {
+  id             String               @id @db.Uuid
+  shoppingListId String               @unique @db.Uuid
+  strategy       OptimizationStrategy
+  totalInitial   Float
+  totalOptimized Float
+  savedAmount    Float
+  byStore        Json
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime
+  ShoppingList   ShoppingList         @relation(fields: [shoppingListId], references: [id], onDelete: Cascade)
+}
+
+model Recipe {
+  id              String       @id @db.Uuid
+  name            String
+  description     String?
+  servings        Int
+  preparationTime Int?
+  cookingTime     Int?
+  difficulty      String?
+  userId          String
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime
+  User            User         @relation(fields: [userId], references: [id])
+  RecipeItem      RecipeItem[]
+
+  @@index([userId])
+}
+
+model RecipeItem {
+  id              String  @id @db.Uuid
+  recipeId        String  @db.Uuid
+  productId       String  @db.Uuid
+  quantity        Float
+  unit            String
+  notes           String?
+  selectedPriceId String? @db.Uuid
+  Product         Product @relation(fields: [productId], references: [id])
+  Recipe          Recipe  @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  Price           Price?  @relation(fields: [selectedPriceId], references: [id])
+
+  @@index([productId])
+  @@index([recipeId])
+}
+
+model UserPreferences {
+  id               String               @id @db.Uuid
+  userId           String               @unique
+  defaultStrategy  OptimizationStrategy @default(BALANCED)
+  preferredStores  String[]
+  maxPriceIncrease Float?
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime
+  User             User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum Currency {
+  AED
+  AUD
+  CAD
+  CHF
+  CNY
+  EUR
+  GBP
+  JPY
+  USD
 }
 
 enum CollaboratorRole {
@@ -180,16 +236,9 @@ enum CollaboratorRole {
   VIEWER
 }
 
-model ShoppingListCollaborator {
-  id           String           @id @default(uuid()) @db.Uuid
-  shoppingList ShoppingList     @relation(fields: [listId], references: [id], onDelete: Cascade)
-  listId       String           @db.Uuid
-  userId       String
-  role         CollaboratorRole
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([listId, userId])
+enum OptimizationStrategy {
+  PRICE
+  QUALITY
+  STORE
+  BALANCED
 }

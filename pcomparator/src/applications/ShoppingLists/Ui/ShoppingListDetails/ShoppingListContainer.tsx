@@ -1,9 +1,11 @@
 import { Trans } from "@lingui/react/macro";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import type { ShoppingListPayload } from "~/ShoppingLists/Domain/Entities/ShoppingList.entity";
 import { ShoppingListItemCard } from "~/ShoppingLists/Ui/ShoppingListDetails/ShoppingListItemCard";
-import { ShoppingListQuickAddBar } from "~/ShoppingLists/Ui/ShoppingListDetails/ShoppingListQuickAddBar";
+import { showSmartProductToast } from "~/ShoppingLists/Ui/ShoppingListDetails/SmartProductToast";
+import { SmartQuickAddBar } from "~/ShoppingLists/Ui/ShoppingListDetails/SmartQuickAddBar";
 import { useShoppingListActions } from "~/ShoppingLists/Ui/ShoppingListDetails/useShoppingListActions";
+import { useStore } from "../Contexts/StoreContext";
 
 interface ShoppingListContainerProps {
   initialList: ShoppingListPayload;
@@ -15,8 +17,25 @@ interface ShoppingListContainerProps {
 const noopPromise = () => Promise.resolve();
 
 export const ShoppingListContainer = ({ initialList, user }: ShoppingListContainerProps) => {
-  const { handleAddItem, handleDeleteItem, handleToggleComplete, handleUpdateItem, items } =
-    useShoppingListActions(initialList);
+  const { selectedStore } = useStore();
+  const {
+    handleAddItem,
+    handleDeleteItem,
+    handleToggleComplete,
+    handleUpdateItem,
+    items,
+    suggestedItem,
+    closeSuggestion,
+    neverAskAgain
+  } = useShoppingListActions(initialList);
+
+  // 🚀 Toast intelligent automatique quand un item est suggéré
+  useEffect(() => {
+    if (suggestedItem) {
+      showSmartProductToast(suggestedItem, selectedStore, neverAskAgain);
+      closeSuggestion(); // Ferme immédiatement pour éviter les doublons
+    }
+  }, [suggestedItem, selectedStore, neverAskAgain, closeSuggestion]);
 
   console.log("User ID:", user.id, "List Owner ID:", initialList.userId);
   const canEdit = useMemo(() => {
@@ -32,7 +51,7 @@ export const ShoppingListContainer = ({ initialList, user }: ShoppingListContain
   return (
     <div className="flex flex-col gap-6 animate-fadeIn">
       {canEdit ? (
-        <ShoppingListQuickAddBar
+        <SmartQuickAddBar
           listId={initialList.id}
           onItemAdded={handleAddItem}
           className="flex-1 min-w-[260px]"

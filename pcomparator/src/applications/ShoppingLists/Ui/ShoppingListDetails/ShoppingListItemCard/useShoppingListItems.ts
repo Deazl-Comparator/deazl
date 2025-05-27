@@ -33,6 +33,11 @@ export const useShoppingListItems = (list: ShoppingListPayload) => {
     };
   }, [items]);
 
+  // Calculer les items complétés pour le composant post-achat
+  const completedItems = useMemo(() => {
+    return items.filter((item) => item.isCompleted);
+  }, [items]);
+
   const filteredItems = useMemo(() => {
     let result = [...items];
 
@@ -94,6 +99,7 @@ export const useShoppingListItems = (list: ShoppingListPayload) => {
 
   return {
     stats,
+    completedItems,
     filteredItems,
     loading,
     setLoading, // Exposer setLoading pour permettre la gestion des états de chargement

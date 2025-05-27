@@ -13,6 +13,7 @@ export const addItemToList = async (
   listId: string,
   itemData: {
     customName?: string | null;
+    productId?: string | null;
     quantity: number;
     unit: string;
     isCompleted?: boolean;

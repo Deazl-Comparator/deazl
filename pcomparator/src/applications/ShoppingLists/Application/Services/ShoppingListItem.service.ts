@@ -4,6 +4,7 @@ import type { ShoppingListRepository } from "~/ShoppingLists/Domain/Repositories
 import { ShoppingListDomainService } from "~/ShoppingLists/Domain/Services/ShoppingListDomainService";
 import { UnitType } from "~/ShoppingLists/Domain/ValueObjects/Unit.vo";
 import { auth } from "~/libraries/nextauth/authConfig";
+import { prisma } from "~/libraries/prisma";
 
 /**
  * Service d'application pour la gestion des articles de listes de courses
@@ -46,8 +47,41 @@ export class ShoppingListItemApplicationService {
         throw new Error("Unauthorized - insufficient permissions to modify list");
       }
 
+      // Si un productId est fourni, récupérer le nom du produit depuis la base
+      let finalCustomName = itemData.customName;
+      let finalPrice = itemData.price;
+
+      if (itemData.productId && (!itemData.customName || itemData.customName.trim() === "")) {
+        const product = await prisma.product.findUnique({
+          where: { id: itemData.productId }
+        });
+
+        if (product) {
+          finalCustomName = product.name;
+
+          // Si pas de prix fourni, calculer le prix total basé sur la quantité
+          if (!finalPrice) {
+            const productPrice = await prisma.price.findFirst({
+              where: { product_id: itemData.productId },
+              orderBy: { date_recorded: "desc" }
+            });
+
+            if (productPrice) {
+              // Le prix en DB est au kg, calculer le prix pour la quantité demandée
+              finalPrice = productPrice.amount * itemData.quantity;
+            }
+          }
+        }
+      }
+
       // Validation métier
-      const validation = this.domainService.validateNewItem(itemData);
+      const validation = this.domainService.validateNewItem({
+        customName: finalCustomName,
+        productId: itemData.productId,
+        quantity: itemData.quantity,
+        unit: itemData.unit,
+        price: finalPrice
+      });
       if (!validation.isValid) {
         throw new Error(`Validation failed: ${validation.errors.join(", ")}`);
       }
@@ -55,12 +89,12 @@ export class ShoppingListItemApplicationService {
       // Créer l'entité article
       const item = ShoppingListItem.create({
         shoppingListId: listId,
-        customName: itemData.customName || undefined,
+        customName: finalCustomName || undefined,
         productId: itemData.productId,
         quantity: itemData.quantity,
         unit: itemData.unit,
         isCompleted: itemData.isCompleted || false,
-        price: itemData.price || undefined,
+        price: finalPrice || undefined,
         notes: itemData.notes || undefined
       });
 
@@ -194,6 +228,43 @@ export class ShoppingListItemApplicationService {
       return this.itemRepository.updateItem(updatedItem);
     } catch (error) {
       console.error("Error toggling item completion", error);
+      throw error;
+    }
+  }
+
+  /**
+   * Crée un produit à partir d'un article de liste de courses
+   */
+  async createProductFromItem(productInfo: {
+    name: string;
+    price: number;
+    unit: string;
+    quantity: number;
+    brandName: string;
+    storeName: string;
+    storeLocation: string;
+    referencePrice: number;
+    referenceUnit: string;
+  }): Promise<any> {
+    try {
+      const session = await auth();
+      if (!session?.user?.id) throw new Error("User not authenticated");
+
+      // Validation métier
+      if (!productInfo.name || productInfo.name.trim() === "") {
+        throw new Error("Product name is required");
+      }
+
+      if (!productInfo.referencePrice || productInfo.referencePrice <= 0) {
+        throw new Error("Reference price must be greater than 0");
+      }
+
+      // Déléguer à la couche infrastructure
+      const result = await this.itemRepository.createProductFromItem(productInfo);
+
+      return result;
+    } catch (error) {
+      console.error("Error creating product from item", error);
       throw error;
     }
   }

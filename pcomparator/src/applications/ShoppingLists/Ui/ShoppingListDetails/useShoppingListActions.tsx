@@ -6,42 +6,56 @@ import { toggleItemComplete } from "~/ShoppingLists/Api/toggleItemComplete.api";
 import { updateShoppingListItem } from "~/ShoppingLists/Api/updateShoppingListItem.api";
 import type { ShoppingListPayload } from "~/ShoppingLists/Domain/Entities/ShoppingList.entity";
 import type { ShoppingListItemPayload } from "~/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
+import { useProductSuggestion } from "./useProductSuggestion";
 
 export const useShoppingListActions = (initialList: ShoppingListPayload) => {
   const [items, setItems] = useState<ShoppingListItemPayload[]>(initialList.items || []);
+  const { triggerSuggestion, suggestedItem, closeSuggestion, neverAskAgain } = useProductSuggestion();
 
   const handleAddItem = (newItem: ShoppingListItemPayload) => {
     setItems((prevItems) => [...prevItems, newItem]);
   };
 
-  const handleToggleComplete = useCallback(async (itemId: string, isCompleted: boolean) => {
-    try {
-      setItems((currentItems) =>
-        currentItems.map((item) => (item.id === itemId ? { ...item, isCompleted } : item))
-      );
+  const handleToggleComplete = useCallback(
+    async (itemId: string, isCompleted: boolean) => {
+      try {
+        // Récupérer l'item avant la mise à jour pour la suggestion
+        const targetItem = items.find((item) => item.id === itemId);
 
-      await toggleItemComplete(itemId, isCompleted);
+        setItems((currentItems) =>
+          currentItems.map((item) => (item.id === itemId ? { ...item, isCompleted } : item))
+        );
 
-      if (isCompleted)
+        await toggleItemComplete(itemId, isCompleted);
+
+        if (isCompleted) {
+          addToast({
+            title: <Trans>Item completed</Trans>,
+            description: <Trans>Item marked as completed</Trans>,
+            variant: "solid",
+            color: "success"
+          });
+
+          // Déclencher la suggestion de création de produit si éligible
+          if (targetItem) {
+            triggerSuggestion(targetItem);
+          }
+        }
+      } catch (error) {
+        setItems((currentItems) =>
+          currentItems.map((item) => (item.id === itemId ? { ...item, isCompleted: !isCompleted } : item))
+        );
+
         addToast({
-          title: <Trans>Item completed</Trans>,
-          description: <Trans>Item marked as completed</Trans>,
+          title: <Trans>Error</Trans>,
+          description: <Trans>Failed to update item status</Trans>,
           variant: "solid",
-          color: "success"
+          color: "danger"
         });
-    } catch (error) {
-      setItems((currentItems) =>
-        currentItems.map((item) => (item.id === itemId ? { ...item, isCompleted: !isCompleted } : item))
-      );
-
-      addToast({
-        title: <Trans>Error</Trans>,
-        description: <Trans>Failed to update item status</Trans>,
-        variant: "solid",
-        color: "danger"
-      });
-    }
-  }, []);
+      }
+    },
+    [items, triggerSuggestion]
+  );
 
   const handleUpdateItem = useCallback(async (itemId: string, data: Partial<ShoppingListItemPayload>) => {
     try {
@@ -109,6 +123,10 @@ export const useShoppingListActions = (initialList: ShoppingListPayload) => {
     handleAddItem,
     handleToggleComplete,
     handleUpdateItem,
-    handleDeleteItem
+    handleDeleteItem,
+    // Product suggestion system
+    suggestedItem,
+    closeSuggestion,
+    neverAskAgain
   };
 };

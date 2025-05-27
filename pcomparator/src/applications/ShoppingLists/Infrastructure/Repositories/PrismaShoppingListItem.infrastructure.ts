@@ -132,12 +132,12 @@ export class PrismaShoppingListItemRepository implements ShoppingListItemReposit
         }
       });
 
-      // return {
-      //   product,
-      //   brand,
-      //   store,
-      //   priceRecord
-      // };
+      return {
+        product,
+        brand,
+        store,
+        priceRecord
+      };
     });
 
     return result;
