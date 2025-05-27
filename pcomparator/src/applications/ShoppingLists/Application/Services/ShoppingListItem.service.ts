@@ -46,17 +46,7 @@ export class ShoppingListItemApplicationService {
         throw new Error("Unauthorized - insufficient permissions to modify list");
       }
 
-      // Validation métier
-      const validation = this.domainService.validateNewItem({
-        customName: itemData.customName,
-        productId: itemData.productId,
-        quantity: itemData.quantity,
-        unit: itemData.unit,
-        price: itemData.price
-      });
-      if (!validation.isValid) {
-        throw new Error(`Validation failed: ${validation.errors.join(", ")}`);
-      }
+      // Note: La validation des données est maintenant effectuée au niveau API avec les Value Objects
 
       // Créer l'entité article
       const item = ShoppingListItem.create({
@@ -107,36 +97,34 @@ export class ShoppingListItemApplicationService {
         throw new Error("Unauthorized - insufficient permissions to modify list");
       }
 
-      // Validation métier
-      const validation = this.domainService.validateItemUpdate(data);
-      if (!validation.isValid) {
-        throw new Error(`Validation failed: ${validation.errors.join(", ")}`);
-      } // Appliquer les modifications à l'entité existante
+      // Create updated item using immutable methods
+      let updatedItem = item;
+
       if (data.customName !== undefined) {
-        item.updateName(data.customName || "");
+        updatedItem = updatedItem.withName(data.customName || "");
       }
 
       if (data.quantity !== undefined) {
-        item.updateQuantity(data.quantity);
+        updatedItem = updatedItem.withQuantity(data.quantity);
       }
 
       if (data.unit !== undefined && Object.values(UnitType).includes(data.unit as UnitType)) {
-        item.updateUnit(data.unit);
+        updatedItem = updatedItem.withUnit(data.unit);
       }
 
       if (data.price !== undefined) {
-        item.updatePrice(data.price);
+        updatedItem = updatedItem.withPrice(data.price);
       }
 
       if (data.isCompleted !== undefined) {
         if (data.isCompleted) {
-          item.complete();
+          updatedItem = updatedItem.withCompletion();
         } else {
-          item.reset();
+          updatedItem = updatedItem.withReset();
         }
       }
 
-      return this.itemRepository.updateItem(item);
+      return this.itemRepository.updateItem(updatedItem);
     } catch (error) {
       console.error("Error updating shopping list item", error);
       throw error;

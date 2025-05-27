@@ -47,8 +47,15 @@ export class ShoppingListCollaborator extends Entity<CollaboratorProps> {
     return this.props.role;
   }
 
-  public updateRole(role: CollaboratorRole): void {
-    this.props.role = role;
-    this.props.updatedAt = new Date();
+  // Immutable update method - return new instance
+  public withRole(role: CollaboratorRole): ShoppingListCollaborator {
+    return new ShoppingListCollaborator(
+      {
+        ...this.props,
+        role,
+        updatedAt: new Date()
+      },
+      this._id
+    );
   }
 }

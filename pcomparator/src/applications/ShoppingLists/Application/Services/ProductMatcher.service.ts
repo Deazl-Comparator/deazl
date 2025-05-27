@@ -39,7 +39,7 @@ export class ProductMatcher {
     for (const pattern of patterns) {
       const match = input.trim().match(pattern);
       if (match) {
-        return this.extractFromMatch(match, input);
+        return ProductMatcher.extractFromMatch(match, input);
       }
     }
 
@@ -62,26 +62,26 @@ export class ProductMatcher {
     // Déterminer l'ordre des éléments selon le pattern
     if (match[0].match(/^[\d.,]/)) {
       // Quantité en premier
-      quantity = this.parseNumber(match[1]) || 1;
-      unit = this.normalizeUnit(match[2]) || "unit";
+      quantity = ProductMatcher.parseNumber(match[1]) || 1;
+      unit = ProductMatcher.normalizeUnit(match[2]) || "unit";
       productName = match[3]?.trim() || "";
-      price = this.parseNumber(match[4]);
-    } else if (match[3] && match[3].match(/^[\d.,]/)) {
+      price = ProductMatcher.parseNumber(match[4]);
+    } else if (match[3]?.match(/^[\d.,]/)) {
       // Nom en premier, puis quantité
       productName = match[1]?.trim() || "";
-      quantity = this.parseNumber(match[2]) || 1;
-      unit = this.normalizeUnit(match[3]) || "unit";
-      price = this.parseNumber(match[4]);
+      quantity = ProductMatcher.parseNumber(match[2]) || 1;
+      unit = ProductMatcher.normalizeUnit(match[3]) || "unit";
+      price = ProductMatcher.parseNumber(match[4]);
     } else {
       // Format simple
-      quantity = this.parseNumber(match[1]) || 1;
+      quantity = ProductMatcher.parseNumber(match[1]) || 1;
       productName = match[2]?.trim() || "";
       unit = "unit";
       confidence = 0.6;
     }
 
     // Nettoyer le nom du produit
-    productName = this.cleanProductName(productName);
+    productName = ProductMatcher.cleanProductName(productName);
 
     // Ajuster la confiance selon la qualité du parsing
     if (!productName) confidence = 0.2;
@@ -101,7 +101,7 @@ export class ProductMatcher {
     if (!str) return undefined;
     const cleaned = str.replace(",", ".");
     const num = Number.parseFloat(cleaned);
-    return isNaN(num) ? undefined : num;
+    return Number.isNaN(num) ? undefined : num;
   }
 
   private static normalizeUnit(unit: string | undefined): string {
@@ -205,7 +205,7 @@ export class ProductMatcher {
   ): ProductMatch[] {
     const matches: ProductMatch[] = searchResults
       .map((product) => {
-        const similarity = this.calculateSimilarity(parsedItem.productName, product);
+        const similarity = ProductMatcher.calculateSimilarity(parsedItem.productName, product);
 
         const match: ProductMatch = {
           product,
