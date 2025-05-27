@@ -13,6 +13,7 @@ interface UseSmartProductSearchProps {
 }
 
 export interface SmartSuggestion {
+  id: string;
   type: "product" | "quick-add";
   product?: ProductSearchResult;
   parsedItem: ParsedItem;
@@ -58,6 +59,7 @@ export const useSmartProductSearch = ({
 
         // 4. Créer les suggestions
         const productSuggestions: SmartSuggestion[] = matches.map((match) => ({
+          id: `product-${match.product.id}`,
           type: "product" as const,
           product: match.product,
           parsedItem: parsed,
@@ -80,6 +82,7 @@ export const useSmartProductSearch = ({
 
         if (!hasHighConfidenceMatch && parsed.productName.length > 2) {
           allSuggestions.push({
+            id: `quick-add-${parsed.productName}`,
             type: "quick-add",
             parsedItem: parsed,
             displayText: `Ajouter "${parsed.productName}"`,

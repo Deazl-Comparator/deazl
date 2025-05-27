@@ -3,7 +3,7 @@
 import { useDisclosure } from "@heroui/react";
 import { useState } from "react";
 import type { ProductSearchResult } from "~/applications/ShoppingLists/Api/searchProducts.api";
-import { ProductSelectionModal } from "./ProductSelectionModal";
+import { ProductSelectionModal } from "../ProductSelectionModal";
 import { SmartItemInput } from "./SmartItemInput";
 import { useSmartAdd } from "./useSmartAdd";
 
@@ -75,6 +75,7 @@ export const SmartQuickAddBar = ({ listId, className = "", onItemAdded }: SmartQ
 
   return (
     <div className={className}>
+      {/* Input simple avec liste déroulante */}
       <SmartItemInput
         listId={listId}
         onProductSelected={handleProductSelected}

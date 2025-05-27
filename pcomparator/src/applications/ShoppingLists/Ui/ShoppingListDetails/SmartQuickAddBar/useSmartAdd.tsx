@@ -24,8 +24,6 @@ export const useSmartAdd = ({ listId, onItemAdded }: UseSmartAddProps) => {
   }) => {
     if (isSubmitting) return;
 
-    console.log("useSmartAdd: Adding custom item to list:", listId, itemData);
-
     try {
       setIsSubmitting(true);
 
