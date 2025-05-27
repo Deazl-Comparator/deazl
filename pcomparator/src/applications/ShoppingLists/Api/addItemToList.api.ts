@@ -44,7 +44,6 @@ export const addItemToList = async (
   } catch (error) {
     console.error("Error adding item to list", error);
 
-    // Préserver les erreurs métier des Value Objects
     if (error instanceof Error && error.message.includes("Quantity must be at least")) {
       throw new Error(`Invalid quantity: ${error.message}`);
     }

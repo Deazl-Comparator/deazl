@@ -129,10 +129,9 @@ export const ProductSelectionModal = ({
 
         <ModalBody>
           <div className="space-y-6">
-            {/* Quantité et unité */}
             <div className="grid grid-cols-2 gap-4">
               <Input
-                label={<Trans>Quantité</Trans>}
+                label={<Trans>Quantity</Trans>}
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
                 type="number"
@@ -141,16 +140,16 @@ export const ProductSelectionModal = ({
                 placeholder="1"
               />
               <Select
-                label={<Trans>Unité</Trans>}
+                label={<Trans>Unit</Trans>}
                 selectedKeys={[unit]}
                 onSelectionChange={(keys) => setUnit(Array.from(keys)[0] as string)}
               >
-                <SelectItem key="unit">Unité</SelectItem>
-                <SelectItem key="g">Grammes (g)</SelectItem>
-                <SelectItem key="kg">Kilogrammes (kg)</SelectItem>
-                <SelectItem key="ml">Millilitres (ml)</SelectItem>
-                <SelectItem key="l">Litres (l)</SelectItem>
-                <SelectItem key="cl">Centilitres (cl)</SelectItem>
+                <SelectItem key="unit">Unit</SelectItem>
+                <SelectItem key="g">Grams (g)</SelectItem>
+                <SelectItem key="kg">Kilograms (kg)</SelectItem>
+                <SelectItem key="ml">Milliliters (ml)</SelectItem>
+                <SelectItem key="l">Liters (l)</SelectItem>
+                <SelectItem key="cl">Centiliters (cl)</SelectItem>
               </Select>
             </div>
 
@@ -159,7 +158,7 @@ export const ProductSelectionModal = ({
               <div>
                 <h4 className="text-md font-medium mb-3 flex items-center gap-2">
                   <StoreIcon size={16} />
-                  <Trans>Choisir un prix et magasin</Trans>
+                  <Trans>Select a price and store</Trans>
                 </h4>
 
                 <div className="space-y-2 max-h-64 overflow-y-auto">
@@ -187,7 +186,7 @@ export const ProductSelectionModal = ({
                                   variant="flat"
                                   startContent={<TrendingDownIcon size={12} />}
                                 >
-                                  Meilleur prix
+                                  <Trans>Best Price</Trans>
                                 </Chip>
                               )}
                               {price.currency !== "EUR" && (
@@ -223,7 +222,7 @@ export const ProductSelectionModal = ({
                     <div className="bg-gray-50 rounded-lg p-4">
                       <div className="flex justify-between items-center">
                         <span className="text-medium">
-                          <Trans>Prix total</Trans>
+                          <Trans>Total Price</Trans>
                         </span>
                         <span className="text-xl font-bold text-primary-600">{totalPrice.toFixed(2)}€</span>
                       </div>
@@ -246,10 +245,10 @@ export const ProductSelectionModal = ({
                   <div className="text-gray-500">
                     <StoreIcon size={32} className="mx-auto mb-2 opacity-50" />
                     <p className="mb-2">
-                      <Trans>Aucun prix disponible pour ce produit</Trans>
+                      <Trans>No price available for this product</Trans>
                     </p>
                     <p className="text-sm">
-                      <Trans>Le produit sera ajouté sans prix de référence</Trans>
+                      <Trans>The product will be added without a reference price</Trans>
                     </p>
                   </div>
                 </CardBody>
@@ -260,10 +259,10 @@ export const ProductSelectionModal = ({
 
         <ModalFooter>
           <Button variant="light" onPress={handleClose}>
-            <Trans>Annuler</Trans>
+            <Trans>Cancel</Trans>
           </Button>
           <Button color="primary" onPress={handleConfirm}>
-            <Trans>Ajouter à la liste</Trans>
+            <Trans>Add to list</Trans>
           </Button>
         </ModalFooter>
       </ModalContent>

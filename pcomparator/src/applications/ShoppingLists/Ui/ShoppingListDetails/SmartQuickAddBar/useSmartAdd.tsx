@@ -41,7 +41,7 @@ export const useSmartAdd = ({ listId, onItemAdded }: UseSmartAddProps) => {
       }
 
       addToast({
-        title: <Trans>Article ajouté</Trans>,
+        title: <Trans>Item added</Trans>,
         description: successMessage,
         variant: "solid",
         color: "success"
@@ -49,8 +49,8 @@ export const useSmartAdd = ({ listId, onItemAdded }: UseSmartAddProps) => {
     } catch (error) {
       console.error("Error adding custom item:", error);
       addToast({
-        title: <Trans>Erreur</Trans>,
-        description: <Trans>Impossible d'ajouter l'article</Trans>,
+        title: <Trans>Error</Trans>,
+        description: <Trans>Unable to add item</Trans>,
         variant: "solid",
         color: "danger"
       });
@@ -73,7 +73,7 @@ export const useSmartAdd = ({ listId, onItemAdded }: UseSmartAddProps) => {
 
       const newItem = await addProductItemToList(listId, {
         productId: product.id,
-        productName: product.name, // Ajouter le nom du produit
+        productName: product.name,
         quantity,
         unit,
         price,
@@ -94,7 +94,7 @@ export const useSmartAdd = ({ listId, onItemAdded }: UseSmartAddProps) => {
       }
 
       addToast({
-        title: <Trans>Produit ajouté</Trans>,
+        title: <Trans>Product added</Trans>,
         description: successMessage,
         variant: "solid",
         color: "success"
@@ -102,8 +102,8 @@ export const useSmartAdd = ({ listId, onItemAdded }: UseSmartAddProps) => {
     } catch (error) {
       console.error("Error adding product item:", error);
       addToast({
-        title: <Trans>Erreur</Trans>,
-        description: <Trans>Impossible d'ajouter le produit</Trans>,
+        title: <Trans>Error</Trans>,
+        description: <Trans>Unable to add product</Trans>,
         variant: "solid",
         color: "danger"
       });
