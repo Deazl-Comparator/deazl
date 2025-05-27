@@ -1,3 +1,10 @@
+# [4.10.0-beta.4](https://github.com/Deazl-Comparator/deazl/compare/v4.10.0-beta.3...v4.10.0-beta.4) (2025-05-27)
+
+
+### Features
+
+* Implement product search service and UI components for shopping… ([#101](https://github.com/Deazl-Comparator/deazl/issues/101)) ([a54ac23](https://github.com/Deazl-Comparator/deazl/commit/a54ac23a1eb5a7286848a6d091cb471ab0b1496d))
+
 # [4.10.0-beta.3](https://github.com/Deazl-Comparator/deazl/compare/v4.10.0-beta.2...v4.10.0-beta.3) (2025-05-26)
 
 
