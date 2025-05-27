@@ -151,6 +151,10 @@ msgstr "Add the products you want to track"
 msgid "Add this product"
 msgstr "Add this product"
 
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ProductSelectionModal.tsx
+msgid "Add to list"
+msgstr "Add to list"
+
 #: src/app/[locale]/features/page.tsx
 msgid "All our features"
 msgstr "All our features"
@@ -201,8 +205,13 @@ msgid "Back to Home"
 msgstr "Back to Home"
 
 #: src/components/Inputs/Input/Barcode.tsx
+#: src/applications/Prices/Ui/NewPrice/NewPiceModal.tsx
 msgid "Barcode"
 msgstr "Barcode"
+
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ProductSelectionModal.tsx
+msgid "Best Price"
+msgstr "Best Price"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/AddStoreModal.tsx
 msgid "Both name and location are required"
@@ -216,7 +225,7 @@ msgstr "Brand"
 msgid "By signing in, you agree to our <0>terms of service</0> and <1>privacy policy</1>."
 msgstr "By signing in, you agree to our <0>terms of service</0> and <1>privacy policy</1>."
 
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ProductSelectionModal.tsx
 msgid "Cancel"
 msgstr "Cancel"
 
@@ -333,6 +342,7 @@ msgstr "Create and share your shopping lists with your family or friends. Collab
 msgid "Create and share your shopping lists. Track prices and collaborate with your loved ones."
 msgstr "Create and share your shopping lists. Track prices and collaborate with your loved ones."
 
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ProductDetailsModal.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
 msgid "Create Product"
 msgstr "Create Product"
@@ -459,12 +469,8 @@ msgstr "Enter your product name"
 msgid "Environment"
 msgstr "Environment"
 
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/useShoppingListActions.tsx
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/useShoppingListActions.tsx
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/useShoppingListActions.tsx
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/useQuickAdd.tsx
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListDetailsHeader.tsx
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/SmartQuickAddBar/useSmartAdd.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/SmartQuickAddBar/useSmartAdd.tsx
 msgid "Error"
 msgstr "Error"
 
@@ -505,6 +511,7 @@ msgid "Failed to remove item"
 msgstr "Failed to remove item"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShoppingListShare.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShareList.tsx
 msgid "Failed to send invitation"
 msgstr "Failed to send invitation"
 
@@ -632,7 +639,7 @@ msgstr "Invitation sent"
 msgid "Invitation sent successfully"
 msgstr "Invitation sent successfully"
 
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/useQuickAdd.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/SmartQuickAddBar/useSmartAdd.tsx
 msgid "Item added"
 msgstr "Item added"
 
@@ -711,6 +718,7 @@ msgid "List deleted"
 msgstr "List deleted"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/AddStoreModal.tsx
+#: src/applications/Prices/Ui/NewPrice/NewPiceModal.tsx
 msgid "Location"
 msgstr "Location"
 
@@ -738,6 +746,7 @@ msgstr "Maybe later"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/AddStoreModal.tsx
 msgid "Missing information"
 msgstr "Missing information"
 
@@ -758,6 +767,7 @@ msgid "National coverage"
 msgstr "National coverage"
 
 #: src/applications/ShoppingLists/Ui/ShoppingLists/ShoppingListsView.tsx
+#: src/applications/ShoppingLists/Ui/NewShoppingListButton/NewShoppingListButton.tsx
 msgid "New List"
 msgstr "New List"
 
@@ -778,6 +788,11 @@ msgstr "No active shopping lists"
 msgid "No completed lists"
 msgstr "No completed lists"
 
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ProductSelectionModal.tsx
+msgid "No price available for this product"
+msgstr "No price available for this product"
+
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/StoreSelector.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
 msgid "No store selected"
@@ -850,6 +865,7 @@ msgid "Please select a store to associate with this product"
 msgstr "Please select a store to associate with this product"
 
 #: src/applications/Profile/Ui/Settings/PhoneNumber.tsx
+#: src/applications/Profile/Ui/Settings/DisplayName.tsx
 msgid "Please use 32 characters at maximum."
 msgstr "Please use 32 characters at maximum."
 
@@ -862,6 +878,7 @@ msgstr "Previous"
 
 #: src/components/DesktopNav.tsx
 #: src/applications/Prices/Ui/NewQuickPrice/FormSteps/Price.tsx
+#: src/applications/Prices/Ui/NewPrice/NewPiceModal.tsx
 #: src/applications/Prices/Ui/NewPrice/FormSteps/Step2/Price.tsx
 msgid "Price"
 msgstr "Price"
@@ -916,7 +933,7 @@ msgstr "Product"
 msgid "Product \"{productName}\" was not found but added to your account."
 msgstr "Product \"{productName}\" was not found but added to your account."
 
-#: src/applications/Products/Ui/NewProduct/NewProduct.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/SmartQuickAddBar/useSmartAdd.tsx
 msgid "Product added"
 msgstr "Product added"
 
@@ -945,7 +962,7 @@ msgstr "Product Not Found"
 msgid "QR Code downloaded"
 msgstr "QR Code downloaded"
 
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ProductSelectionModal.tsx
 msgid "Quantity"
 msgstr "Quantity"
 
@@ -996,6 +1013,7 @@ msgid "Return to the app"
 msgstr "Return to the app"
 
 #: src/applications/Profile/Ui/Settings/PhoneNumber.tsx
+#: src/applications/Profile/Ui/Settings/DisplayName.tsx
 msgid "Save"
 msgstr "Save"
 
@@ -1028,6 +1046,10 @@ msgstr "Scan barcode"
 #: src/applications/Prices/Ui/NewPrice/FormSteps/Step4/Location.tsx
 msgid "Search"
 msgstr "Search"
+
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ProductSelectionModal.tsx
+msgid "Select a price and store"
+msgstr "Select a price and store"
 
 #: src/components/Inputs/File/File.tsx
 msgid "Select your file"
@@ -1161,6 +1183,10 @@ msgstr "Terms of Service"
 msgid "The link has been copied to clipboard"
 msgstr "The link has been copied to clipboard"
 
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ProductSelectionModal.tsx
+msgid "The product will be added without a reference price"
+msgstr "The product will be added without a reference price"
+
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/QrCodeTab.tsx
 msgid "The QR code has been downloaded"
 msgstr "The QR code has been downloaded"
@@ -1193,7 +1219,7 @@ msgstr "Together, we build a collaborative and reliable database."
 msgid "Total Items"
 msgstr "Total Items"
 
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ProductSelectionModal.tsx
 msgid "Total Price"
 msgstr "Total Price"
 
@@ -1230,7 +1256,15 @@ msgstr "Type \"confirm\" to confirm"
 msgid "Type barcode"
 msgstr "Type barcode"
 
-#: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/SmartQuickAddBar/useSmartAdd.tsx
+msgid "Unable to add item"
+msgstr "Unable to add item"
+
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/SmartQuickAddBar/useSmartAdd.tsx
+msgid "Unable to add product"
+msgstr "Unable to add product"
+
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ProductSelectionModal.tsx
 msgid "Unit"
 msgstr "Unit"
 

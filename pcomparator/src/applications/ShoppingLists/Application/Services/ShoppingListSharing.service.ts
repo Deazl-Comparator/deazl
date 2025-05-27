@@ -34,7 +34,7 @@ export class ShoppingListSharingApplicationService {
       }
 
       // Vérifier que la liste peut être partagée
-      if (!this.domainService.canListBeShared(list)) {
+      if (!list.canBeShared()) {
         throw new Error("List cannot be shared - list must have a name");
       }
 

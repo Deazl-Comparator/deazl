@@ -2,7 +2,7 @@ import { Trans } from "@lingui/react/macro";
 import { useMemo } from "react";
 import type { ShoppingListPayload } from "~/ShoppingLists/Domain/Entities/ShoppingList.entity";
 import { ShoppingListItemCard } from "~/ShoppingLists/Ui/ShoppingListDetails/ShoppingListItemCard";
-import { ShoppingListQuickAddBar } from "~/ShoppingLists/Ui/ShoppingListDetails/ShoppingListQuickAddBar";
+import { SmartQuickAddBar } from "~/ShoppingLists/Ui/ShoppingListDetails/SmartQuickAddBar/SmartQuickAddBar";
 import { useShoppingListActions } from "~/ShoppingLists/Ui/ShoppingListDetails/useShoppingListActions";
 
 interface ShoppingListContainerProps {
@@ -32,7 +32,7 @@ export const ShoppingListContainer = ({ initialList, user }: ShoppingListContain
   return (
     <div className="flex flex-col gap-6 animate-fadeIn">
       {canEdit ? (
-        <ShoppingListQuickAddBar
+        <SmartQuickAddBar
           listId={initialList.id}
           onItemAdded={handleAddItem}
           className="flex-1 min-w-[260px]"

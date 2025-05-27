@@ -18,6 +18,14 @@ export class Price extends ValueObject<PriceProps> {
     return new Price({ value, currency });
   }
 
+  public static createOptional(value: number | null | undefined, currency = "EUR"): Price | undefined {
+    if (value === undefined || value === null) {
+      return undefined;
+    }
+
+    return Price.create(value, currency);
+  }
+
   public get value(): number | null {
     return this.props.value;
   }

@@ -155,47 +155,96 @@ export class ShoppingListItem extends Entity<ShoppingListItemProps> {
     return Price.create(totalPrice.value / this.props.quantity.value);
   }
 
-  public updateQuantity(quantity: number): void {
-    this.props.quantity = ItemQuantity.create(quantity);
-    this.props.updatedAt = new Date();
+  // Immutable update methods - return new instances
+  public withQuantity(quantity: number): ShoppingListItem {
+    return new ShoppingListItem(
+      {
+        ...this.props,
+        quantity: ItemQuantity.create(quantity),
+        updatedAt: new Date()
+      },
+      this._id
+    );
   }
 
-  public updateUnit(unit: string): void {
-    this.props.unit = Unit.create(unit);
-    this.props.updatedAt = new Date();
+  public withUnit(unit: string): ShoppingListItem {
+    return new ShoppingListItem(
+      {
+        ...this.props,
+        unit: Unit.create(unit),
+        updatedAt: new Date()
+      },
+      this._id
+    );
   }
 
-  public updateName(name: string): void {
+  public withName(name: string): ShoppingListItem {
     if (name && name.length < 2) {
       throw new ItemNameTooShortError();
     }
-    this.props.customName = name;
-    this.props.updatedAt = new Date();
+    return new ShoppingListItem(
+      {
+        ...this.props,
+        customName: name,
+        updatedAt: new Date()
+      },
+      this._id
+    );
   }
 
-  public updatePrice(price: number | null): void {
-    this.props.totalPrice = Price.create(price);
-    this.props.updatedAt = new Date();
+  public withPrice(price: number | null): ShoppingListItem {
+    return new ShoppingListItem(
+      {
+        ...this.props,
+        totalPrice: Price.create(price),
+        updatedAt: new Date()
+      },
+      this._id
+    );
   }
 
-  public updateNotes(notes: string | null): void {
-    this.props.notes = notes;
-    this.props.updatedAt = new Date();
+  public withNotes(notes: string | null): ShoppingListItem {
+    return new ShoppingListItem(
+      {
+        ...this.props,
+        notes,
+        updatedAt: new Date()
+      },
+      this._id
+    );
   }
 
-  public toggleCompletion(): void {
-    this.props.status = this.props.status.toggle();
-    this.props.updatedAt = new Date();
+  public withToggleCompletion(): ShoppingListItem {
+    return new ShoppingListItem(
+      {
+        ...this.props,
+        status: this.props.status.toggle(),
+        updatedAt: new Date()
+      },
+      this._id
+    );
   }
 
-  public complete(): void {
-    this.props.status = this.props.status.complete();
-    this.props.updatedAt = new Date();
+  public withCompletion(): ShoppingListItem {
+    return new ShoppingListItem(
+      {
+        ...this.props,
+        status: this.props.status.complete(),
+        updatedAt: new Date()
+      },
+      this._id
+    );
   }
 
-  public reset(): void {
-    this.props.status = this.props.status.reset();
-    this.props.updatedAt = new Date();
+  public withReset(): ShoppingListItem {
+    return new ShoppingListItem(
+      {
+        ...this.props,
+        status: this.props.status.reset(),
+        updatedAt: new Date()
+      },
+      this._id
+    );
   }
 
   public toObject(): ShoppingListItemPayload {

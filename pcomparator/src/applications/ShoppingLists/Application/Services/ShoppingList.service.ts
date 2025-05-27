@@ -78,21 +78,7 @@ export class ShoppingListApplicationService {
       const session = await auth();
       if (!session?.user?.id) throw new Error("User not authenticated");
 
-      // Validation métier
-      const validation = this.domainService.validateListCreation(data);
-      if (!validation.isValid) {
-        throw new Error(`Validation failed: ${validation.errors.join(", ")}`);
-      }
-
-      // Validation des articles si fournis
-      if (data.items) {
-        for (const item of data.items) {
-          const itemValidation = this.domainService.validateNewItem(item);
-          if (!itemValidation.isValid) {
-            throw new Error(`Item validation failed: ${itemValidation.errors.join(", ")}`);
-          }
-        }
-      }
+      // Note: La validation est maintenant effectuée directement dans l'entité ShoppingList.create()
 
       // Create ShoppingListItemEntity instances if items are provided
       const itemEntities =
@@ -166,26 +152,17 @@ export class ShoppingListApplicationService {
         throw new Error("Unauthorized - insufficient permissions to modify list");
       }
 
-      // Validation métier si on modifie le nom
-      if (data.name !== undefined) {
-        const validation = this.domainService.validateListCreation({
-          name: data.name,
-          description: data.description
-        });
-        if (!validation.isValid) {
-          throw new Error(`Validation failed: ${validation.errors.join(", ")}`);
-        }
-      }
+      // Create updated list using immutable methods
+      let updatedList = list;
 
-      // Update the list entity
       if (data.name !== undefined) {
-        list.updateName(data.name);
+        updatedList = updatedList.withName(data.name);
       }
       if (data.description !== undefined) {
-        list.updateDescription(data.description);
+        updatedList = updatedList.withDescription(data.description);
       }
 
-      return this.repository.update(list);
+      return this.repository.update(updatedList);
     } catch (error) {
       console.error("Error updating shopping list", error);
       throw error;

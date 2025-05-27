@@ -107,39 +107,70 @@ export class ShoppingList extends Entity<ShoppingListProps> {
     return this.props.isPublic;
   }
 
-  public updateName(name: string): void {
+  // Immutable update methods - return new instances
+  public withName(name: string): ShoppingList {
     if (name.length < 2) {
       throw new ListNameTooShortError();
     }
-    this.props.name = name;
-    this.props.updatedAt = new Date();
+    return new ShoppingList(
+      {
+        ...this.props,
+        name,
+        updatedAt: new Date()
+      },
+      this._id
+    );
   }
 
-  public updateDescription(description: string): void {
-    this.props.description = description;
-    this.props.updatedAt = new Date();
+  public withDescription(description: string): ShoppingList {
+    return new ShoppingList(
+      {
+        ...this.props,
+        description,
+        updatedAt: new Date()
+      },
+      this._id
+    );
   }
 
-  public addItem(item: ShoppingListItem): void {
-    this.props.items.push(item);
-    this.props.updatedAt = new Date();
+  public withItem(item: ShoppingListItem): ShoppingList {
+    return new ShoppingList(
+      {
+        ...this.props,
+        items: [...this.props.items, item],
+        updatedAt: new Date()
+      },
+      this._id
+    );
   }
 
-  public removeItem(itemId: string): void {
-    this.props.items = this.props.items.filter((item) => item.id !== itemId);
-    this.props.updatedAt = new Date();
+  public withoutItem(itemId: string): ShoppingList {
+    return new ShoppingList(
+      {
+        ...this.props,
+        items: this.props.items.filter((item) => item.id !== itemId),
+        updatedAt: new Date()
+      },
+      this._id
+    );
   }
 
+  public withUpdatedItem(itemId: string, updatedItem: ShoppingListItem): ShoppingList {
+    const updatedItems = this.props.items.map((item) => (item.id === itemId ? updatedItem : item));
+
+    return new ShoppingList(
+      {
+        ...this.props,
+        items: updatedItems,
+        updatedAt: new Date()
+      },
+      this._id
+    );
+  }
+
+  // Query methods (read-only operations)
   public getItemById(itemId: string): ShoppingListItem | undefined {
     return this.props.items.find((item) => item.id === itemId);
-  }
-
-  public updateItem(itemId: string, updateFn: (item: ShoppingListItem) => void): void {
-    const item = this.getItemById(itemId);
-    if (!item) return;
-
-    updateFn(item);
-    this.props.updatedAt = new Date();
   }
 
   public getCompletedItems(): ShoppingListItem[] {
@@ -177,6 +208,10 @@ export class ShoppingList extends Entity<ShoppingListProps> {
 
   public isEmpty(): boolean {
     return this.props.items.length === 0;
+  }
+
+  public canBeShared(): boolean {
+    return !!this.name?.trim();
   }
 
   public toObject(): ShoppingListPayload {
