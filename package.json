@@ -67,7 +67,7 @@
 		"turbo": "^2.5.3"
 	},
 	"engines": {
-		"node": ">=22.x"
+		"node": ">=20.x"
 	},
 	"packageManager": "yarn@1.22.22"
 }
