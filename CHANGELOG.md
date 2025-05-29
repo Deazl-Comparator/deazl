@@ -1,3 +1,10 @@
+# [4.10.0-beta.5](https://github.com/Deazl-Comparator/deazl/compare/v4.10.0-beta.4...v4.10.0-beta.5) (2025-05-29)
+
+
+### Features
+
+* add smart conversion notif ([#102](https://github.com/Deazl-Comparator/deazl/issues/102)) ([05656cd](https://github.com/Deazl-Comparator/deazl/commit/05656cd589e1f63d575e6d3863c5861241de1596))
+
 # [4.10.0-beta.4](https://github.com/Deazl-Comparator/deazl/compare/v4.10.0-beta.3...v4.10.0-beta.4) (2025-05-27)
 
 
