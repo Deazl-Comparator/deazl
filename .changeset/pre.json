@@ -1,0 +1,10 @@
+{
+  "mode": "exit",
+  "tag": "beta",
+  "initialVersions": {
+    "@deazl/shopping-lists": "0.0.1"
+  },
+  "changesets": [
+    "good-bobcats-jam"
+  ]
+}
