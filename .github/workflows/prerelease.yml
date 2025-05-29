@@ -49,7 +49,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Build packages
-        run: yarn workspaces foreach -A run build
+        run: yarn build
 
       - name: Determine prerelease tag
         id: prerelease-tag
