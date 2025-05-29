@@ -1,8 +1,8 @@
-import { ShoppingListItem } from "~/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
-import type { ShoppingListItemRepository } from "~/ShoppingLists/Domain/Repositories/ShoppingListItemRepository";
-import type { ShoppingListRepository } from "~/ShoppingLists/Domain/Repositories/ShoppingListRepository";
-import { UnitType } from "~/ShoppingLists/Domain/ValueObjects/Unit.vo";
-import { auth } from "~/libraries/nextauth/authConfig";
+import { auth } from "@deazl/system";
+import { ShoppingListItem } from "~/Domain/Entities/ShoppingListItem.entity";
+import type { ShoppingListItemRepository } from "~/Domain/Repositories/ShoppingListItemRepository";
+import type { ShoppingListRepository } from "~/Domain/Repositories/ShoppingListRepository";
+import { UnitType } from "~/Domain/ValueObjects/Unit.vo";
 
 /**
  * Service d'application pour la gestion des articles de listes de courses

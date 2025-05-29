@@ -1,8 +1,8 @@
 "use client";
 
-import type { ShoppingListPayload } from "~/ShoppingLists/Domain/Entities/ShoppingList.entity";
-import { ShoppingListContainer } from "~/ShoppingLists/Ui/ShoppingListDetails/ShoppingListContainer";
-import { ShoppingListDetailsHeader } from "~/ShoppingLists/Ui/ShoppingListDetails/ShoppingListDetailsHeader";
+import type { ShoppingListPayload } from "~/Domain/Entities/ShoppingList.entity";
+import { ShoppingListContainer } from "~/Ui/ShoppingListDetails/ShoppingListContainer";
+import { ShoppingListDetailsHeader } from "~/Ui/ShoppingListDetails/ShoppingListDetailsHeader";
 import type { User } from "~/applications/Authentication/Domain/User";
 import { StoreProvider } from "../Contexts/StoreContext";
 

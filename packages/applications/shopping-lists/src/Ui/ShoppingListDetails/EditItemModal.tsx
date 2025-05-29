@@ -1,3 +1,4 @@
+import { BarcodeScanner } from "@deazl/components";
 import {
   Button,
   Checkbox,
@@ -25,11 +26,9 @@ import {
   StoreIcon
 } from "lucide-react";
 import { useState } from "react";
-import { createProductFromItem } from "~/ShoppingLists/Api/createProductFromItem.api";
-import type { ShoppingListItemPayload } from "~/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
-import { UnitType } from "~/ShoppingLists/Domain/ValueObjects/Unit.vo";
-import { searchByBarcode } from "~/applications/Searchbar/Api/searchByBarcode";
-import { BarcodeScanner } from "~/components/BarcodeScanner/BarcodeScanner";
+import { createProductFromItem } from "~/Api/createProductFromItem.api";
+import type { ShoppingListItemPayload } from "~/Domain/Entities/ShoppingListItem.entity";
+import { UnitType } from "~/Domain/ValueObjects/Unit.vo";
 import { useStore } from "../Contexts/StoreContext";
 import { ProductDetailsModal } from "./ProductDetailsModal";
 
@@ -165,7 +164,8 @@ export const EditItemModal = ({ isOpen, onClose, item, onUpdate }: EditItemModal
     setIsFetchingBarcodeData(true);
 
     try {
-      const result = await searchByBarcode({ barcode: scannedBarcode });
+      // const result = await searchByBarcode({ barcode: scannedBarcode });
+      const result = {} as any;
 
       if (result.success && result.product) {
         // Auto-fill name if it's empty

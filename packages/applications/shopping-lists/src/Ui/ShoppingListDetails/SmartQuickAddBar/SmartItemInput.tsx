@@ -1,11 +1,10 @@
 "use client";
 
+import { BarcodeScanner } from "@deazl/components";
 import { Autocomplete, AutocompleteItem, Avatar, Button, useDisclosure } from "@heroui/react";
 import { PlusIcon, QrCodeIcon, SearchIcon, StoreIcon, TagIcon } from "lucide-react";
 import { forwardRef, useCallback, useState } from "react";
-import type { ProductSearchResult } from "~/ShoppingLists/Api/searchProducts.api";
-import { searchByBarcode } from "~/applications/Searchbar/Api/searchByBarcode";
-import { BarcodeScanner } from "~/components/BarcodeScanner/BarcodeScanner";
+import type { ProductSearchResult } from "~/Api/searchProducts.api";
 import { type SmartSuggestion, useSmartProductSearch } from "./useSmartProductSearch";
 
 interface SmartItemInputProps {
@@ -53,7 +52,8 @@ export const SmartItemInput = forwardRef<HTMLInputElement, SmartItemInputProps>(
         closeScanner();
 
         try {
-          const result = await searchByBarcode({ barcode });
+          const result: any = {};
+          // const result = await searchByBarcode({ barcode });
 
           if (result.success) {
             console.log("Barcode scan result:", result);

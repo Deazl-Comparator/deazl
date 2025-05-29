@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { ShoppingListItemSchema } from "~/ShoppingLists/Domain/Schemas/ShoppingListItem.schema";
-import { UserRoleEnum } from "~/ShoppingLists/Domain/Schemas/UserRole.schema";
+import { ShoppingListItemSchema } from "~/Domain/Schemas/ShoppingListItem.schema";
+import { UserRoleEnum } from "~/Domain/Schemas/UserRole.schema";
 
 export const ShoppingListCollaboratorSchema = z.object({
   id: z.string(),

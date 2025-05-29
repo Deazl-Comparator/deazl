@@ -4,7 +4,7 @@ import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@
 import { motion } from "framer-motion";
 import { CalendarIcon, GlobeIcon, MoreVerticalIcon, ShoppingBagIcon, UsersIcon } from "lucide-react";
 import Link from "next/link";
-import type { ShoppingListPayload } from "~/ShoppingLists/Domain/Entities/ShoppingList.entity";
+import type { ShoppingListPayload } from "~/Domain/Entities/ShoppingList.entity";
 
 export interface ShoppingListCardProps {
   list: ShoppingListPayload;

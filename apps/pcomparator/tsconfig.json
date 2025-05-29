@@ -28,7 +28,7 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "~/ShoppingLists/*": [
+      "~/*": [
         "src/applications/ShoppingLists/*"
       ],
       "~/Shared/*": [

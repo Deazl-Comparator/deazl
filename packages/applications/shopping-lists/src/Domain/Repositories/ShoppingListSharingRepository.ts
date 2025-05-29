@@ -1,8 +1,8 @@
-import type { ShoppingList } from "~/ShoppingLists/Domain/Entities/ShoppingList.entity";
+import type { ShoppingList } from "~/Domain/Entities/ShoppingList.entity";
 import type {
   CollaboratorRole,
   ShoppingListCollaborator
-} from "~/ShoppingLists/Domain/Entities/ShoppingListCollaborator.entity";
+} from "~/Domain/Entities/ShoppingListCollaborator.entity";
 
 /**
  * Repository interface pour la gestion du partage des listes de courses

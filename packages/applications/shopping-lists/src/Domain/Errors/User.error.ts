@@ -1,4 +1,4 @@
-import { DomainError } from "~/Shared/Domain/Core/DomainError";
+import { DomainError } from "@deazl/shared";
 
 export class UserNotAuthenticated extends DomainError {
   constructor() {

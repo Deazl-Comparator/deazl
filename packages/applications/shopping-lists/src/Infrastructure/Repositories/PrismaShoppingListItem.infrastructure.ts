@@ -1,16 +1,16 @@
-import type { ShoppingListItem } from "~/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
-import type { ShoppingListItemRepository } from "~/ShoppingLists/Domain/Repositories/ShoppingListItemRepository";
-import { ShoppingListItemMapper } from "~/ShoppingLists/Infrastructure/Mappers/ShoppingListItemMapper";
-import { prisma } from "~/libraries/prisma";
+import { prisma } from "@deazl/system";
+import type { ShoppingListItem } from "~/Domain/Entities/ShoppingListItem.entity";
+import type { ShoppingListItemRepository } from "~/Domain/Repositories/ShoppingListItemRepository";
+import { ShoppingListItemMapper } from "~/Infrastructure/Mappers/ShoppingListItemMapper";
 
 /**
  * Implémentation Prisma du repository pour les articles de listes de courses
- * 
+ *
  * Responsabilités (selon les principes DDD) :
  * - Persister et récupérer les entités ShoppingListItem
  * - Gérer les opérations CRUD sur les articles
  * - Mapper entre le modèle de domaine et le modèle de persistance
- * 
+ *
  * Ce repository se concentre uniquement sur les opérations liées aux articles
  * et ne gère pas les entités d'autres bounded contexts (Product, Brand, Store)
  */

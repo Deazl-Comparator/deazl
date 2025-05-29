@@ -1,10 +1,10 @@
 import { addToast } from "@heroui/react";
 import { Trans } from "@lingui/react/macro";
 import { useCallback, useEffect, useState } from "react";
-import { addCollaborator } from "~/ShoppingLists/Api/shoppingLists/share/addCollaborator.api";
-import { generateShareLink } from "~/ShoppingLists/Api/shoppingLists/share/generateShareLink.api";
-import { getCollaborators } from "~/ShoppingLists/Api/shoppingLists/share/getCollaborators.api";
-import type { ShoppingListCollaborator } from "~/ShoppingLists/Domain/Entities/ShoppingListCollaborator.entity";
+import { addCollaborator } from "~/Api/shoppingLists/share/addCollaborator.api";
+import { generateShareLink } from "~/Api/shoppingLists/share/generateShareLink.api";
+import { getCollaborators } from "~/Api/shoppingLists/share/getCollaborators.api";
+import type { ShoppingListCollaborator } from "~/Domain/Entities/ShoppingListCollaborator.entity";
 
 type Collaborator = {
   id: string;

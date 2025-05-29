@@ -1,10 +1,10 @@
 "use client";
 
+import { CollapsibleCard } from "@deazl/components";
 import { Autocomplete, AutocompleteItem, Button, Chip } from "@heroui/react";
 import { Trans } from "@lingui/react/macro";
 import { MapPinIcon, PlusIcon, SearchIcon, StoreIcon } from "lucide-react";
 import { useState } from "react";
-import { CollapsibleCard } from "~/components/CollapsibleCard/CollapsibleCard";
 import { useStore } from "../Contexts/StoreContext";
 import { useStorageStore } from "../Hooks/useStorageStore";
 import { useStoreData } from "../Hooks/useStoreData";

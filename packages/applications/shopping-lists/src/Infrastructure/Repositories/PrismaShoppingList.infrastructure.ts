@@ -1,10 +1,10 @@
-import { InfrastructureError } from "~/Shared/Infrastructure/Core/Errors/Infrastructure.error";
-import type { ShoppingList } from "~/ShoppingLists/Domain/Entities/ShoppingList.entity";
-import type { ShoppingListRepository } from "~/ShoppingLists/Domain/Repositories/ShoppingListRepository";
-import type { ShoppingListQuery } from "~/ShoppingLists/Domain/ValueObjects/ShoppingListQuery.vo";
-import { ShoppingListMapper } from "~/ShoppingLists/Infrastructure/Mappers/ShoppingListMapper";
-import { ShoppingListInfraSchema } from "~/ShoppingLists/Infrastructure/Schemas/ShoppingList.schema";
-import { prisma } from "~/libraries/prisma";
+import { InfrastructureError } from "@deazl/shared";
+import { prisma } from "@deazl/system";
+import type { ShoppingList } from "~/Domain/Entities/ShoppingList.entity";
+import type { ShoppingListRepository } from "~/Domain/Repositories/ShoppingListRepository";
+import type { ShoppingListQuery } from "~/Domain/ValueObjects/ShoppingListQuery.vo";
+import { ShoppingListMapper } from "~/Infrastructure/Mappers/ShoppingListMapper";
+import { ShoppingListInfraSchema } from "~/Infrastructure/Schemas/ShoppingList.schema";
 
 export class PrismaShoppingListRepository implements ShoppingListRepository {
   async save(list: ShoppingList): Promise<ShoppingList> {

@@ -1,6 +1,6 @@
+import { CollapsibleCard } from "@deazl/components";
 import { Progress } from "@heroui/react";
 import { ShoppingBagIcon, ShoppingCartIcon } from "lucide-react";
-import { CollapsibleCard } from "~/components/CollapsibleCard/CollapsibleCard";
 
 interface ShoppingListStatsProps {
   stats: {

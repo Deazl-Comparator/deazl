@@ -1,6 +1,6 @@
 "use server";
 
-import { auth } from "~/libraries/nextauth/authConfig";
+import { auth } from "@deazl/system";
 
 // TODO: Cette fonctionnalité devrait être déplacée vers un service Products dédié
 // plutôt que d'être dans les services ShoppingLists

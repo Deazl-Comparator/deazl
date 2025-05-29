@@ -1,4 +1,4 @@
-import type { ProductSearchResult } from "~/ShoppingLists/Api/searchProducts.api";
+import type { ProductSearchResult } from "~/Api/searchProducts.api";
 
 export interface ParsedItem {
   quantity: number;

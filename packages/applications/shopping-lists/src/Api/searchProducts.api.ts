@@ -1,6 +1,6 @@
 "use server";
 
-import { ProductSearchApplicationService } from "~/applications/ShoppingLists/Application/Services/ProductSearch.service";
+import { ProductSearchApplicationService } from "~/Application/Services/ProductSearch.service";
 
 // L'API orchestre en instanciant les dépendances selon l'architecture DDD
 const productSearchService = new ProductSearchApplicationService();

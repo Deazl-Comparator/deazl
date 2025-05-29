@@ -1,8 +1,8 @@
-import type { ProductCreationRequest } from "~/ShoppingLists/Domain/ValueObjects/ProductCreationRequest.vo";
+import type { ProductCreationRequest } from "~/Domain/ValueObjects/ProductCreationRequest.vo";
 
 /**
  * Interface pour un service d'application qui gère la création de produits
- * Cette interface permet de découpler le bounded context ShoppingList 
+ * Cette interface permet de découpler le bounded context ShoppingList
  * du bounded context Product/Catalog
  */
 export interface ProductCreationService {

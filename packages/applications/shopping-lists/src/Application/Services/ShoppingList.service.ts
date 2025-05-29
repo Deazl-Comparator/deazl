@@ -1,12 +1,10 @@
-import { AuthenticationService } from "~/Shared/Application/Services/Authentication.service";
-import { DomainError } from "~/Shared/Domain/Core/DomainError";
-import { DataAccessError } from "~/Shared/Domain/Core/Errors/ApplicationErrors";
-import type { CreateShoppingListPayload } from "~/ShoppingLists/Api/shoppingLists/createShoppingList.api";
-import type { DeleteShoppingListPayload } from "~/ShoppingLists/Api/shoppingLists/deleteShoppingList.api";
-import type { GetShoppingListPayload } from "~/ShoppingLists/Api/shoppingLists/getShoppingList.api";
-import { ShoppingList } from "~/ShoppingLists/Domain/Entities/ShoppingList.entity";
-import type { ShoppingListRepository } from "~/ShoppingLists/Domain/Repositories/ShoppingListRepository";
-import { ShoppingListQuery } from "~/ShoppingLists/Domain/ValueObjects/ShoppingListQuery.vo";
+import { AuthenticationService, DataAccessError, DomainError } from "@deazl/shared";
+import type { CreateShoppingListPayload } from "~/Api/shoppingLists/createShoppingList.api";
+import type { DeleteShoppingListPayload } from "~/Api/shoppingLists/deleteShoppingList.api";
+import type { GetShoppingListPayload } from "~/Api/shoppingLists/getShoppingList.api";
+import { ShoppingList } from "~/Domain/Entities/ShoppingList.entity";
+import type { ShoppingListRepository } from "~/Domain/Repositories/ShoppingListRepository";
+import { ShoppingListQuery } from "~/Domain/ValueObjects/ShoppingListQuery.vo";
 
 export class ShoppingListApplicationService {
   private readonly authService: AuthenticationService;
@@ -17,7 +15,7 @@ export class ShoppingListApplicationService {
 
   async listUserShoppingLists(): Promise<ShoppingList[]> {
     try {
-      const currentUser = await this.authService.getCurrentUser();
+      const currentUser: any = await this.authService.getCurrentUser();
       const lists = await this.repository.findManyByQuery(ShoppingListQuery.forUserAccess(currentUser.id));
 
       return lists;
@@ -33,7 +31,7 @@ export class ShoppingListApplicationService {
 
   async getShoppingList(shoppingListId: GetShoppingListPayload): Promise<ShoppingList | null> {
     try {
-      const currentUser = await this.authService.getCurrentUser();
+      const currentUser: any = await this.authService.getCurrentUser();
 
       const list = await this.repository.findById(shoppingListId);
 
@@ -52,7 +50,7 @@ export class ShoppingListApplicationService {
 
   async createShoppingList(data: CreateShoppingListPayload): Promise<ShoppingList> {
     try {
-      const currentUser = await this.authService.getCurrentUser();
+      const currentUser: any = await this.authService.getCurrentUser();
 
       const shoppingList = ShoppingList.create({
         name: data.name,
@@ -70,7 +68,7 @@ export class ShoppingListApplicationService {
 
   async deleteShoppingList(shoppingListId: DeleteShoppingListPayload): Promise<void> {
     try {
-      const currentUser = await this.authService.getCurrentUser();
+      const currentUser: any = await this.authService.getCurrentUser();
 
       const list = await this.repository.findById(shoppingListId);
 
@@ -91,7 +89,7 @@ export class ShoppingListApplicationService {
     data: Partial<{ name: string; description: string }>
   ): Promise<ShoppingList> {
     try {
-      const currentUser = await this.authService.getCurrentUser();
+      const currentUser: any = await this.authService.getCurrentUser();
 
       const list = await this.repository.findById(shoppingListId);
 

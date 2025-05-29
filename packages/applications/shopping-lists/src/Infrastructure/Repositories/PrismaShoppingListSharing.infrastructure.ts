@@ -1,14 +1,14 @@
+import { prisma } from "@deazl/system";
 import { v4 as uuidv4 } from "uuid";
-import type { ShoppingList } from "~/ShoppingLists/Domain/Entities/ShoppingList.entity";
+import type { ShoppingList } from "~/Domain/Entities/ShoppingList.entity";
 import type {
   CollaboratorRole,
   ShoppingListCollaborator
-} from "~/ShoppingLists/Domain/Entities/ShoppingListCollaborator.entity";
-import type { ShoppingListSharingRepository } from "~/ShoppingLists/Domain/Repositories/ShoppingListSharingRepository";
-import { ShoppingListCollaboratorMapper } from "~/ShoppingLists/Infrastructure/Mappers/ShoppingListCollaboratorMapper";
-import { ShoppingListMapper } from "~/ShoppingLists/Infrastructure/Mappers/ShoppingListMapper";
-import { ShoppingListInfraSchema } from "~/ShoppingLists/Infrastructure/Schemas/ShoppingList.schema";
-import { prisma } from "~/libraries/prisma";
+} from "~/Domain/Entities/ShoppingListCollaborator.entity";
+import type { ShoppingListSharingRepository } from "~/Domain/Repositories/ShoppingListSharingRepository";
+import { ShoppingListCollaboratorMapper } from "~/Infrastructure/Mappers/ShoppingListCollaboratorMapper";
+import { ShoppingListMapper } from "~/Infrastructure/Mappers/ShoppingListMapper";
+import { ShoppingListInfraSchema } from "~/Infrastructure/Schemas/ShoppingList.schema";
 
 /**
  * Implémentation Prisma du repository pour le partage des listes de courses

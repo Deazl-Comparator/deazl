@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
-import { type ProductSearchResult, searchProducts } from "~/ShoppingLists/Api/searchProducts.api";
+import { type ProductSearchResult, searchProducts } from "~/Api/searchProducts.api";
 import {
   type ParsedItem,
   type ProductMatch,
   ProductMatcher
-} from "~/ShoppingLists/Application/Services/ProductMatcher.service";
+} from "~/Application/Services/ProductMatcher.service";
 
 interface UseSmartProductSearchProps {
   onProductSelected?: (product: ProductSearchResult, parsedItem: ParsedItem) => void;

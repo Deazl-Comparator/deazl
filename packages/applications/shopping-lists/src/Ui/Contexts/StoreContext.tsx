@@ -1,7 +1,7 @@
 "use client";
 
 import { type ReactNode, createContext, useContext, useState } from "react";
-import { getStores } from "~/ShoppingLists/Api/getStores.api";
+import { getStores } from "~/Api/getStores.api";
 
 export interface StoreInfo {
   id: string;

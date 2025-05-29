@@ -1,10 +1,9 @@
+import { Entity, UniqueEntityID } from "@deazl/shared";
 import type { z } from "zod";
-import { Entity } from "~/Shared/Domain/Core/Entity";
-import { UniqueEntityID } from "~/Shared/Domain/Core/UniqueEntityId";
-import type { ShoppingListCollaborator } from "~/ShoppingLists/Domain/Entities/ShoppingListCollaborator.entity";
-import type { ShoppingListItem } from "~/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
-import type { ShoppingListSchema } from "~/ShoppingLists/Domain/Schemas/ShoppingList.schema";
-import type { UserRoleEnum } from "~/ShoppingLists/Domain/Schemas/UserRole.schema";
+import type { ShoppingListCollaborator } from "~/Domain/Entities/ShoppingListCollaborator.entity";
+import type { ShoppingListItem } from "~/Domain/Entities/ShoppingListItem.entity";
+import type { ShoppingListSchema } from "~/Domain/Schemas/ShoppingList.schema";
+import type { UserRoleEnum } from "~/Domain/Schemas/UserRole.schema";
 
 export type UserRole = z.infer<typeof UserRoleEnum>;
 

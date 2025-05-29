@@ -15,10 +15,7 @@ import {
 } from "@heroui/react";
 import { CheckIcon, ExternalLinkIcon, Package2Icon, SparklesIcon } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
-import type {
-  ConversionResult,
-  ConversionSuggestion
-} from "~/ShoppingLists/Application/Services/SmartConversion.service";
+import type { ConversionResult, ConversionSuggestion } from "~/Application/Services/SmartConversion.service";
 
 interface SmartConversionSectionProps {
   itemId: string;

@@ -1,7 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { SmartConversionApplicationService } from "~/ShoppingLists/Application/Services/SmartConversion.service";
-import { PrismaShoppingListRepository } from "~/ShoppingLists/Infrastructure/Repositories/PrismaShoppingList.infrastructure";
-import { PrismaShoppingListItemRepository } from "~/ShoppingLists/Infrastructure/Repositories/PrismaShoppingListItem.infrastructure";
+import { SmartConversionApplicationService } from "~/Application/Services/SmartConversion.service";
+import { PrismaShoppingListRepository } from "~/Infrastructure/Repositories/PrismaShoppingList.infrastructure";
+import { PrismaShoppingListItemRepository } from "~/Infrastructure/Repositories/PrismaShoppingListItem.infrastructure";
 
 const conversionService = new SmartConversionApplicationService(
   new PrismaShoppingListRepository(),

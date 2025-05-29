@@ -4,8 +4,8 @@ import { Button, Tooltip, addToast, useDisclosure } from "@heroui/react";
 import { Trans } from "@lingui/react/macro";
 import { ArrowLeftIcon, MoreVerticalIcon, UserPlusIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { deleteShoppingList } from "~/ShoppingLists/Api/shoppingLists/deleteShoppingList.api";
-import { MoreActionModal } from "~/ShoppingLists/Ui/ShoppingListDetails/MoreActionModal";
+import { deleteShoppingList } from "~/Api/shoppingLists/deleteShoppingList.api";
+import { MoreActionModal } from "~/Ui/ShoppingListDetails/MoreActionModal";
 import ShareListModal from "./ShareListModal/ShareListModal";
 
 interface ShoppingListPageHeaderProps {

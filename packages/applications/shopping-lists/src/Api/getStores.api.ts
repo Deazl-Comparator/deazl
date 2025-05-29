@@ -1,7 +1,6 @@
 "use server";
 
-import { auth } from "~/libraries/nextauth/authConfig";
-import { prisma } from "~/libraries/prisma";
+import { auth, prisma } from "@deazl/system";
 
 export interface StoreInfo {
   id: string;

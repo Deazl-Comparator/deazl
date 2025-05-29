@@ -1,10 +1,10 @@
-import { ShoppingList } from "~/ShoppingLists/Domain/Entities/ShoppingList.entity";
+import { ShoppingList } from "~/Domain/Entities/ShoppingList.entity";
 import {
   CollaboratorRole,
   ShoppingListCollaborator
-} from "~/ShoppingLists/Domain/Entities/ShoppingListCollaborator.entity";
-import { ShoppingListItem } from "~/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
-import type { ShoppingListInfraPayload } from "~/ShoppingLists/Infrastructure/Schemas/ShoppingList.schema";
+} from "~/Domain/Entities/ShoppingListCollaborator.entity";
+import { ShoppingListItem } from "~/Domain/Entities/ShoppingListItem.entity";
+import type { ShoppingListInfraPayload } from "~/Infrastructure/Schemas/ShoppingList.schema";
 
 export class ShoppingListMapper {
   static toDomain(raw: ShoppingListInfraPayload): ShoppingList {

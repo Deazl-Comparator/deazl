@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import type { ConversionResult } from "~/ShoppingLists/Application/Services/SmartConversion.service";
+import type { ConversionResult } from "~/Application/Services/SmartConversion.service";
 
 interface ConversionOpportunity {
   itemId: string;

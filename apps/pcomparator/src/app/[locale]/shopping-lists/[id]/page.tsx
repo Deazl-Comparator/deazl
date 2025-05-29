@@ -1,6 +1,4 @@
 import { notFound } from "next/navigation";
-import { getShoppingList } from "~/ShoppingLists/Api/shoppingLists/getShoppingList.api";
-import { ShoppingListDetails } from "~/ShoppingLists/Ui/ShoppingListDetails/ShoppingListDetails";
 import { auth } from "~/libraries/nextauth/authConfig";
 
 export default async function ShoppingListPage({ params }: { params: Promise<{ id: string }> }) {

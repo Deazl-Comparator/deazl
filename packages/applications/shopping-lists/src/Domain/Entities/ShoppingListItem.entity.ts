@@ -1,13 +1,11 @@
+import { DomainError, Entity, UniqueEntityID } from "@deazl/shared";
 import { z } from "zod";
-import { DomainError } from "~/Shared/Domain/Core/DomainError";
-import { Entity } from "~/Shared/Domain/Core/Entity";
-import { UniqueEntityID } from "~/Shared/Domain/Core/UniqueEntityId";
-import { BusinessRuleViolationError } from "~/ShoppingLists/Domain/Errors/ShoppingListItemEntity.error";
-import type { ShoppingListItemSchema } from "~/ShoppingLists/Domain/Schemas/ShoppingListItem.schema";
-import { ItemQuantity } from "~/ShoppingLists/Domain/ValueObjects/ItemQuantity.vo";
-import { ItemStatus } from "~/ShoppingLists/Domain/ValueObjects/ItemStatus.vo";
-import { Price } from "~/ShoppingLists/Domain/ValueObjects/Price.vo";
-import { Unit } from "~/ShoppingLists/Domain/ValueObjects/Unit.vo";
+import { BusinessRuleViolationError } from "~/Domain/Errors/ShoppingListItemEntity.error";
+import type { ShoppingListItemSchema } from "~/Domain/Schemas/ShoppingListItem.schema";
+import { ItemQuantity } from "~/Domain/ValueObjects/ItemQuantity.vo";
+import { ItemStatus } from "~/Domain/ValueObjects/ItemStatus.vo";
+import { Price } from "~/Domain/ValueObjects/Price.vo";
+import { Unit } from "~/Domain/ValueObjects/Unit.vo";
 
 export class ItemNameTooShortError extends DomainError {
   constructor() {

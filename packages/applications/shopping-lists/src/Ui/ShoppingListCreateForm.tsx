@@ -1,10 +1,9 @@
 "use client";
 
+import { Input, useForm } from "@deazl/components";
 import { Card, CardBody, CardFooter, Textarea } from "@heroui/react";
 import { Trans } from "@lingui/react/macro";
 import { type KeyboardEvent, useState } from "react";
-import useForm from "~/components/Form/useForm";
-import { Input } from "~/components/Inputs/Input/Input";
 
 type ItemType = {
   id: string;

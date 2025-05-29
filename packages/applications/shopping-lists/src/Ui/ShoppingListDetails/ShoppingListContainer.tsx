@@ -1,12 +1,12 @@
 import { Button } from "@heroui/react";
 import { Trans } from "@lingui/react/macro";
 import { useMemo, useState } from "react";
-import type { ShoppingListPayload } from "~/ShoppingLists/Domain/Entities/ShoppingList.entity";
-import { ShoppingListItemCard } from "~/ShoppingLists/Ui/ShoppingListDetails/ShoppingListItemCard";
-import { ShoppingModeScanner } from "~/ShoppingLists/Ui/ShoppingListDetails/ShoppingModeScanner";
-import { SmartConversionSection } from "~/ShoppingLists/Ui/ShoppingListDetails/SmartConversionSection";
-import { SmartQuickAddBar } from "~/ShoppingLists/Ui/ShoppingListDetails/SmartQuickAddBar/SmartQuickAddBar";
-import { useShoppingListActions } from "~/ShoppingLists/Ui/ShoppingListDetails/useShoppingListActions";
+import type { ShoppingListPayload } from "~/Domain/Entities/ShoppingList.entity";
+import { ShoppingListItemCard } from "~/Ui/ShoppingListDetails/ShoppingListItemCard";
+import { ShoppingModeScanner } from "~/Ui/ShoppingListDetails/ShoppingModeScanner";
+import { SmartConversionSection } from "~/Ui/ShoppingListDetails/SmartConversionSection";
+import { SmartQuickAddBar } from "~/Ui/ShoppingListDetails/SmartQuickAddBar/SmartQuickAddBar";
+import { useShoppingListActions } from "~/Ui/ShoppingListDetails/useShoppingListActions";
 
 interface ShoppingListContainerProps {
   initialList: ShoppingListPayload;

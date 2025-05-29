@@ -1,11 +1,10 @@
-import { AuthenticationService } from "~/Shared/Application/Services/Authentication.service";
-import { DomainError } from "~/Shared/Domain/Core/DomainError";
-import type { GetCollaboratorsPayload } from "~/ShoppingLists/Api/shoppingLists/share/getCollaborators.api";
-import type { CollaboratorRole } from "~/ShoppingLists/Domain/Entities/ShoppingListCollaborator.entity";
-import type { ShoppingListRepository } from "~/ShoppingLists/Domain/Repositories/ShoppingListRepository";
-import type { ShoppingListSharingRepository } from "~/ShoppingLists/Domain/Repositories/ShoppingListSharingRepository";
-import { CollaboratorRoleValidator } from "~/ShoppingLists/Domain/ValueObjects/CollaboratorRoleValidator.vo";
-import { auth } from "~/libraries/nextauth/authConfig";
+import { AuthenticationService, DomainError } from "@deazl/shared";
+import { auth } from "@deazl/system";
+import type { GetCollaboratorsPayload } from "~/Api/shoppingLists/share/getCollaborators.api";
+import type { CollaboratorRole } from "~/Domain/Entities/ShoppingListCollaborator.entity";
+import type { ShoppingListRepository } from "~/Domain/Repositories/ShoppingListRepository";
+import type { ShoppingListSharingRepository } from "~/Domain/Repositories/ShoppingListSharingRepository";
+import { CollaboratorRoleValidator } from "~/Domain/ValueObjects/CollaboratorRoleValidator.vo";
 
 /**
  * Service d'application pour la gestion du partage des listes de courses
@@ -22,7 +21,7 @@ export class ShoppingListSharingApplicationService {
 
   async shareList(listId: string, email: string, role: "OWNER" | "EDITOR" | "VIEWER"): Promise<void> {
     try {
-      const user = await this.authService.getCurrentUser();
+      const user: any = await this.authService.getCurrentUser();
 
       const list = await this.listRepository.findById(listId);
 
@@ -49,7 +48,7 @@ export class ShoppingListSharingApplicationService {
 
   async getListCollaborators(shoppingListId: GetCollaboratorsPayload) {
     try {
-      const user = await this.authService.getCurrentUser();
+      const user: any = await this.authService.getCurrentUser();
       const list = await this.listRepository.findById(shoppingListId);
 
       if (!list) throw new Error("Shopping list not found");
@@ -100,7 +99,7 @@ export class ShoppingListSharingApplicationService {
    */
   async leaveSharedList(listId: string): Promise<void> {
     try {
-      const session = await auth();
+      const session: any = await auth();
       if (!session?.user?.id) throw new Error("User not authenticated");
 
       const list = await this.listRepository.findById(listId);

@@ -1,11 +1,10 @@
 "use client";
 
+import { BarcodeScanner } from "@deazl/components";
 import { Button, Card, CardBody, CardHeader } from "@heroui/react";
 import { ShoppingCartIcon, XIcon } from "lucide-react";
 import { useCallback, useState } from "react";
-import type { ShoppingListItemPayload } from "~/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
-import { searchByBarcode } from "~/applications/Searchbar/Api/searchByBarcode";
-import { BarcodeScanner } from "~/components/BarcodeScanner/BarcodeScanner";
+import type { ShoppingListItemPayload } from "~/Domain/Entities/ShoppingListItem.entity";
 
 interface ShoppingModeScannerProps {
   items: ShoppingListItemPayload[];
@@ -45,7 +44,8 @@ export const ShoppingModeScanner = ({
         } else {
           // 2. Item non trouvé → rechercher dans OpenFoodFacts et ajouter
           try {
-            const result = await searchByBarcode({ barcode });
+            // const result = await searchByBarcode({ barcode });
+            const result: any = {};
 
             if (result.success) {
               // Ajouter l'item avec les données OpenFoodFacts

@@ -1,4 +1,4 @@
-import { ValueObject } from "~/Shared/Domain/Core/ValueObject";
+import { ValueObject } from "@deazl/shared";
 
 interface ProductInformationProps {
   name: string;

@@ -1,6 +1,6 @@
 import type { ShoppingListCollaborator as ShoppingListCollaboratorPrisma } from "@prisma/client";
 import type { User } from "@prisma/client";
-import type { ShoppingListCollaborator } from "~/ShoppingLists/Domain/Entities/ShoppingListCollaborator.entity";
+import type { ShoppingListCollaborator } from "~/Domain/Entities/ShoppingListCollaborator.entity";
 
 export class ShoppingListCollaboratorMapper {
   static toDomain(
