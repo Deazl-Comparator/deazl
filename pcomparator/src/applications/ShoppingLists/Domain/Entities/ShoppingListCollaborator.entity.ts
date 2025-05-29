@@ -13,15 +13,15 @@ interface CollaboratorProps {
   listId: string;
   userId: string;
   role: CollaboratorRole;
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export type ShoppingListCollaboratorPayload = z.infer<typeof ShoppingListCollaboratorSchema>;
 
 export class ShoppingListCollaborator extends Entity<CollaboratorProps> {
-  private constructor(props: CollaboratorProps, id?: UniqueEntityID) {
-    super(props, id);
+  private constructor(props: CollaboratorProps, id?: string) {
+    super(props, new UniqueEntityID(id));
   }
 
   public static create(props: CollaboratorProps, id?: string): ShoppingListCollaborator {
@@ -31,8 +31,12 @@ export class ShoppingListCollaborator extends Entity<CollaboratorProps> {
         createdAt: props.createdAt || new Date(),
         updatedAt: props.updatedAt || new Date()
       },
-      id ? new UniqueEntityID(id) : undefined
+      id
     );
+  }
+
+  get collaboratorId(): string {
+    return this._id.toString();
   }
 
   get listId(): string {
@@ -47,15 +51,16 @@ export class ShoppingListCollaborator extends Entity<CollaboratorProps> {
     return this.props.role;
   }
 
-  // Immutable update method - return new instance
-  public withRole(role: CollaboratorRole): ShoppingListCollaborator {
-    return new ShoppingListCollaborator(
-      {
-        ...this.props,
-        role,
-        updatedAt: new Date()
-      },
-      this._id
-    );
+  public toObject(): ShoppingListCollaboratorPayload {
+    return {
+      id: this._id.toString(),
+      listId: this.props.listId,
+      userId: this.props.userId,
+      role: this.props.role,
+      // @ts-ignore
+      user: null
+      // createdAt: this.props.createdAt,
+      // updatedAt: this.props.updatedAt
+    };
   }
 }

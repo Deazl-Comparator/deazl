@@ -25,6 +25,7 @@ export interface ShoppingListItemProps {
   status: ItemStatus;
   customName?: string;
   totalPrice?: Price | null; // Total price for the item quantity
+  barcode?: string | null; // Code-barres pour enrichissement OpenFoodFacts
   notes?: string | null;
   createdAt: Date;
   updatedAt: Date;
@@ -44,6 +45,7 @@ export class ShoppingListItem extends Entity<ShoppingListItemProps> {
       isCompleted?: boolean;
       customName?: string;
       price?: number | null; // Total price for item quantity
+      barcode?: string | null; // Code-barres pour enrichissement OpenFoodFacts
       notes?: string | null;
     },
     id?: string
@@ -61,6 +63,7 @@ export class ShoppingListItem extends Entity<ShoppingListItemProps> {
         status: ItemStatus.create(props.isCompleted || false),
         customName: props.customName,
         totalPrice: props.price !== undefined ? Price.create(props.price) : undefined,
+        barcode: props.barcode,
         notes: props.notes,
         createdAt: new Date(),
         updatedAt: new Date()
@@ -73,7 +76,7 @@ export class ShoppingListItem extends Entity<ShoppingListItemProps> {
 
   public withUpdates(
     updates: Partial<
-      Pick<ShoppingListItemPayload, "customName" | "quantity" | "unit" | "price" | "isCompleted">
+      Pick<ShoppingListItemPayload, "customName" | "quantity" | "unit" | "price" | "isCompleted" | "barcode">
     >,
     shoppingListItemId: string
   ): ShoppingListItem {
@@ -88,7 +91,8 @@ export class ShoppingListItem extends Entity<ShoppingListItemProps> {
           unit: updates.unit ?? this.unit,
           isCompleted: updates.isCompleted ?? this.isCompleted,
           customName: updates.customName ?? this.customName,
-          price: updates.price ?? this.price
+          price: updates.price ?? this.price,
+          barcode: updates.barcode ?? this.barcode
         },
         shoppingListItemId
       );
@@ -132,6 +136,10 @@ export class ShoppingListItem extends Entity<ShoppingListItemProps> {
 
   get price(): number | null | undefined {
     return this.props.totalPrice?.value;
+  }
+
+  get barcode(): string | null | undefined {
+    return this.props.barcode;
   }
 
   get notes(): string | null | undefined {
@@ -197,6 +205,17 @@ export class ShoppingListItem extends Entity<ShoppingListItemProps> {
       {
         ...this.props,
         totalPrice: Price.create(price),
+        updatedAt: new Date()
+      },
+      this._id
+    );
+  }
+
+  public withBarcode(barcode: string | null): ShoppingListItem {
+    return new ShoppingListItem(
+      {
+        ...this.props,
+        barcode,
         updatedAt: new Date()
       },
       this._id

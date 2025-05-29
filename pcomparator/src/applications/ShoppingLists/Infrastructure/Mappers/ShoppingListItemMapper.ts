@@ -11,6 +11,7 @@ export class ShoppingListItemMapper {
         isCompleted: raw.isCompleted,
         customName: raw.customName,
         price: raw.price,
+        barcode: raw.barcode,
         notes: raw.notes
       },
       raw.id
@@ -27,6 +28,7 @@ export class ShoppingListItemMapper {
       isCompleted: entity.isCompleted,
       customName: entity.customName,
       price: entity.price,
+      barcode: entity.barcode,
       notes: entity.notes,
       updatedAt: new Date()
     };

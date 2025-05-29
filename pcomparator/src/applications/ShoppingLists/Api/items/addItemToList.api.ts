@@ -20,6 +20,7 @@ export const addItemToList = async (
     unit: string;
     isCompleted?: boolean;
     price?: number | null;
+    barcode?: string | null;
   }
 ) => {
   try {
@@ -37,7 +38,8 @@ export const addItemToList = async (
       ...itemData,
       quantity: quantity.value,
       unit: unit.value,
-      price: price?.value ?? undefined
+      price: price?.value ?? undefined,
+      barcode: itemData.barcode
     });
 
     return item.toObject();

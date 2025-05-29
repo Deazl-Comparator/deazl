@@ -1,4 +1,4 @@
-import { listUserShoppingList } from "~/ShoppingLists/Api/listUserShoppingList.api";
+import { listUserShoppingList } from "~/ShoppingLists/Api/shoppingLists/listUserShoppingList.api";
 import { ShoppingListsView } from "~/ShoppingLists/Ui/ShoppingLists/ShoppingListsView";
 import { withLinguiPage } from "~/core/withLinguiLayout";
 

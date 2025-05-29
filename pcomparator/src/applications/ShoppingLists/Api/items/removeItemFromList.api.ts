@@ -1,5 +1,6 @@
 "use server";
 
+import { z } from "zod";
 import { ShoppingListItemApplicationService } from "~/ShoppingLists/Application/Services/ShoppingListItem.service";
 import { PrismaShoppingListRepository } from "~/ShoppingLists/Infrastructure/Repositories/PrismaShoppingList.infrastructure";
 import { PrismaShoppingListItemRepository } from "~/ShoppingLists/Infrastructure/Repositories/PrismaShoppingListItem.infrastructure";
@@ -9,12 +10,16 @@ const shoppingListItemService = new ShoppingListItemApplicationService(
   new PrismaShoppingListItemRepository()
 );
 
-export const removeItemFromList = async (itemId: string) => {
+export const RemoveItemFromListSchema = z.string().uuid();
+
+export type RemoveItemFromListPayload = z.infer<typeof RemoveItemFromListSchema>;
+
+export const removeItemFromList = async (itemId: RemoveItemFromListPayload): Promise<void> => {
   try {
-    await shoppingListItemService.removeShoppingListItem(itemId);
-    return { success: true };
+    const payload = RemoveItemFromListSchema.parse(itemId);
+
+    await shoppingListItemService.removeShoppingListItem(payload);
   } catch (error) {
-    console.error("Error removing item from list", error);
-    throw new Error("Failed to remove item from list");
+    throw new Error("Failed to remove item from list", { cause: error });
   }
 };

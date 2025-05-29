@@ -205,9 +205,14 @@ msgid "Back to Home"
 msgstr "Retour à l'accueil"
 
 #: src/components/Inputs/Input/Barcode.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
 #: src/applications/Prices/Ui/NewPrice/NewPiceModal.tsx
 msgid "Barcode"
 msgstr "Code-barre"
+
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
+msgid "Barcode saved but no product information found"
+msgstr "Code-barre enregistré mais aucune information produit trouvée"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ProductSelectionModal.tsx
 msgid "Best Price"
@@ -226,6 +231,10 @@ msgid "By signing in, you agree to our <0>terms of service</0> and <1>privacy po
 msgstr "En vous connectant, vous acceptez nos <0>conditions d'utilisation</0> et notre <1>politique de confidentialité</1>."
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ProductSelectionModal.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ProductDetailsModal.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/AddStoreModal.tsx
+#: src/applications/Prices/Ui/ListPrices/CardPrice/DeletePriceModal/DeletePriceModal.tsx
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -469,8 +478,19 @@ msgstr "Saisissez le nom du produit"
 msgid "Environment"
 msgstr "Environnement"
 
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/useShoppingListActions.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/useShoppingListActions.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/useShoppingListActions.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/useQuickAdd.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListDetailsHeader.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/AddStoreModal.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/SmartQuickAddBar/useSmartAdd.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/SmartQuickAddBar/useSmartAdd.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShoppingListShare.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShoppingListShare.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShareList.tsx
 msgid "Error"
 msgstr "Erreur"
 
@@ -485,6 +505,10 @@ msgstr "Tout est inclus, pour tout le monde"
 #: src/app/[locale]/about/page.tsx
 msgid "Excellence"
 msgstr "Excellence"
+
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListContainer.tsx
+msgid "Exit Shopping Mode"
+msgstr "Quitter le mode Shopping"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/useQuickAdd.tsx
 msgid "Failed to add item"
@@ -501,6 +525,10 @@ msgstr "Échec de la création du magasin"
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListDetailsHeader.tsx
 msgid "Failed to delete shopping list"
 msgstr "Échec de la suppression de la liste de courses"
+
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
+msgid "Failed to fetch product information"
+msgstr "Échec de la récupération des informations sur le produit"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShareListModal/useShoppingListShare.tsx
 msgid "Failed to load collaborators"
@@ -639,6 +667,7 @@ msgstr "Invitation envoyée"
 msgid "Invitation sent successfully"
 msgstr "Invitation envoyée avec succès"
 
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/useQuickAdd.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/SmartQuickAddBar/useSmartAdd.tsx
 msgid "Item added"
 msgstr "Article ajouté"
@@ -869,6 +898,10 @@ msgstr "Veuillez sélectionner un magasin à associer à ce produit"
 msgid "Please use 32 characters at maximum."
 msgstr "Veuillez utiliser 32 caractères maximum."
 
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListContainer.tsx
+msgid "Preparation Mode"
+msgstr "Mode Préparation"
+
 #: src/applications/Prices/Ui/NewQuickPrice/FormSteps/Location.tsx
 #: src/applications/Prices/Ui/NewPrice/FormSteps/Step4/Location.tsx
 #: src/applications/Prices/Ui/NewPrice/FormSteps/Step3/Proof.tsx
@@ -934,6 +967,7 @@ msgid "Product \"{productName}\" was not found but added to your account."
 msgstr "Produit \"{productName}\" n'a pas été trouvé mais à été ajouté  votre compte."
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/SmartQuickAddBar/useSmartAdd.tsx
+#: src/applications/Products/Ui/NewProduct/NewProduct.tsx
 msgid "Product added"
 msgstr "Produit ajouté"
 
@@ -946,13 +980,25 @@ msgid "Product Details"
 msgstr "Détails du produit"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
+msgid "Product found"
+msgstr "Produit trouvé"
+
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
 msgid "Product has been created and saved for future reference"
 msgstr "Le produit a été créé et enregistré pour référence future"
+
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
+msgid "Product information has been retrieved from barcode"
+msgstr "Les informations sur le produit ont été récupérées à partir du code-barres"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
 msgid "Product name and price are required"
 msgstr "Le nom et le prix du produit sont requis"
+
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
+msgid "Product not found"
+msgstr "Produit non trouvé"
 
 #: src/applications/Products/Ui/NewProduct/NewProduct.tsx
 msgid "Product Not Found"
@@ -963,6 +1009,7 @@ msgid "QR Code downloaded"
 msgstr "QR Code téléchargé"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ProductSelectionModal.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
 msgid "Quantity"
 msgstr "Quantité"
 
@@ -1081,6 +1128,10 @@ msgstr "Liste de courses supprimée avec succès"
 msgid "Shopping Lists"
 msgstr "Listes de courses"
 
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListContainer.tsx
+msgid "Shopping Mode"
+msgstr "Mode Shopping"
+
 #: src/app/[locale]/auth/signin/page.tsx
 msgid "Sign in"
 msgstr "Se connecter"
@@ -1129,6 +1180,10 @@ msgstr "Commencer maintenant"
 #: src/views/Home/components/HowItWorks/HowItWorksSection.tsx
 msgid "Start saving in just a few simple steps. No more running around different stores!"
 msgstr "Commencez à économiser en quelques étapes simples. Plus besoin de courir dans différents magasins !"
+
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/ShoppingListContainer.tsx
+msgid "Start Shopping"
+msgstr "Commencer les courses"
 
 #: src/views/Home/components/Stats/StatsSection.tsx
 msgid "Statistics"
@@ -1220,6 +1275,7 @@ msgid "Total Items"
 msgstr "Total des articles"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ProductSelectionModal.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
 msgid "Total Price"
 msgstr "Prix total"
 
@@ -1265,6 +1321,7 @@ msgid "Unable to add product"
 msgstr "Impossible d'ajouter le produit"
 
 #: src/applications/ShoppingLists/Ui/ShoppingListDetails/ProductSelectionModal.tsx
+#: src/applications/ShoppingLists/Ui/ShoppingListDetails/EditItemModal.tsx
 msgid "Unit"
 msgstr "Unité"
 

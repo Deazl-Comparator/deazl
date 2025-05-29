@@ -1,90 +1,69 @@
+import { AuthenticationService } from "~/Shared/Application/Services/Authentication.service";
+import { DomainError } from "~/Shared/Domain/Core/DomainError";
+import type { GetCollaboratorsPayload } from "~/ShoppingLists/Api/shoppingLists/share/getCollaborators.api";
 import type { CollaboratorRole } from "~/ShoppingLists/Domain/Entities/ShoppingListCollaborator.entity";
 import type { ShoppingListRepository } from "~/ShoppingLists/Domain/Repositories/ShoppingListRepository";
 import type { ShoppingListSharingRepository } from "~/ShoppingLists/Domain/Repositories/ShoppingListSharingRepository";
-import { ShoppingListDomainService } from "~/ShoppingLists/Domain/Services/ShoppingListDomainService";
+import { CollaboratorRoleValidator } from "~/ShoppingLists/Domain/ValueObjects/CollaboratorRoleValidator.vo";
 import { auth } from "~/libraries/nextauth/authConfig";
 
 /**
  * Service d'application pour la gestion du partage des listes de courses
  */
 export class ShoppingListSharingApplicationService {
-  private readonly domainService: ShoppingListDomainService;
+  private readonly authService: AuthenticationService;
 
   constructor(
     private readonly listRepository: ShoppingListRepository,
     private readonly sharingRepository: ShoppingListSharingRepository
   ) {
-    this.domainService = new ShoppingListDomainService();
+    this.authService = new AuthenticationService();
   }
 
-  /**
-   * Partage une liste avec un utilisateur
-   */
   async shareList(listId: string, email: string, role: "OWNER" | "EDITOR" | "VIEWER"): Promise<void> {
     try {
-      const session = await auth();
-      if (!session?.user?.id) throw new Error("User not authenticated");
+      const user = await this.authService.getCurrentUser();
 
       const list = await this.listRepository.findById(listId);
+
       if (!list) throw new Error("Shopping list not found");
 
-      // Vérifier les permissions de partage
-      if (!this.domainService.canUserShareList(list, session.user.id)) {
-        throw new Error("Unauthorized - only owner can share list");
-      }
+      if (!list.canUserShare(user.id)) throw new Error("Unauthorized - only owner can share list");
 
-      // Vérifier que la liste peut être partagée
-      if (!list.canBeShared()) {
-        throw new Error("List cannot be shared - list must have a name");
-      }
+      if (!list.canBeShared()) throw new Error("List cannot be shared - list must have a name");
 
-      // Valider le rôle
-      if (!this.domainService.isValidCollaboratorRole(role)) {
-        throw new Error("Invalid collaborator role");
-      }
+      if (!CollaboratorRoleValidator.isValid(role)) throw new Error("Invalid collaborator role");
 
-      // Vérifier que l'utilisateur existe
-      const user = await this.sharingRepository.findUserByEmail(email);
-      if (!user) throw new Error("User not found");
-
-      // Vérifier si l'utilisateur est déjà collaborateur
       const collaborators = await this.sharingRepository.getCollaborators(listId);
       const existingCollaborator = collaborators.find((c: any) => c.userId === user.id);
 
-      if (existingCollaborator) {
-        // Mettre à jour le rôle existant
+      if (existingCollaborator)
         await this.sharingRepository.updateCollaboratorRole(listId, user.id, role as CollaboratorRole);
-      } else {
-        // Ajouter un nouveau collaborateur
-        await this.sharingRepository.addCollaborator(listId, email, role as CollaboratorRole);
-      }
+      else await this.sharingRepository.addCollaborator(listId, email, role as CollaboratorRole);
     } catch (error) {
-      console.error("Error sharing list", error);
-      throw error;
+      if (error instanceof DomainError) throw error;
+
+      throw new Error("Error sharing list", { cause: error });
     }
   }
 
-  /**
-   * Récupère la liste des collaborateurs d'une liste
-   */
-  async getListCollaborators(listId: string) {
+  async getListCollaborators(shoppingListId: GetCollaboratorsPayload) {
     try {
-      const session = await auth();
-      if (!session?.user?.id) throw new Error("User not authenticated");
+      const user = await this.authService.getCurrentUser();
+      const list = await this.listRepository.findById(shoppingListId);
 
-      const list = await this.listRepository.findById(listId);
       if (!list) throw new Error("Shopping list not found");
 
-      // Vérifier les permissions de lecture
-      const userRole = this.domainService.getUserRoleForList(list, session.user.id);
-      if (!this.domainService.canUserViewList(list, session.user.id!, userRole || undefined)) {
-        throw new Error("Unauthorized - insufficient permissions to view collaborators");
-      }
+      const userRole = list.getUserRole(user.id);
 
-      return this.sharingRepository.getCollaborators(listId);
+      if (!list.canUserView(user.id, userRole || undefined))
+        throw new Error("Unauthorized - insufficient permissions to view collaborators");
+
+      return this.sharingRepository.getCollaborators(shoppingListId);
     } catch (error) {
-      console.error("Error retrieving collaborators", error);
-      throw error;
+      if (error instanceof DomainError) throw error;
+
+      throw new Error("Error retrieving collaborators", { cause: error });
     }
   }
 
@@ -100,7 +79,7 @@ export class ShoppingListSharingApplicationService {
       if (!list) throw new Error("Shopping list not found");
 
       // Vérifier les permissions de partage
-      if (!this.domainService.canUserShareList(list, session.user.id!)) {
+      if (!list.canUserShare(session.user.id!)) {
         throw new Error("Unauthorized - only owner can remove collaborators");
       }
 

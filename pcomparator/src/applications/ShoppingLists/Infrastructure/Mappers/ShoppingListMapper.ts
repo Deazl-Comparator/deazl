@@ -1,10 +1,15 @@
 import { ShoppingList } from "~/ShoppingLists/Domain/Entities/ShoppingList.entity";
+import {
+  CollaboratorRole,
+  ShoppingListCollaborator
+} from "~/ShoppingLists/Domain/Entities/ShoppingListCollaborator.entity";
 import { ShoppingListItem } from "~/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
+import type { ShoppingListInfraPayload } from "~/ShoppingLists/Infrastructure/Schemas/ShoppingList.schema";
 
 export class ShoppingListMapper {
-  static toDomain(raw: any): ShoppingList {
+  static toDomain(raw: ShoppingListInfraPayload): ShoppingList {
     const itemEntities =
-      raw.items?.map((item: any) =>
+      raw.items?.map((item) =>
         ShoppingListItem.create(
           {
             shoppingListId: raw.id,
@@ -12,29 +17,31 @@ export class ShoppingListMapper {
             quantity: item.quantity,
             unit: item.unit,
             isCompleted: item.isCompleted,
-            customName: item.customName,
-            price: item.price,
-            notes: item.notes
+            customName: item.customName ?? undefined,
+            price: item.price
           },
           item.id
         )
       ) || [];
 
-    const collaborators =
-      raw.collaborators?.map((c: any) => ({
-        id: c.id,
-        listId: c.listId,
-        userId: c.userId,
-        role: c.role,
-        createdAt: c.createdAt,
-        updatedAt: c.updatedAt,
-        user: c.user
-      })) || [];
+    const collaborators = raw.collaborators.map(
+      (collaborator) =>
+        ShoppingListCollaborator.create(
+          {
+            listId: collaborator.listId,
+            userId: collaborator.userId,
+            role: CollaboratorRole[collaborator.role as keyof typeof CollaboratorRole],
+            createdAt: collaborator.createdAt,
+            updatedAt: collaborator.updatedAt
+          },
+          collaborator.id
+        ) || []
+    );
 
     return ShoppingList.create(
       {
         name: raw.name,
-        description: raw.description,
+        description: raw.description ?? undefined,
         userId: raw.userId,
         items: itemEntities,
         collaborators: collaborators
@@ -43,7 +50,7 @@ export class ShoppingListMapper {
     );
   }
 
-  static toPersistence(entity: ShoppingList): any {
+  static toPersistence(entity: ShoppingList) {
     return {
       id: entity.id,
       name: entity.name,
@@ -54,7 +61,7 @@ export class ShoppingListMapper {
     };
   }
 
-  static toDTO(entity: ShoppingList): any {
+  static toDTO(entity: ShoppingList) {
     return {
       ...entity.toObject(),
       totalItems: entity.totalItems,

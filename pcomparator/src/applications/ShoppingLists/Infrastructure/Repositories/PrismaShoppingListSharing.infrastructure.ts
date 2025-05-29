@@ -7,8 +7,21 @@ import type {
 import type { ShoppingListSharingRepository } from "~/ShoppingLists/Domain/Repositories/ShoppingListSharingRepository";
 import { ShoppingListCollaboratorMapper } from "~/ShoppingLists/Infrastructure/Mappers/ShoppingListCollaboratorMapper";
 import { ShoppingListMapper } from "~/ShoppingLists/Infrastructure/Mappers/ShoppingListMapper";
+import { ShoppingListInfraSchema } from "~/ShoppingLists/Infrastructure/Schemas/ShoppingList.schema";
 import { prisma } from "~/libraries/prisma";
 
+/**
+ * Implémentation Prisma du repository pour le partage des listes de courses
+ *
+ * Responsabilités (selon les principes DDD) :
+ * - Gérer les opérations de partage et collaboration sur les listes
+ * - Persister les collaborateurs et leurs rôles
+ * - Gérer les tokens de partage public
+ * - Rechercher les utilisateurs pour le partage
+ *
+ * Ce repository est spécialisé dans les aspects de partage et collaboration
+ * et utilise des transactions pour garantir la cohérence des données
+ */
 export class PrismaShoppingListSharingRepository implements ShoppingListSharingRepository {
   async findUserByEmail(email: string): Promise<{ id: string; email: string } | null> {
     const user = await prisma.user.findUnique({
@@ -52,7 +65,9 @@ export class PrismaShoppingListSharingRepository implements ShoppingListSharingR
 
     if (!list) return null;
 
-    return ShoppingListMapper.toDomain(list);
+    const listPayload = ShoppingListInfraSchema.parse(list);
+
+    return ShoppingListMapper.toDomain(listPayload);
   }
 
   async updatePublicStatus(listId: string, isPublic: boolean): Promise<void> {
@@ -71,7 +86,7 @@ export class PrismaShoppingListSharingRepository implements ShoppingListSharingR
       // First find the user by email
       const user = await this.findUserByEmail(email);
       if (!user) {
-        throw new Error("User not found");
+        throw new Error(`User with email ${email} not found`);
       }
 
       // Use a transaction to ensure all operations complete or none do
@@ -85,7 +100,7 @@ export class PrismaShoppingListSharingRepository implements ShoppingListSharingR
         });
 
         if (existingCollaborator) {
-          // If they are, update their role instead of throwing an error
+          // If they are, update their role instead of creating a new collaboration
           const updated = await tx.shoppingListCollaborator.update({
             where: { id: existingCollaborator.id },
             data: { role },
@@ -111,7 +126,9 @@ export class PrismaShoppingListSharingRepository implements ShoppingListSharingR
       return ShoppingListCollaboratorMapper.toDomain(collaborator);
     } catch (error) {
       console.error("Error in addCollaborator:", error);
-      throw error;
+      throw new Error(
+        `Failed to add collaborator: ${error instanceof Error ? error.message : "Unknown error"}`
+      );
     }
   }
 

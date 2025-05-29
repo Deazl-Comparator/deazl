@@ -1,17 +1,10 @@
 import type { z } from "zod";
-import { DomainError } from "~/Shared/Domain/Core/DomainError";
 import { Entity } from "~/Shared/Domain/Core/Entity";
 import { UniqueEntityID } from "~/Shared/Domain/Core/UniqueEntityId";
-import type { ShoppingListCollaboratorPayload } from "~/ShoppingLists/Domain/Entities/ShoppingListCollaborator.entity";
+import type { ShoppingListCollaborator } from "~/ShoppingLists/Domain/Entities/ShoppingListCollaborator.entity";
 import type { ShoppingListItem } from "~/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
 import type { ShoppingListSchema } from "~/ShoppingLists/Domain/Schemas/ShoppingList.schema";
 import type { UserRoleEnum } from "~/ShoppingLists/Domain/Schemas/UserRole.schema";
-
-export class ListNameTooShortError extends DomainError {
-  constructor() {
-    super("List name must be at least 2 characters long");
-  }
-}
 
 export type UserRole = z.infer<typeof UserRoleEnum>;
 
@@ -30,15 +23,15 @@ interface ShoppingListProps {
   description?: string;
   userId: string;
   items: ShoppingListItem[];
-  collaborators?: ShoppingListCollaboratorPayload[];
+  collaborators?: ShoppingListCollaborator[];
   isPublic: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }
 
 export class ShoppingList extends Entity<ShoppingListProps> {
-  private constructor(props: ShoppingListProps, id?: UniqueEntityID) {
-    super(props, id);
+  private constructor(props: ShoppingListProps, id?: string) {
+    super(props, new UniqueEntityID(id));
   }
 
   public static create(
@@ -47,14 +40,12 @@ export class ShoppingList extends Entity<ShoppingListProps> {
       description?: string;
       userId: string;
       items?: ShoppingListItem[];
-      collaborators?: ShoppingListCollaboratorPayload[];
+      collaborators?: ShoppingListCollaborator[];
       isPublic?: boolean;
     },
     id?: string
   ): ShoppingList {
-    if (props.name.length < 2) throw new ListNameTooShortError();
-
-    const listEntity = new ShoppingList(
+    return new ShoppingList(
       {
         name: props.name,
         description: props.description,
@@ -65,10 +56,8 @@ export class ShoppingList extends Entity<ShoppingListProps> {
         createdAt: new Date(),
         updatedAt: new Date()
       },
-      id ? new UniqueEntityID(id) : undefined
+      id
     );
-
-    return listEntity;
   }
 
   get id(): string {
@@ -87,7 +76,7 @@ export class ShoppingList extends Entity<ShoppingListProps> {
     return this.props.userId;
   }
 
-  get collaborators(): ShoppingListCollaboratorPayload[] | undefined {
+  get collaborators(): ShoppingListCollaborator[] | undefined {
     return this.props.collaborators;
   }
 
@@ -107,18 +96,14 @@ export class ShoppingList extends Entity<ShoppingListProps> {
     return this.props.isPublic;
   }
 
-  // Immutable update methods - return new instances
   public withName(name: string): ShoppingList {
-    if (name.length < 2) {
-      throw new ListNameTooShortError();
-    }
     return new ShoppingList(
       {
         ...this.props,
         name,
         updatedAt: new Date()
       },
-      this._id
+      this._id.toValue()
     );
   }
 
@@ -129,46 +114,24 @@ export class ShoppingList extends Entity<ShoppingListProps> {
         description,
         updatedAt: new Date()
       },
-      this._id
+      this._id.toValue()
     );
   }
 
-  public withItem(item: ShoppingListItem): ShoppingList {
-    return new ShoppingList(
-      {
-        ...this.props,
-        items: [...this.props.items, item],
-        updatedAt: new Date()
-      },
-      this._id
-    );
+  public withUpdates(updates: Partial<{ name: string; description: string }>): ShoppingList {
+    let updatedList: ShoppingList = this;
+
+    if (updates.name !== undefined) {
+      updatedList = updatedList.withName(updates.name);
+    }
+
+    if (updates.description !== undefined) {
+      updatedList = updatedList.withDescription(updates.description);
+    }
+
+    return updatedList;
   }
 
-  public withoutItem(itemId: string): ShoppingList {
-    return new ShoppingList(
-      {
-        ...this.props,
-        items: this.props.items.filter((item) => item.id !== itemId),
-        updatedAt: new Date()
-      },
-      this._id
-    );
-  }
-
-  public withUpdatedItem(itemId: string, updatedItem: ShoppingListItem): ShoppingList {
-    const updatedItems = this.props.items.map((item) => (item.id === itemId ? updatedItem : item));
-
-    return new ShoppingList(
-      {
-        ...this.props,
-        items: updatedItems,
-        updatedAt: new Date()
-      },
-      this._id
-    );
-  }
-
-  // Query methods (read-only operations)
   public getItemById(itemId: string): ShoppingListItem | undefined {
     return this.props.items.find((item) => item.id === itemId);
   }
@@ -214,6 +177,43 @@ export class ShoppingList extends Entity<ShoppingListProps> {
     return !!this.name?.trim();
   }
 
+  public canUserModify(userId: string, userRole?: string): boolean {
+    if (this.userId === userId) return true;
+
+    if (userRole === "EDITOR") return true;
+
+    return false;
+  }
+
+  public canUserView(userId: string, userRole?: string): boolean {
+    if (this.userId === userId) return true;
+
+    if (userRole) return true;
+
+    return false;
+  }
+
+  public getUserRole(userId: string): string | null {
+    if (this.userId === userId) return "OWNER";
+
+    const collaborator = this.collaborators?.find((c) => c.userId === userId);
+    return collaborator?.role || null;
+  }
+
+  public isOwner(userId: string): boolean {
+    return this.userId === userId;
+  }
+
+  public isUserCollaborator(userId: string): boolean {
+    if (this.userId === userId) return true;
+
+    return this.collaborators?.some((collaborator) => collaborator.userId === userId) || false;
+  }
+
+  public canUserShare(userId: string): boolean {
+    return this.userId === userId;
+  }
+
   public toObject(): ShoppingListPayload {
     return {
       id: this.id,
@@ -222,7 +222,7 @@ export class ShoppingList extends Entity<ShoppingListProps> {
       userId: this.userId,
       isPublic: this.isPublic,
       items: this.items.map((item) => item.toObject()),
-      collaborators: this.collaborators,
+      collaborators: this.collaborators?.map((collaborator) => collaborator.toObject()),
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       totalItems: this.totalItems,

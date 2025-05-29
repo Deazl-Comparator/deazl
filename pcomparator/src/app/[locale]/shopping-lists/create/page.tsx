@@ -4,7 +4,7 @@ import { Button } from "@heroui/react";
 import { ArrowLeftIcon } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { createShoppingList } from "~/ShoppingLists/Api/createShoppingList.api";
+import { createShoppingList } from "~/ShoppingLists/Api/shoppingLists/createShoppingList.api";
 import { ShoppingListCreateForm } from "~/ShoppingLists/Ui/ShoppingListCreateForm";
 
 async function handleCreateList(formData: FormData) {
@@ -27,13 +27,7 @@ async function handleCreateList(formData: FormData) {
 
   const list = await createShoppingList({
     name,
-    description: description || null,
-    items: items.map((item: any) => ({
-      customName: item.customName,
-      quantity: item.quantity,
-      unit: item.unit,
-      isCompleted: false
-    }))
+    description: description
   });
 
   redirect(`/shopping-lists/${list.id}`);

@@ -1,7 +1,6 @@
 import { ShoppingListItem } from "~/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
 import type { ShoppingListItemRepository } from "~/ShoppingLists/Domain/Repositories/ShoppingListItemRepository";
 import type { ShoppingListRepository } from "~/ShoppingLists/Domain/Repositories/ShoppingListRepository";
-import { ShoppingListDomainService } from "~/ShoppingLists/Domain/Services/ShoppingListDomainService";
 import { UnitType } from "~/ShoppingLists/Domain/ValueObjects/Unit.vo";
 import { auth } from "~/libraries/nextauth/authConfig";
 
@@ -9,14 +8,10 @@ import { auth } from "~/libraries/nextauth/authConfig";
  * Service d'application pour la gestion des articles de listes de courses
  */
 export class ShoppingListItemApplicationService {
-  private readonly domainService: ShoppingListDomainService;
-
   constructor(
     private readonly listRepository: ShoppingListRepository,
     private readonly itemRepository: ShoppingListItemRepository
-  ) {
-    this.domainService = new ShoppingListDomainService();
-  }
+  ) {}
 
   /**
    * Ajoute un article à une liste de courses
@@ -31,6 +26,7 @@ export class ShoppingListItemApplicationService {
       isCompleted?: boolean;
       price?: number | null;
       notes?: string | null;
+      barcode?: string | null;
     }
   ): Promise<ShoppingListItem> {
     try {
@@ -41,8 +37,8 @@ export class ShoppingListItemApplicationService {
       if (!list) throw new Error("Shopping list not found");
 
       // Vérifier les permissions de modification
-      const userRole = this.domainService.getUserRoleForList(list, session.user.id);
-      if (!this.domainService.canUserModifyList(list, session.user.id, userRole || undefined)) {
+      const userRole = list.getUserRole(session.user.id);
+      if (!list.canUserModify(session.user.id, userRole || undefined)) {
         throw new Error("Unauthorized - insufficient permissions to modify list");
       }
 
@@ -57,7 +53,8 @@ export class ShoppingListItemApplicationService {
         unit: itemData.unit,
         isCompleted: itemData.isCompleted || false,
         price: itemData.price || undefined,
-        notes: itemData.notes || undefined
+        notes: itemData.notes || undefined,
+        barcode: itemData.barcode || undefined
       });
 
       return this.itemRepository.addItem(listId, item);
@@ -78,22 +75,25 @@ export class ShoppingListItemApplicationService {
       unit: string;
       price: number | null;
       isCompleted: boolean;
+      barcode: string | null;
       notes: string | null;
     }>
   ): Promise<ShoppingListItem> {
     try {
+      console.log("🔧 ShoppingListItemApplicationService.updateShoppingListItem called:", { itemId, data });
       const session = await auth();
       if (!session?.user?.id) throw new Error("User not authenticated");
 
       const item = await this.itemRepository.findItemById(itemId);
       if (!item) throw new Error("Item not found");
+      console.log("📦 Found item in service:", item);
 
       const list = await this.listRepository.findById(item.shoppingListId);
       if (!list) throw new Error("Shopping list not found");
 
       // Vérifier les permissions de modification
-      const userRole = this.domainService.getUserRoleForList(list, session.user.id);
-      if (!this.domainService.canUserModifyList(list, session.user.id, userRole || undefined)) {
+      const userRole = list.getUserRole(session.user.id);
+      if (!list.canUserModify(session.user.id, userRole || undefined)) {
         throw new Error("Unauthorized - insufficient permissions to modify list");
       }
 
@@ -117,14 +117,33 @@ export class ShoppingListItemApplicationService {
       }
 
       if (data.isCompleted !== undefined) {
+        console.log("🔄 Updating isCompleted field:", {
+          previous: updatedItem.isCompleted,
+          new: data.isCompleted
+        });
         if (data.isCompleted) {
           updatedItem = updatedItem.withCompletion();
         } else {
           updatedItem = updatedItem.withReset();
         }
+        console.log("✅ isCompleted field updated:", { current: updatedItem.isCompleted });
       }
 
-      return this.itemRepository.updateItem(updatedItem);
+      if (data.barcode !== undefined) {
+        updatedItem = updatedItem.withBarcode(data.barcode);
+      }
+
+      console.log("🔄 Calling repository.updateItem with:", {
+        id: updatedItem.id,
+        isCompleted: updatedItem.isCompleted
+      });
+      const result = await this.itemRepository.updateItem(updatedItem);
+      console.log("✅ Repository.updateItem completed:", {
+        id: result.id,
+        isCompleted: result.isCompleted
+      });
+
+      return result;
     } catch (error) {
       console.error("Error updating shopping list item", error);
       throw error;
@@ -146,8 +165,8 @@ export class ShoppingListItemApplicationService {
       if (!list) throw new Error("Shopping list not found");
 
       // Vérifier les permissions de modification
-      const userRole = this.domainService.getUserRoleForList(list, session.user.id);
-      if (!this.domainService.canUserModifyList(list, session.user.id, userRole || undefined)) {
+      const userRole = list.getUserRole(session.user.id);
+      if (!list.canUserModify(session.user.id, userRole || undefined)) {
         throw new Error("Unauthorized - insufficient permissions to modify list");
       }
 
@@ -173,8 +192,8 @@ export class ShoppingListItemApplicationService {
       if (!list) throw new Error("Shopping list not found");
 
       // Vérifier les permissions de modification
-      const userRole = this.domainService.getUserRoleForList(list, session.user.id);
-      if (!this.domainService.canUserModifyList(list, session.user.id, userRole || undefined)) {
+      const userRole = list.getUserRole(session.user.id);
+      if (!list.canUserModify(session.user.id, userRole || undefined)) {
         throw new Error("Unauthorized - insufficient permissions to modify list");
       }
 

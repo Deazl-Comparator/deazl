@@ -19,6 +19,7 @@ import {
   DatabaseIcon,
   InfoIcon,
   PlusCircleIcon,
+  QrCodeIcon,
   SaveIcon,
   ShoppingBagIcon,
   StoreIcon
@@ -27,6 +28,8 @@ import { useState } from "react";
 import { createProductFromItem } from "~/ShoppingLists/Api/createProductFromItem.api";
 import type { ShoppingListItemPayload } from "~/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
 import { UnitType } from "~/ShoppingLists/Domain/ValueObjects/Unit.vo";
+import { searchByBarcode } from "~/applications/Searchbar/Api/searchByBarcode";
+import { BarcodeScanner } from "~/components/BarcodeScanner/BarcodeScanner";
 import { useStore } from "../Contexts/StoreContext";
 import { ProductDetailsModal } from "./ProductDetailsModal";
 
@@ -44,10 +47,13 @@ export const EditItemModal = ({ isOpen, onClose, item, onUpdate }: EditItemModal
   const [quantity, setQuantity] = useState(item.quantity.toString());
   const [unit, setUnit] = useState(item.unit);
   const [price, setPrice] = useState(item.price?.toString() || "");
+  const [barcode, setBarcode] = useState(item.barcode || "");
   const [isCompleted, setIsCompleted] = useState(item.isCompleted);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isCreatingProduct, setIsCreatingProduct] = useState(false);
   const [isProductDetailsModalOpen, setIsProductDetailsModalOpen] = useState(false);
+  const [isBarcodeScannerOpen, setIsBarcodeScannerOpen] = useState(false);
+  const [isFetchingBarcodeData, setIsFetchingBarcodeData] = useState(false);
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
@@ -58,6 +64,7 @@ export const EditItemModal = ({ isOpen, onClose, item, onUpdate }: EditItemModal
         quantity: Number.parseFloat(quantity),
         unit,
         price: price ? Number.parseFloat(price) : undefined,
+        barcode: barcode || undefined,
         isCompleted
       });
     } catch (error) {
@@ -152,6 +159,47 @@ export const EditItemModal = ({ isOpen, onClose, item, onUpdate }: EditItemModal
     setIsProductDetailsModalOpen(true);
   };
 
+  const handleBarcodeScanned = async (scannedBarcode: string) => {
+    setIsBarcodeScannerOpen(false);
+    setBarcode(scannedBarcode);
+    setIsFetchingBarcodeData(true);
+
+    try {
+      const result = await searchByBarcode({ barcode: scannedBarcode });
+
+      if (result.success && result.product) {
+        // Auto-fill name if it's empty
+        if (!name && result.product.product_name) {
+          setName(result.product.product_name);
+        }
+
+        addToast({
+          title: <Trans>Product found</Trans>,
+          description: <Trans>Product information has been retrieved from barcode</Trans>,
+          color: "success",
+          variant: "solid"
+        });
+      } else {
+        addToast({
+          title: <Trans>Product not found</Trans>,
+          description: <Trans>Barcode saved but no product information found</Trans>,
+          color: "warning",
+          variant: "solid"
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching barcode data:", error);
+      addToast({
+        title: <Trans>Error</Trans>,
+        description: <Trans>Failed to fetch product information</Trans>,
+        color: "danger",
+        variant: "solid"
+      });
+    } finally {
+      setIsFetchingBarcodeData(false);
+    }
+  };
+
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose} classNames={{ backdrop: "backdrop-blur-sm" }}>
@@ -228,6 +276,32 @@ export const EditItemModal = ({ isOpen, onClose, item, onUpdate }: EditItemModal
                   step="0.01"
                   startContent={<span className="text-gray-500">€</span>}
                 />
+              </div>
+
+              <div className="space-y-2">
+                <label htmlFor="barcode" className="text-sm font-medium flex items-center gap-1">
+                  <QrCodeIcon size={16} className="text-blue-600" />
+                  <Trans>Barcode</Trans>
+                </label>
+                <div className="flex gap-2">
+                  <Input
+                    id="barcode"
+                    placeholder="Enter barcode manually or scan"
+                    value={barcode}
+                    onChange={(e) => setBarcode(e.target.value)}
+                    className="flex-1"
+                  />
+                  <Button
+                    color="primary"
+                    variant="flat"
+                    size="md"
+                    onPress={() => setIsBarcodeScannerOpen(true)}
+                    isLoading={isFetchingBarcodeData}
+                    isIconOnly
+                  >
+                    <QrCodeIcon size={16} />
+                  </Button>
+                </div>
               </div>
 
               <div className="pt-2">
@@ -337,6 +411,16 @@ export const EditItemModal = ({ isOpen, onClose, item, onUpdate }: EditItemModal
           price: price ? Number.parseFloat(price) : undefined
         }}
       />
+
+      {/* Barcode Scanner Modal */}
+      {isBarcodeScannerOpen && (
+        <BarcodeScanner
+          onScanned={handleBarcodeScanned}
+          onClose={() => setIsBarcodeScannerOpen(false)}
+          title="Scan Barcode"
+          description="Position the barcode within the frame to scan"
+        />
+      )}
     </>
   );
 };

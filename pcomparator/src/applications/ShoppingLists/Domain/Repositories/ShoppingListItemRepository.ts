@@ -23,19 +23,4 @@ export interface ShoppingListItemRepository {
    * Récupère un article par son ID
    */
   findItemById(id: string): Promise<ShoppingListItem | null>;
-
-  /**
-   * Crée un produit à partir d'un article de liste de courses
-   */
-  createProductFromItem(productInfo: {
-    name: string;
-    price: number;
-    unit: string;
-    quantity: number;
-    brandName: string;
-    storeName: string;
-    storeLocation: string;
-    referencePrice: number;
-    referenceUnit: string;
-  }): Promise<any>;
 }

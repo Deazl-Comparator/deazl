@@ -11,6 +11,7 @@ export const ShoppingListItemSchema = z.object({
   isCompleted: z.boolean().default(false),
   customName: z.string().nullable().optional(),
   price: z.number().positive().optional(),
+  barcode: z.string().nullable().optional(),
   createdAt: z.date().optional(),
   updatedAt: z.date().optional(),
   product: z
