@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getShoppingList } from "~/ShoppingLists/Api/getShoppingList.api";
+import { getShoppingList } from "~/ShoppingLists/Api/shoppingLists/getShoppingList.api";
 import { ShoppingListDetails } from "~/ShoppingLists/Ui/ShoppingListDetails/ShoppingListDetails";
 import { auth } from "~/libraries/nextauth/authConfig";
 

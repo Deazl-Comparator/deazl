@@ -1,31 +1,9 @@
 import type { ShoppingList } from "~/ShoppingLists/Domain/Entities/ShoppingList.entity";
+import type { ShoppingListQuery } from "~/ShoppingLists/Domain/ValueObjects/ShoppingListQuery.vo";
 
-/**
- * Repository interface pour la gestion des listes de courses
- */
 export interface ShoppingListRepository {
-  /**
-   * Crée une nouvelle liste de courses
-   */
-  create(list: ShoppingList): Promise<ShoppingList>;
-
-  /**
-   * Récupère une liste de courses par son ID
-   */
-  findById(id: string): Promise<ShoppingList | null>;
-
-  /**
-   * Récupère toutes les listes de courses d'un utilisateur
-   */
-  findByUserId(userId: string): Promise<ShoppingList[]>;
-
-  /**
-   * Met à jour une liste de courses
-   */
-  update(list: ShoppingList): Promise<ShoppingList>;
-
-  /**
-   * Supprime une liste de courses
-   */
-  delete(id: string): Promise<void>;
+  save(list: ShoppingList): Promise<ShoppingList>;
+  findById(shoppingListId: string): Promise<ShoppingList | null>;
+  findManyByQuery(query: ShoppingListQuery): Promise<ShoppingList[]>;  
+  remove(shoppingListId: string): Promise<void>;
 }

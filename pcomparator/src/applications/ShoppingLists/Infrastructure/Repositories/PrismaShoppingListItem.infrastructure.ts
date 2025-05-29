@@ -3,6 +3,17 @@ import type { ShoppingListItemRepository } from "~/ShoppingLists/Domain/Reposito
 import { ShoppingListItemMapper } from "~/ShoppingLists/Infrastructure/Mappers/ShoppingListItemMapper";
 import { prisma } from "~/libraries/prisma";
 
+/**
+ * Implémentation Prisma du repository pour les articles de listes de courses
+ * 
+ * Responsabilités (selon les principes DDD) :
+ * - Persister et récupérer les entités ShoppingListItem
+ * - Gérer les opérations CRUD sur les articles
+ * - Mapper entre le modèle de domaine et le modèle de persistance
+ * 
+ * Ce repository se concentre uniquement sur les opérations liées aux articles
+ * et ne gère pas les entités d'autres bounded contexts (Product, Brand, Store)
+ */
 export class PrismaShoppingListItemRepository implements ShoppingListItemRepository {
   async addItem(listId: string, item: ShoppingListItem): Promise<ShoppingListItem> {
     const itemData = ShoppingListItemMapper.toPersistence(item);
@@ -56,90 +67,5 @@ export class PrismaShoppingListItemRepository implements ShoppingListItemReposit
     if (!item) return null;
 
     return ShoppingListItemMapper.toDomain(item);
-  }
-
-  async createProductFromItem(productInfo: {
-    name: string;
-    price: number;
-    unit: string;
-    quantity: number;
-    brandName: string;
-    storeName: string;
-    storeLocation: string;
-    referencePrice: number;
-    referenceUnit: string;
-  }) {
-    const randomBarcode = `MANUAL-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-
-    // Vérifier que le prix de référence est fourni
-    if (!productInfo.referencePrice) throw new Error("Reference price is required to create a product");
-
-    // Transaction pour créer le produit, la marque, le magasin et le prix
-    const result = await prisma.$transaction(async (tx) => {
-      // 1. Vérifier/créer la marque
-      let brand = await tx.brand.findFirst({
-        where: { name: productInfo.brandName }
-      });
-
-      if (!brand) {
-        brand = await tx.brand.create({
-          data: {
-            name: productInfo.brandName,
-            description: `Brand created from shopping list item for ${productInfo.name}`
-          }
-        });
-      }
-
-      // 2. Vérifier/créer le magasin
-      let store = await tx.store.findFirst({
-        where: {
-          name: productInfo.storeName,
-          location: productInfo.storeLocation
-        }
-      });
-
-      if (!store) {
-        store = await tx.store.create({
-          data: {
-            name: productInfo.storeName,
-            location: productInfo.storeLocation
-          }
-        });
-      }
-
-      // 3. Créer le produit
-      const product = await tx.product.create({
-        data: {
-          name: productInfo.name,
-          barcode: randomBarcode,
-          description: "",
-          brand_id: brand.id
-        }
-      });
-
-      // 4. Créer l'enregistrement de prix avec le prix de référence
-      const priceRecord = await tx.price.create({
-        data: {
-          product_id: product.id,
-          store_id: store.id,
-          amount: productInfo.referencePrice,
-          unit: productInfo.referenceUnit,
-          currency: "EUR"
-        },
-        include: {
-          product: true,
-          store: true
-        }
-      });
-
-      // return {
-      //   product,
-      //   brand,
-      //   store,
-      //   priceRecord
-      // };
-    });
-
-    return result;
   }
 }

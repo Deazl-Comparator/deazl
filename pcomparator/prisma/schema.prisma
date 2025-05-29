@@ -166,6 +166,7 @@ model ShoppingListItem {
   isCompleted    Boolean  @default(false)
   customName     String?
   price          Float? // Champ pour stocker le prix d'un article
+  barcode        String? // Code-barres pour enrichissement OpenFoodFacts
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 

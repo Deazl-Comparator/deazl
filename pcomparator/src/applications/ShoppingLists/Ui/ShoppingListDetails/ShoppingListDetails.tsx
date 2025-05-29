@@ -7,6 +7,7 @@ import type { User } from "~/applications/Authentication/Domain/User";
 import { StoreProvider } from "../Contexts/StoreContext";
 
 export const ShoppingListDetails = ({ list, user }: { list: ShoppingListPayload; user: User }) => {
+  console.log(list);
   return (
     <StoreProvider>
       <div className="space-y-4">

@@ -1,179 +1,114 @@
+import { AuthenticationService } from "~/Shared/Application/Services/Authentication.service";
+import { DomainError } from "~/Shared/Domain/Core/DomainError";
+import { DataAccessError } from "~/Shared/Domain/Core/Errors/ApplicationErrors";
+import type { CreateShoppingListPayload } from "~/ShoppingLists/Api/shoppingLists/createShoppingList.api";
+import type { DeleteShoppingListPayload } from "~/ShoppingLists/Api/shoppingLists/deleteShoppingList.api";
+import type { GetShoppingListPayload } from "~/ShoppingLists/Api/shoppingLists/getShoppingList.api";
 import { ShoppingList } from "~/ShoppingLists/Domain/Entities/ShoppingList.entity";
-import { ShoppingListItem } from "~/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
 import type { ShoppingListRepository } from "~/ShoppingLists/Domain/Repositories/ShoppingListRepository";
-import { ShoppingListDomainService } from "~/ShoppingLists/Domain/Services/ShoppingListDomainService";
-import { auth } from "~/libraries/nextauth/authConfig";
+import { ShoppingListQuery } from "~/ShoppingLists/Domain/ValueObjects/ShoppingListQuery.vo";
 
-/**
- * Service d'application qui orchestre les opérations sur les listes de courses
- * Il coordonne entre le domaine, l'infrastructure et les préoccupations transversales
- */
 export class ShoppingListApplicationService {
-  private readonly domainService: ShoppingListDomainService;
+  private readonly authService: AuthenticationService;
 
   constructor(private readonly repository: ShoppingListRepository) {
-    this.domainService = new ShoppingListDomainService();
+    this.authService = new AuthenticationService();
   }
 
-  /**
-   * Récupère toutes les listes de courses d'un utilisateur
-   */
-  async listUserShoppingLists(): Promise<ShoppingListItem[]> {
+  async listUserShoppingLists(): Promise<ShoppingList[]> {
     try {
-      const session = await auth();
-      if (!session?.user?.id) throw new Error("User not authenticated");
+      const currentUser = await this.authService.getCurrentUser();
+      const lists = await this.repository.findManyByQuery(ShoppingListQuery.forUserAccess(currentUser.id));
 
-      const lists = await this.repository.findByUserId(session.user.id);
-
-      // @ts-ignore
-      return lists.map((list) => {
-        const userRole = this.domainService.getUserRoleForList(list, session.user.id);
-        return Object.assign(list, { userRole });
-      });
+      return lists;
     } catch (error) {
-      console.error("Error listing user shopping lists", error);
-      throw new Error("Failed to retrieve shopping lists");
+      if (error instanceof DomainError) throw error;
+
+      throw new DataAccessError(
+        "Failed to list user shopping lists",
+        error instanceof Error ? error : new Error(String(error))
+      );
     }
   }
 
-  /**
-   * Récupère une liste de courses par son ID
-   */
-  async getShoppingList(id: string): Promise<ShoppingList | null> {
+  async getShoppingList(shoppingListId: GetShoppingListPayload): Promise<ShoppingList | null> {
     try {
-      const session = await auth();
-      if (!session?.user?.id) throw new Error("User not authenticated");
+      const currentUser = await this.authService.getCurrentUser();
 
-      const list = await this.repository.findById(id);
+      const list = await this.repository.findById(shoppingListId);
+
       if (!list) return null;
 
-      // Vérifier les permissions de lecture
-      const userRole = this.domainService.getUserRoleForList(list, session.user.id);
-      if (!this.domainService.canUserViewList(list, session.user.id, userRole || undefined)) {
-        throw new Error("Unauthorized - insufficient permissions to view list");
-      }
+      if (!list.isUserCollaborator(currentUser.id) && !list.isPublic)
+        throw new Error("Shopping list not found or you do not have access to it");
 
-      return Object.assign(list, { userRole });
+      return list;
     } catch (error) {
-      console.error("Error retrieving shopping list", error);
-      throw error;
+      if (error instanceof DomainError) throw error;
+
+      throw new Error("Unexpected error retrieving shopping list", { cause: error });
     }
   }
 
-  /**
-   * Crée une nouvelle liste de courses
-   */
-  async createShoppingList(data: {
-    name: string;
-    description?: string | null;
-    items?: Array<{
-      customName?: string | null;
-      quantity: number;
-      unit: string;
-      isCompleted?: boolean;
-      price?: number | null;
-    }>;
-  }): Promise<ShoppingList> {
+  async createShoppingList(data: CreateShoppingListPayload): Promise<ShoppingList> {
     try {
-      const session = await auth();
-      if (!session?.user?.id) throw new Error("User not authenticated");
+      const currentUser = await this.authService.getCurrentUser();
 
-      // Note: La validation est maintenant effectuée directement dans l'entité ShoppingList.create()
-
-      // Create ShoppingListItemEntity instances if items are provided
-      const itemEntities =
-        data.items?.map((item) =>
-          ShoppingListItem.create({
-            shoppingListId: "", // Will be set by the repository after shopping list creation
-            quantity: item.quantity,
-            unit: item.unit,
-            isCompleted: item.isCompleted || false,
-            customName: item.customName || undefined,
-            price: item.price || undefined
-          })
-        ) || [];
-
-      // Create the ShoppingList entity
       const shoppingList = ShoppingList.create({
         name: data.name,
-        description: data.description || undefined,
-        userId: session.user.id,
-        items: itemEntities,
-        isPublic: false // Default to private
+        description: data.description,
+        userId: currentUser.id
       });
 
-      return this.repository.create(shoppingList);
+      return this.repository.save(shoppingList);
     } catch (error) {
-      console.error("Error creating shopping list", error);
-      throw error;
+      if (error instanceof DomainError) throw error;
+
+      throw new Error("Unexpected error creating shopping list", { cause: error });
     }
   }
 
-  /**
-   * Supprime une liste de courses
-   */
-  async deleteShoppingList(id: string): Promise<void> {
+  async deleteShoppingList(shoppingListId: DeleteShoppingListPayload): Promise<void> {
     try {
-      const session = await auth();
-      if (!session?.user?.id) throw new Error("User not authenticated");
+      const currentUser = await this.authService.getCurrentUser();
 
-      const list = await this.repository.findById(id);
+      const list = await this.repository.findById(shoppingListId);
+
       if (!list) throw new Error("Shopping list not found");
 
-      // Seul le propriétaire peut supprimer
-      if (list.userId !== session.user.id) {
-        throw new Error("Unauthorized - only owner can delete list");
-      }
+      if (list.isOwner(currentUser.id)) throw new Error("Unauthorized - only owner can delete list");
 
-      await this.repository.delete(id);
+      await this.repository.remove(shoppingListId);
     } catch (error) {
-      console.error("Error deleting shopping list", error);
-      throw error;
+      if (error instanceof DomainError) throw error;
+
+      throw new Error("Unexpected error deleting shopping list", { cause: error });
     }
   }
 
-  /**
-   * Met à jour une liste de courses
-   */
   async updateShoppingList(
-    id: string,
+    shoppingListId: string,
     data: Partial<{ name: string; description: string }>
   ): Promise<ShoppingList> {
     try {
-      const session = await auth();
-      if (!session?.user?.id) throw new Error("User not authenticated");
+      const currentUser = await this.authService.getCurrentUser();
 
-      const list = await this.repository.findById(id);
+      const list = await this.repository.findById(shoppingListId);
+
       if (!list) throw new Error("Shopping list not found");
 
-      // Vérifier les permissions de modification
-      const userRole = this.domainService.getUserRoleForList(list, session.user.id);
-      if (!this.domainService.canUserModifyList(list, session.user.id, userRole || undefined)) {
+      const userRole = list.getUserRole(currentUser.id);
+
+      if (!list.canUserModify(currentUser.id, userRole || undefined))
         throw new Error("Unauthorized - insufficient permissions to modify list");
-      }
 
-      // Create updated list using immutable methods
-      let updatedList = list;
+      const updatedList = list.withUpdates({ name: data.name, description: data.description });
 
-      if (data.name !== undefined) {
-        updatedList = updatedList.withName(data.name);
-      }
-      if (data.description !== undefined) {
-        updatedList = updatedList.withDescription(data.description);
-      }
-
-      return this.repository.update(updatedList);
+      return this.repository.save(updatedList);
     } catch (error) {
-      console.error("Error updating shopping list", error);
-      throw error;
-    }
-  }
+      if (error instanceof DomainError) throw error;
 
-  /**
-   * Vérifie l'authentification de l'utilisateur
-   */
-  private async isUserAuthenticated(): Promise<boolean> {
-    const session = await auth();
-    return !!session?.user?.id;
+      throw new Error("Unexpected error updating shopping list", { cause: error });
+    }
   }
 }

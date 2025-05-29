@@ -1,153 +1,157 @@
+import { InfrastructureError } from "~/Shared/Infrastructure/Core/Errors/Infrastructure.error";
 import type { ShoppingList } from "~/ShoppingLists/Domain/Entities/ShoppingList.entity";
 import type { ShoppingListRepository } from "~/ShoppingLists/Domain/Repositories/ShoppingListRepository";
+import type { ShoppingListQuery } from "~/ShoppingLists/Domain/ValueObjects/ShoppingListQuery.vo";
 import { ShoppingListMapper } from "~/ShoppingLists/Infrastructure/Mappers/ShoppingListMapper";
+import { ShoppingListInfraSchema } from "~/ShoppingLists/Infrastructure/Schemas/ShoppingList.schema";
 import { prisma } from "~/libraries/prisma";
 
 export class PrismaShoppingListRepository implements ShoppingListRepository {
-  async create(list: ShoppingList): Promise<ShoppingList> {
-    const persistenceData = ShoppingListMapper.toPersistence(list);
+  async save(list: ShoppingList): Promise<ShoppingList> {
+    try {
+      const persistenceData = ShoppingListMapper.toPersistence(list);
 
-    const newList = await prisma.shoppingList.create({
-      data: {
-        name: persistenceData.name,
-        description: persistenceData.description,
-        userId: persistenceData.userId
-      },
-      include: {
-        items: true
-      }
-    });
-
-    console.log("New list created:", newList);
-
-    // Add items if there are any
-    if (list.items.length > 0) {
-      for (const item of list.items) {
-        // @ts-ignore
-        const itemData = ShoppingListItemMapper.toPersistence({
-          ...item,
-          shoppingListId: newList.id
-        });
-
-        await prisma.shoppingListItem.create({
-          data: {
-            shoppingListId: newList.id,
-            quantity: itemData.quantity,
-            unit: itemData.unit,
-            customName: itemData.customName,
-            productId: itemData.productId,
-            isCompleted: itemData.isCompleted,
-            price: itemData.price
-            // notes: itemData.notes
+      const updatedList = await prisma.shoppingList.upsert({
+        where: { id: list.id },
+        create: persistenceData,
+        update: persistenceData,
+        include: {
+          items: true,
+          collaborators: {
+            include: {
+              user: true
+            }
           }
-        });
+        }
+      });
+
+      const listPayload = ShoppingListInfraSchema.parse(updatedList);
+
+      return ShoppingListMapper.toDomain(listPayload);
+    } catch (error) {
+      if (error instanceof Error && error.message.includes("Record to update not found")) {
+        throw new Error(`Shopping list with id ${list.id} not found`);
       }
+      throw new Error(
+        `Failed to save shopping list: ${error instanceof Error ? error.message : "Unknown error"}`
+      );
     }
+  }
 
-    console.log("New list created:", newList.id);
-
-    // Fetch the complete list with items
-    const completeList = await prisma.shoppingList.findUnique({
-      where: { id: newList.id },
-      include: {
+  async findManyByQuery(query: ShoppingListQuery): Promise<ShoppingList[]> {
+    try {
+      const whereClause: any = {};
+      const include = {
         items: true,
         collaborators: {
           include: {
             user: true
           }
         }
-      }
-    });
+      };
 
-    if (!completeList) {
-      throw new Error("Failed to create shopping list");
-    }
-
-    return ShoppingListMapper.toDomain(completeList);
-  }
-
-  async findById(id: string): Promise<ShoppingList | null> {
-    const list = await prisma.shoppingList.findUnique({
-      where: { id },
-      include: {
-        items: true,
-        collaborators: {
-          include: {
-            user: true
-          }
-        }
-      }
-    });
-
-    if (!list) return null;
-
-    return ShoppingListMapper.toDomain(list);
-  }
-
-  async findByUserId(userId: string): Promise<ShoppingList[]> {
-    const lists = await prisma.shoppingList.findMany({
-      where: {
-        OR: [
-          { userId }, // Lists owned by the user
+      if (query.userId && query.collaboratorUserId)
+        whereClause.OR = [
+          { userId: query.userId },
           {
             collaborators: {
               some: {
-                userId
+                userId: query.collaboratorUserId
               }
             }
-          } // Lists where user is a collaborator
-        ]
-      },
-      include: {
-        items: true,
-        collaborators: {
-          include: {
-            user: true
           }
-        }
-      },
-      orderBy: { updatedAt: "desc" }
-    });
-
-    return lists.map((list) => ShoppingListMapper.toDomain(list));
-  }
-
-  async update(list: ShoppingList): Promise<ShoppingList> {
-    const persistenceData = ShoppingListMapper.toPersistence(list);
-
-    const updatedList = await prisma.shoppingList.update({
-      where: { id: list.id },
-      data: {
-        name: persistenceData.name,
-        description: persistenceData.description,
-        updatedAt: new Date()
-      },
-      include: {
-        items: true,
-        collaborators: {
-          include: {
-            user: true
+        ];
+      else if (query.userId) whereClause.userId = query.userId;
+      else if (query.collaboratorUserId)
+        whereClause.collaborators = {
+          some: {
+            userId: query.collaboratorUserId
           }
-        }
+        };
+
+      if (query.name)
+        whereClause.name = {
+          contains: query.name,
+          mode: "insensitive"
+        };
+
+      if (query.isShared !== undefined) {
+        if (query.isShared)
+          whereClause.collaborators = {
+            some: {}
+          };
+        else
+          whereClause.collaborators = {
+            none: {}
+          };
       }
-    });
 
-    return ShoppingListMapper.toDomain(updatedList);
+      const lists = await prisma.shoppingList.findMany({
+        where: whereClause,
+        include,
+        orderBy: query.orderBy || { updatedAt: "desc" },
+        take: query.limit,
+        skip: query.offset
+      });
+
+      const listPayloads = lists.map((list) => ShoppingListInfraSchema.parse(list));
+
+      return listPayloads.map((list) => ShoppingListMapper.toDomain(list));
+    } catch (error) {
+      throw new InfrastructureError(
+        "Failed to query shopping lists",
+        error instanceof Error ? error : new Error(String(error))
+      );
+    }
   }
 
-  async delete(id: string): Promise<void> {
-    // Delete items first (assuming cascade delete is not set up)
-    await prisma.shoppingListItem.deleteMany({
-      where: { shoppingListId: id }
-    });
+  async remove(shoppingListId: string): Promise<void> {
+    try {
+      await prisma.$transaction(async (tx) => {
+        await tx.shoppingListItem.deleteMany({
+          where: { shoppingListId: shoppingListId }
+        });
 
-    // Delete collaborators
-    await prisma.shoppingListCollaborator.deleteMany({
-      where: { listId: id }
-    });
+        await tx.shoppingListCollaborator.deleteMany({
+          where: { listId: shoppingListId }
+        });
 
-    await prisma.shoppingList.delete({
-      where: { id }
-    });
+        await tx.shoppingList.delete({
+          where: { id: shoppingListId }
+        });
+      });
+    } catch (error) {
+      throw new InfrastructureError(
+        "Failed to remove shoppingList through API",
+        error instanceof Error ? error : new Error(String(error))
+      );
+    }
+  }
+
+  async findById(shoppingListId: string): Promise<ShoppingList | null> {
+    try {
+      const list = await prisma.shoppingList.findUnique({
+        where: { id: shoppingListId },
+        include: {
+          items: true,
+          collaborators: {
+            include: {
+              user: true
+            }
+          }
+        }
+      });
+
+      if (!list) return null;
+
+      const listPayload = ShoppingListInfraSchema.parse(list);
+
+      return ShoppingListMapper.toDomain(listPayload);
+    } catch (error) {
+      throw new InfrastructureError(
+        "Failed to find shopping list by ID",
+        error instanceof Error ? error : new Error(String(error))
+      );
+    }
   }
 }

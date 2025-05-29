@@ -1,47 +1,77 @@
 import { addToast } from "@heroui/react";
 import { Trans } from "@lingui/react/macro";
 import { useCallback, useState } from "react";
-import { removeItemFromList } from "~/ShoppingLists/Api/removeItemFromList.api";
-import { toggleItemComplete } from "~/ShoppingLists/Api/toggleItemComplete.api";
-import { updateShoppingListItem } from "~/ShoppingLists/Api/updateShoppingListItem.api";
+import { removeItemFromList } from "~/ShoppingLists/Api/items/removeItemFromList.api";
+import { toggleItemComplete } from "~/ShoppingLists/Api/items/toggleItemComplete.api";
+import { updateShoppingListItem } from "~/ShoppingLists/Api/items/updateShoppingListItem.api";
 import type { ShoppingListPayload } from "~/ShoppingLists/Domain/Entities/ShoppingList.entity";
 import type { ShoppingListItemPayload } from "~/ShoppingLists/Domain/Entities/ShoppingListItem.entity";
+import { useSmartConversionNotifications } from "~/ShoppingLists/Ui/Hooks/useSmartConversionNotifications";
 
 export const useShoppingListActions = (initialList: ShoppingListPayload) => {
   const [items, setItems] = useState<ShoppingListItemPayload[]>(initialList.items || []);
+
+  // Intégration des notifications de conversion intelligente
+  const {
+    activeNotification,
+    handleItemCompleted: notifyItemCompleted,
+    handleConversionComplete,
+    dismissNotification,
+    hasOpportunities
+  } = useSmartConversionNotifications({
+    listId: initialList.id,
+    onItemCompleted: (itemId, itemName) => {
+      console.log(`Item completed for smart conversion: ${itemName} (${itemId})`);
+    }
+  });
 
   const handleAddItem = (newItem: ShoppingListItemPayload) => {
     setItems((prevItems) => [...prevItems, newItem]);
   };
 
-  const handleToggleComplete = useCallback(async (itemId: string, isCompleted: boolean) => {
-    try {
-      setItems((currentItems) =>
-        currentItems.map((item) => (item.id === itemId ? { ...item, isCompleted } : item))
-      );
+  const handleToggleComplete = useCallback(
+    async (itemId: string, isCompleted: boolean) => {
+      try {
+        console.log("🔄 useShoppingListActions.handleToggleComplete called:", { itemId, isCompleted });
+        const item = items.find((item) => item.id === itemId);
+        console.log("📦 Found item:", item);
 
-      await toggleItemComplete(itemId, isCompleted);
+        setItems((currentItems) =>
+          currentItems.map((item) => (item.id === itemId ? { ...item, isCompleted } : item))
+        );
+        console.log("🔄 UI updated, calling API...");
 
-      if (isCompleted)
+        await toggleItemComplete(itemId, isCompleted);
+        console.log("✅ API call completed successfully");
+
+        if (isCompleted) {
+          // Déclencher la notification de conversion intelligente
+          if (item && !item.productId) {
+            notifyItemCompleted(itemId, item.customName || "Unnamed item");
+          }
+
+          addToast({
+            title: <Trans>Item completed</Trans>,
+            description: <Trans>Item marked as completed</Trans>,
+            variant: "solid",
+            color: "success"
+          });
+        }
+      } catch (error) {
+        setItems((currentItems) =>
+          currentItems.map((item) => (item.id === itemId ? { ...item, isCompleted: !isCompleted } : item))
+        );
+
         addToast({
-          title: <Trans>Item completed</Trans>,
-          description: <Trans>Item marked as completed</Trans>,
+          title: <Trans>Error</Trans>,
+          description: <Trans>Failed to update item status</Trans>,
           variant: "solid",
-          color: "success"
+          color: "danger"
         });
-    } catch (error) {
-      setItems((currentItems) =>
-        currentItems.map((item) => (item.id === itemId ? { ...item, isCompleted: !isCompleted } : item))
-      );
-
-      addToast({
-        title: <Trans>Error</Trans>,
-        description: <Trans>Failed to update item status</Trans>,
-        variant: "solid",
-        color: "danger"
-      });
-    }
-  }, []);
+      }
+    },
+    [items, notifyItemCompleted]
+  );
 
   const handleUpdateItem = useCallback(async (itemId: string, data: Partial<ShoppingListItemPayload>) => {
     try {
@@ -109,6 +139,13 @@ export const useShoppingListActions = (initialList: ShoppingListPayload) => {
     handleAddItem,
     handleToggleComplete,
     handleUpdateItem,
-    handleDeleteItem
+    handleDeleteItem,
+    // Smart conversion props
+    smartConversion: {
+      activeNotification,
+      handleConversionComplete,
+      dismissNotification,
+      hasOpportunities
+    }
   };
 };

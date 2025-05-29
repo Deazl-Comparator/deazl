@@ -1,9 +1,11 @@
 "use client";
 
-import { Autocomplete, AutocompleteItem, Avatar } from "@heroui/react";
-import { PlusIcon, SearchIcon, StoreIcon, TagIcon } from "lucide-react";
-import { forwardRef, useCallback } from "react";
+import { Autocomplete, AutocompleteItem, Avatar, Button, useDisclosure } from "@heroui/react";
+import { PlusIcon, QrCodeIcon, SearchIcon, StoreIcon, TagIcon } from "lucide-react";
+import { forwardRef, useCallback, useState } from "react";
 import type { ProductSearchResult } from "~/ShoppingLists/Api/searchProducts.api";
+import { searchByBarcode } from "~/applications/Searchbar/Api/searchByBarcode";
+import { BarcodeScanner } from "~/components/BarcodeScanner/BarcodeScanner";
 import { type SmartSuggestion, useSmartProductSearch } from "./useSmartProductSearch";
 
 interface SmartItemInputProps {
@@ -27,6 +29,9 @@ export const SmartItemInput = forwardRef<HTMLInputElement, SmartItemInputProps>(
     },
     ref
   ) => {
+    const { isOpen: isScannerOpen, onOpen: openScanner, onClose: closeScanner } = useDisclosure();
+    const [isScannerLoading, setIsScannerLoading] = useState(false);
+
     const {
       inputValue,
       suggestions,
@@ -41,6 +46,48 @@ export const SmartItemInput = forwardRef<HTMLInputElement, SmartItemInputProps>(
         clearInput();
       }
     });
+
+    const handleBarcodeScanned = useCallback(
+      async (barcode: string) => {
+        setIsScannerLoading(true);
+        closeScanner();
+
+        try {
+          const result = await searchByBarcode({ barcode });
+
+          if (result.success) {
+            console.log("Barcode scan result:", result);
+
+            // Ajouter automatiquement l'item avec les données du code-barres
+            onItemAdded?.({
+              customName: result.name,
+              quantity: 1,
+              unit: "unit",
+              isCompleted: false,
+              barcode: barcode
+            });
+
+            // Notification de succès via console pour le moment
+            console.log(`Produit "${result.name}" ajouté via scan!`);
+          } else {
+            console.log("Produit non trouvé:", result.error.reason);
+            // Pour l'instant, on ajoute quand même un item avec le code-barres
+            onItemAdded?.({
+              customName: `Produit ${barcode}`,
+              quantity: 1,
+              unit: "unit",
+              isCompleted: false,
+              barcode: barcode
+            });
+          }
+        } catch (error) {
+          console.error("Erreur lors du scan:", error);
+        } finally {
+          setIsScannerLoading(false);
+        }
+      },
+      [onItemAdded, closeScanner]
+    );
 
     const handleSuggestionSelect = useCallback(
       (suggestion: SmartSuggestion) => {
@@ -80,49 +127,68 @@ export const SmartItemInput = forwardRef<HTMLInputElement, SmartItemInputProps>(
 
     return (
       <div className={className}>
-        <Autocomplete
-          ref={ref}
-          items={suggestions}
-          inputValue={inputValue}
-          onInputChange={handleInputChange}
-          onSelectionChange={(key) => {
-            if (key && key !== "") {
-              const suggestion = suggestions.find((s) => s.id === key);
-              if (suggestion) {
-                handleSuggestionSelect(suggestion);
+        <div className="flex gap-2 items-center">
+          <Autocomplete
+            ref={ref}
+            items={suggestions}
+            inputValue={inputValue}
+            onInputChange={handleInputChange}
+            onSelectionChange={(key) => {
+              if (key && key !== "") {
+                const suggestion = suggestions.find((s) => s.id === key);
+                if (suggestion) {
+                  handleSuggestionSelect(suggestion);
+                }
               }
-            }
-          }}
-          allowsCustomValue
-          isLoading={isLoading}
-          placeholder={placeholder}
-          autoFocus={autoFocus}
-          startContent={<SearchIcon className="h-4 w-4 text-gray-400" />}
-          onKeyDown={handleKeyDown}
-          classNames={{
-            base: "w-full",
-            listboxWrapper: "max-h-80",
-            popoverContent: "p-0",
-            endContentWrapper: "pe-3",
-            clearButton: "p-0 text-gray-400 hover:text-gray-600"
-          }}
-          inputProps={{
-            classNames: {
-              input: "text-sm placeholder:text-gray-400",
-              inputWrapper: "shadow-sm border-gray-200 hover:border-gray-300 focus-within:border-primary-500"
-            }
-          }}
-          menuTrigger="input"
-          selectorButtonProps={{
-            "aria-label": "Toggle menu"
-          }}
-        >
-          {(suggestion) => (
-            <AutocompleteItem key={suggestion.id} textValue={suggestion.displayText} className="text-sm">
-              <SuggestionItem suggestion={suggestion} onSelect={() => handleSuggestionSelect(suggestion)} />
-            </AutocompleteItem>
-          )}
-        </Autocomplete>
+            }}
+            allowsCustomValue
+            isLoading={isLoading}
+            placeholder={placeholder}
+            autoFocus={autoFocus}
+            startContent={<SearchIcon className="h-4 w-4 text-gray-400" />}
+            onKeyDown={handleKeyDown}
+            classNames={{
+              base: "w-full",
+              listboxWrapper: "max-h-80",
+              popoverContent: "p-0",
+              endContentWrapper: "pe-3",
+              clearButton: "p-0 text-gray-400 hover:text-gray-600"
+            }}
+            inputProps={{
+              classNames: {
+                input: "text-sm placeholder:text-gray-400",
+                inputWrapper:
+                  "shadow-sm border-gray-200 hover:border-gray-300 focus-within:border-primary-500"
+              }
+            }}
+            menuTrigger="input"
+            selectorButtonProps={{
+              "aria-label": "Toggle menu"
+            }}
+          >
+            {(suggestion) => (
+              <AutocompleteItem key={suggestion.id} textValue={suggestion.displayText} className="text-sm">
+                <SuggestionItem suggestion={suggestion} onSelect={() => handleSuggestionSelect(suggestion)} />
+              </AutocompleteItem>
+            )}
+          </Autocomplete>
+
+          {/* Bouton Scanner */}
+          <Button
+            isIconOnly
+            size="lg"
+            variant="flat"
+            color="primary"
+            onPress={openScanner}
+            isLoading={isScannerLoading}
+            aria-label="Scanner un code-barres"
+            className="flex-shrink-0"
+          >
+            <QrCodeIcon className="h-5 w-5" />
+          </Button>
+        </div>
+
+        {isScannerOpen && <BarcodeScanner onClose={closeScanner} onScanned={handleBarcodeScanned} />}
       </div>
     );
   }

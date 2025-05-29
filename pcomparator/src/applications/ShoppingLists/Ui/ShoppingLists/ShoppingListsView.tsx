@@ -11,23 +11,27 @@ import { EmptyState, type EmptyStateProps } from "~/ShoppingLists/Ui/ShoppingLis
 import { ShoppingListCard } from "~/ShoppingLists/Ui/ShoppingLists/ShoppingListCard";
 
 export interface ShoppingListViewProps {
-  lists: ShoppingListPayload[];
+  lists: ShoppingListPayload[] | null;
 }
 
 export const ShoppingListsView = ({ lists }: ShoppingListViewProps) => {
   const [filter, setFilter] = useState<EmptyStateProps["type"]>("active");
 
-  const activeLists = lists.filter((list) => {
+  const activeLists = lists?.filter((list) => {
     const progress = (list.completedItems / list.totalItems) * 100;
     return progress < 100;
   });
 
-  const completedLists = lists.filter((list) => {
+  const completedLists = lists?.filter((list) => {
     const progress = (list.completedItems / list.totalItems) * 100;
     return progress === 100;
   });
 
-  return (
+  return !lists || !activeLists ? (
+    <div className="col-span-full">
+      <EmptyState type="active" />
+    </div>
+  ) : (
     <div className="mx-auto max-w-5xl md:max-w-6xl px-4">
       <div className="mb-6 flex items-center justify-between flex-wrap gap-4">
         <div>
@@ -81,7 +85,7 @@ export const ShoppingListsView = ({ lists }: ShoppingListViewProps) => {
               <ArchiveIcon className="h-4 w-4" />
               <span>Completed</span>
               <Chip size="sm" variant="flat" color="default">
-                {completedLists.length}
+                {completedLists?.length}
               </Chip>
             </div>
           }
@@ -90,7 +94,7 @@ export const ShoppingListsView = ({ lists }: ShoppingListViewProps) => {
 
       <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <AnimatePresence mode="popLayout">
-          {(filter === "active" ? activeLists : completedLists).map((list, index) => (
+          {(filter === "active" ? activeLists : (completedLists ?? [])).map((list, index) => (
             <motion.div
               key={list.id}
               layout
@@ -115,7 +119,7 @@ export const ShoppingListsView = ({ lists }: ShoppingListViewProps) => {
             <EmptyState type="active" />
           </div>
         )}
-        {filter === "completed" && completedLists.length === 0 && (
+        {filter === "completed" && completedLists?.length === 0 && (
           <div className="col-span-full">
             <EmptyState type="completed" />
           </div>
