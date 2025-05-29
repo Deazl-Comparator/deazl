@@ -20,7 +20,7 @@ export interface ClientOptions extends Omit<RequestInit, "headers"> {
   /** custom Request (defaults to globalThis.Request) */
   Request?: typeof Request;
   /** global querySerializer */
-  querySerializer?: QuerySerializer<unknown> | QuerySerializerOptions;
+  querySerializer: QuerySerializer<unknown> | QuerySerializerOptions;
   /** global bodySerializer */
   bodySerializer?: BodySerializer<unknown>;
   headers?: HeadersOptions;

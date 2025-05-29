@@ -1,47 +1,73 @@
 {
-  "name": "pcomparator",
-  "version": "1.0.0",
-  "private": true,
-  "workspaces": [
-    "packages/*",
-    "packages/*/*"
-  ],
-  "main": "index.js",
-  "repository": "https://github.com/Clement-Muth/pcomparator",
-  "license": "MIT",
-  "scripts": {
-    "semantic-release": "semantic-release",
-    "changeset": "changeset",
-    "changeset:add": "changeset add",
-    "changeset:status": "changeset status",
-    "changeset:version": "changeset version",
-    "changeset:publish": "changeset publish",
-    "changeset:pre:enter": "changeset pre enter",
-    "changeset:pre:exit": "changeset pre exit",
-    "changeset:canary": "changeset pre enter canary",
-    "changeset:beta": "changeset pre enter beta",
-    "changeset:alpha": "changeset pre enter alpha",
-    "changeset:test": "./scripts/changeset-test.sh",
-    "changeset:workflow": "./scripts/test-full-workflow.sh",
-    "release": "changeset version && changeset publish",
-    "release:canary": "changeset pre enter canary && changeset version && changeset publish --tag canary && changeset pre exit",
-    "release:beta": "changeset pre enter beta && changeset version && changeset publish --tag beta && changeset pre exit",
-    "release:alpha": "changeset pre enter alpha && changeset version && changeset publish --tag alpha && changeset pre exit"
-  },
-  "dependencies": {
-    "semantic-release": "^24.0.0",
-    "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/commit-analyzer": "^13.0.0",
-    "@semantic-release/exec": "^6.0.3",
-    "@semantic-release/git": "^10.0.1",
-    "@semantic-release/github": "^11.0.1",
-    "@semantic-release/release-notes-generator": "^14.0.1"
-  },
-  "devDependencies": {
-    "@changesets/changelog-github": "0.5.0",
-    "@changesets/cli": "2.27.10",
-    "@changesets/get-github-info": "0.6.0",
-    "@changesets/get-release-plan": "4.0.5",
-    "@changesets/types": "6.0.0"
-  }
+	"name": "deazl",
+	"private": true,
+	"version": "1.0.0",
+	"author": "Clément Muth <clementmuth@deazl.fr>",
+	"workspaces": [
+		"apps/**/*",
+		"packages/**/*"
+	],
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Deazl-Comparator/deazl.git"
+	},
+	"scripts": {
+		"build": "turbo build --filter='!@deazl/pcomparator'",
+		"build:fast": "turbo build:fast --filter='!@deazl/pcomparator'",
+		"semantic-release": "semantic-release",
+		"changeset": "changeset",
+		"changeset:add": "changeset add",
+		"changeset:status": "changeset status",
+		"changeset:version": "changeset version",
+		"changeset:publish": "changeset publish",
+		"changeset:pre:enter": "changeset pre enter",
+		"changeset:pre:exit": "changeset pre exit",
+		"changeset:canary": "changeset pre enter canary",
+		"changeset:beta": "changeset pre enter beta",
+		"changeset:alpha": "changeset pre enter alpha",
+		"changeset:test": "./scripts/changeset-test.sh",
+		"changeset:workflow": "./scripts/test-full-workflow.sh",
+		"clean": "yarn turbo:clean && yarn clean:jest && yarn clean:lock && yarn clean:node-modules && yarn install --hoist",
+		"clean:node-modules": "rimraf ./apps/**/node_modules && rimraf ./packages/**/**/node_modules && rimraf ./node_modules",
+		"clean:changelogs": "rimraf ./packages/**/**/CHANGELOG.md",
+		"clean:lock": "rimraf ./yarn.lock",
+		"clean:jest": "jest --clearCache",
+		"check:all": "turbo check:all",
+		"check:fix": "turbo check:fix",
+		"typescript:check": "turbo typescript:check",
+		"version": "changeset version",
+		"release": "changeset version && changeset publish",
+		"release:canary": "changeset pre enter canary && changeset version && changeset publish --tag canary && changeset pre exit",
+		"release:beta": "changeset pre enter beta && changeset version && changeset publish --tag beta && changeset pre exit",
+		"release:alpha": "changeset pre enter alpha && changeset version && changeset publish --tag alpha && changeset pre exit",
+		"postinstall": "husky"
+	},
+	"dependencies": {
+		"@semantic-release/changelog": "^6.0.3",
+		"@semantic-release/commit-analyzer": "^13.0.0",
+		"@semantic-release/exec": "^6.0.3",
+		"@semantic-release/git": "^10.0.1",
+		"@semantic-release/github": "^11.0.1",
+		"@semantic-release/release-notes-generator": "^14.0.1",
+		"semantic-release": "^24.0.0"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.4",
+		"@changesets/changelog-github": "0.5.0",
+		"@changesets/cli": "2.27.10",
+		"@changesets/get-github-info": "0.6.0",
+		"@changesets/get-release-plan": "4.0.5",
+		"@changesets/types": "6.0.0",
+		"@commitlint/cli": "^19.8.1",
+		"@commitlint/config-conventional": "^19.8.1",
+		"commitlint-plugin-function-rules": "^4.0.2",
+		"husky": "^9.1.7",
+		"rimraf": "^6.0.1",
+		"turbo": "^2.5.3"
+	},
+	"engines": {
+		"node": ">=22.x"
+	},
+	"packageManager": "yarn@1.22.22"
 }

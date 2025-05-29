@@ -10,8 +10,8 @@
     "vercel-build": "npm run prepare && next build",
     "start": "next start",
     "lint": "next lint",
-    "lint:check": "biome check .",
-    "format:check": "biome format .",
+    "check:all": "biome check .",
+    "check:fix": "biome check . --write",
     "typescript:check": "tsc --noEmit",
     "translation:extract": "lingui extract --clean",
     "storybook": "NODE_ENV=development storybook dev --ci --quiet --port 3001",
@@ -83,7 +83,6 @@
     "@babel/core": "^7.24.4",
     "@babel/preset-react": "^7.24.1",
     "@babel/preset-typescript": "^7.24.1",
-    "@biomejs/biome": "^1.9.4",
     "@ducanh2912/next-pwa": "^10.2.9",
     "@expo/ngrok": "^4.1.3",
     "@lingui/cli": "^5.3.1",
@@ -105,7 +104,6 @@
     "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/user-event": "^13.5.0",
     "@types/testing-library__jest-dom": "^5.14.6",
-    "biome": "^0.3.3",
     "clsx": "^2.1.1",
     "cross-env": "^7.0.3",
     "env-cmd": "^10.1.0",
@@ -124,6 +122,5 @@
     "turbo": "^2.5.3",
     "webpack": "^5.95.0",
     "zod": "^3.23.8"
-  },
-  "packageManager": "yarn@3.6.1"
+  }
 }
