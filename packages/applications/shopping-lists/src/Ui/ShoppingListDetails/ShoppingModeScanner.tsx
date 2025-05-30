@@ -4,7 +4,7 @@ import { BarcodeScanner } from "@deazl/components";
 import { Button, Card, CardBody, CardHeader } from "@heroui/react";
 import { ShoppingCartIcon, XIcon } from "lucide-react";
 import { useCallback, useState } from "react";
-import type { ShoppingListItemPayload } from "~/Domain/Entities/ShoppingListItem.entity";
+import type { ShoppingListItemPayload } from "../../Domain/Entities/ShoppingListItem.entity";
 
 interface ShoppingModeScannerProps {
   items: ShoppingListItemPayload[];

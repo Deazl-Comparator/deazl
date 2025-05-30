@@ -1,10 +1,10 @@
 import { AuthenticationService, DataAccessError, DomainError } from "@deazl/shared";
-import type { CreateShoppingListPayload } from "~/Api/shoppingLists/createShoppingList.api";
-import type { DeleteShoppingListPayload } from "~/Api/shoppingLists/deleteShoppingList.api";
-import type { GetShoppingListPayload } from "~/Api/shoppingLists/getShoppingList.api";
-import { ShoppingList } from "~/Domain/Entities/ShoppingList.entity";
-import type { ShoppingListRepository } from "~/Domain/Repositories/ShoppingListRepository";
-import { ShoppingListQuery } from "~/Domain/ValueObjects/ShoppingListQuery.vo";
+import type { CreateShoppingListPayload } from "../../Api/shoppingLists/createShoppingList.api";
+import type { DeleteShoppingListPayload } from "../../Api/shoppingLists/deleteShoppingList.api";
+import type { GetShoppingListPayload } from "../../Api/shoppingLists/getShoppingList.api";
+import { ShoppingList } from "../../Domain/Entities/ShoppingList.entity";
+import type { ShoppingListRepository } from "../../Domain/Repositories/ShoppingListRepository";
+import { ShoppingListQuery } from "../../Domain/ValueObjects/ShoppingListQuery.vo";
 
 export class ShoppingListApplicationService {
   private readonly authService: AuthenticationService;

@@ -19,7 +19,7 @@ import {
 import { Trans } from "@lingui/react/macro";
 import { CalendarIcon, PackageIcon, StoreIcon, TagIcon, TrendingDownIcon } from "lucide-react";
 import { useEffect, useState } from "react";
-import type { ProductSearchResult } from "~/applications/ShoppingLists/Api/searchProducts.api";
+import type { ProductSearchResult } from "../../Api/searchProducts.api";
 
 interface ProductSelectionModalProps {
   isOpen: boolean;
@@ -167,11 +167,10 @@ export const ProductSelectionModal = ({
                       key={price.id}
                       isPressable
                       isHoverable
-                      className={`cursor-pointer transition-all ${
-                        selectedPriceId === price.id
+                      className={`cursor-pointer transition-all ${selectedPriceId === price.id
                           ? "ring-2 ring-primary-500 bg-primary-50"
                           : "hover:bg-gray-50"
-                      }`}
+                        }`}
                       onPress={() => setSelectedPriceId(price.id)}
                     >
                       <CardBody className="py-3">

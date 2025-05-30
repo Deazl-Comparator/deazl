@@ -1,9 +1,9 @@
 import { auth } from "@deazl/system";
-import { ProductSearchApplicationService } from "~/Application/Services/ProductSearch.service";
-import { ShoppingListItem } from "~/Domain/Entities/ShoppingListItem.entity";
-import type { ShoppingListItemRepository } from "~/Domain/Repositories/ShoppingListItemRepository";
-import type { ShoppingListRepository } from "~/Domain/Repositories/ShoppingListRepository";
-import { ProductCreationRequest } from "~/Domain/ValueObjects/ProductCreationRequest.vo";
+import { ProductSearchApplicationService } from "../../Application/Services/ProductSearch.service";
+import { ShoppingListItem } from "../../Domain/Entities/ShoppingListItem.entity";
+import type { ShoppingListItemRepository } from "../../Domain/Repositories/ShoppingListItemRepository";
+import type { ShoppingListRepository } from "../../Domain/Repositories/ShoppingListRepository";
+import { ProductCreationRequest } from "../../Domain/ValueObjects/ProductCreationRequest.vo";
 
 /**
  * Types pour les réponses de l'API OpenFoodFacts

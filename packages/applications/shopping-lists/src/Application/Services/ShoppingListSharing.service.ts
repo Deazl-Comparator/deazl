@@ -1,10 +1,10 @@
 import { AuthenticationService, DomainError } from "@deazl/shared";
 import { auth } from "@deazl/system";
-import type { GetCollaboratorsPayload } from "~/Api/shoppingLists/share/getCollaborators.api";
-import type { CollaboratorRole } from "~/Domain/Entities/ShoppingListCollaborator.entity";
-import type { ShoppingListRepository } from "~/Domain/Repositories/ShoppingListRepository";
-import type { ShoppingListSharingRepository } from "~/Domain/Repositories/ShoppingListSharingRepository";
-import { CollaboratorRoleValidator } from "~/Domain/ValueObjects/CollaboratorRoleValidator.vo";
+import type { GetCollaboratorsPayload } from "../../Api/shoppingLists/share/getCollaborators.api";
+import type { CollaboratorRole } from "../../Domain/Entities/ShoppingListCollaborator.entity";
+import type { ShoppingListRepository } from "../../Domain/Repositories/ShoppingListRepository";
+import type { ShoppingListSharingRepository } from "../../Domain/Repositories/ShoppingListSharingRepository";
+import { CollaboratorRoleValidator } from "../../Domain/ValueObjects/CollaboratorRoleValidator.vo";
 
 /**
  * Service d'application pour la gestion du partage des listes de courses

@@ -1,7 +1,7 @@
 import { prisma } from "@deazl/system";
-import type { ShoppingListItem } from "~/Domain/Entities/ShoppingListItem.entity";
-import type { ShoppingListItemRepository } from "~/Domain/Repositories/ShoppingListItemRepository";
-import { ShoppingListItemMapper } from "~/Infrastructure/Mappers/ShoppingListItemMapper";
+import type { ShoppingListItem } from "../../Domain/Entities/ShoppingListItem.entity";
+import type { ShoppingListItemRepository } from "../../Domain/Repositories/ShoppingListItemRepository";
+import { ShoppingListItemMapper } from "../../Infrastructure/Mappers/ShoppingListItemMapper";
 
 /**
  * Implémentation Prisma du repository pour les articles de listes de courses

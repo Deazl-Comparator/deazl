@@ -2,7 +2,7 @@
 
 import { useDisclosure } from "@heroui/react";
 import { useState } from "react";
-import type { ProductSearchResult } from "~/applications/ShoppingLists/Api/searchProducts.api";
+import type { ProductSearchResult } from "../../../Api/searchProducts.api";
 import { ProductSelectionModal } from "../ProductSelectionModal";
 import { SmartItemInput } from "./SmartItemInput";
 import { useSmartAdd } from "./useSmartAdd";

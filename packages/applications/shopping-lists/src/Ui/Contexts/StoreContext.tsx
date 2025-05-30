@@ -1,7 +1,7 @@
 "use client";
 
 import { type ReactNode, createContext, useContext, useState } from "react";
-import { getStores } from "~/Api/getStores.api";
+import { getStores } from "../../Api/getStores.api";
 
 export interface StoreInfo {
   id: string;
@@ -24,14 +24,14 @@ interface StoreContextType {
 // Créer le contexte avec une valeur par défaut
 const StoreContext = createContext<StoreContextType>({
   selectedStore: null,
-  setSelectedStore: () => {},
+  setSelectedStore: () => { },
   stores: [],
-  setStores: () => {},
+  setStores: () => { },
   isLoading: false,
-  setIsLoading: () => {},
+  setIsLoading: () => { },
   error: null,
-  setError: () => {},
-  refreshStores: async () => {}
+  setError: () => { },
+  refreshStores: async () => { }
 });
 
 export function StoreProvider({ children }: { children: ReactNode }) {

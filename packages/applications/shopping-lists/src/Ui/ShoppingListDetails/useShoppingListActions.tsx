@@ -1,12 +1,12 @@
 import { addToast } from "@heroui/react";
 import { Trans } from "@lingui/react/macro";
 import { useCallback, useState } from "react";
-import { removeItemFromList } from "~/Api/items/removeItemFromList.api";
-import { toggleItemComplete } from "~/Api/items/toggleItemComplete.api";
-import { updateShoppingListItem } from "~/Api/items/updateShoppingListItem.api";
-import type { ShoppingListPayload } from "~/Domain/Entities/ShoppingList.entity";
-import type { ShoppingListItemPayload } from "~/Domain/Entities/ShoppingListItem.entity";
-import { useSmartConversionNotifications } from "~/Ui/Hooks/useSmartConversionNotifications";
+import { removeItemFromList } from "../../Api/items/removeItemFromList.api";
+import { toggleItemComplete } from "../../Api/items/toggleItemComplete.api";
+import { updateShoppingListItem } from "../../Api/items/updateShoppingListItem.api";
+import type { ShoppingListPayload } from "../../Domain/Entities/ShoppingList.entity";
+import type { ShoppingListItemPayload } from "../../Domain/Entities/ShoppingListItem.entity";
+import { useSmartConversionNotifications } from "../../Ui/Hooks/useSmartConversionNotifications";
 
 export const useShoppingListActions = (initialList: ShoppingListPayload) => {
   const [items, setItems] = useState<ShoppingListItemPayload[]>(initialList.items || []);

@@ -1,8 +1,8 @@
 "use server";
 
-import { HTTPError } from "ky";
+import { pcomparatorAuthenticatedApiClient } from "@deazl/system";
+// import { HTTPError } from "ky";
 import { z } from "zod";
-import { pcomparatorAuthenticatedApiClient } from "~/clients/PcomparatorApiClient";
 
 const ParamsSchema = z.object({
   search: z.string({ message: "This field is requried" }).min(1, "This field is required")
@@ -43,15 +43,15 @@ export const search = async (_: any, data: FormData): Promise<SearchReturnType> 
 
     return { success: true, prices: product.prices, search: payload.data.search };
   } catch (error) {
-    if (error instanceof HTTPError) {
-      if (error?.response?.status === 404)
-        return {
-          success: false,
-          prices: product?.prices,
-          search: payload.data!.search!,
-          reason: "NO_PRODUCTS"
-        };
-    }
+    // if (error instanceof ) {
+    //   if (error?.response?.status === 404)
+    //     return {
+    //       success: false,
+    //       prices: product?.prices,
+    //       search: payload.data!.search!,
+    //       reason: "NO_PRODUCTS"
+    //     };
+    // }
     console.error(error);
     throw error;
   }

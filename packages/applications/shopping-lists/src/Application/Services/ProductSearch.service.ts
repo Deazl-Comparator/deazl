@@ -1,5 +1,5 @@
 import { prisma } from "@deazl/system";
-import type { ProductSearchResult } from "~/Api/searchProducts.api";
+import type { ProductSearchResult } from "../../Api/searchProducts.api";
 
 /**
  * Service d'application pour la recherche de produits

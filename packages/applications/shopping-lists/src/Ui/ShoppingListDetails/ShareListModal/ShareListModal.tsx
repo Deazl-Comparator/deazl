@@ -3,12 +3,12 @@
 import { Divider, Modal, ModalBody, ModalContent, ModalHeader, Tab, Tabs } from "@heroui/react";
 import { Share2Icon } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
-import { InviteTab } from "~/Ui/ShoppingListDetails/ShareListModal/InviteTab";
-import { LinkTab } from "~/Ui/ShoppingListDetails/ShareListModal/LinkTab";
-import { QrCodeTab } from "~/Ui/ShoppingListDetails/ShareListModal/QrCodeTab";
-import { SocialTab } from "~/Ui/ShoppingListDetails/ShareListModal/SocialTab";
-import { useShareList } from "~/Ui/ShoppingListDetails/ShareListModal/useShareList";
-import { useShoppingListShare } from "~/Ui/ShoppingListDetails/ShareListModal/useShoppingListShare";
+import { InviteTab } from "../../../Ui/ShoppingListDetails/ShareListModal/InviteTab";
+import { LinkTab } from "../../../Ui/ShoppingListDetails/ShareListModal/LinkTab";
+import { QrCodeTab } from "../../../Ui/ShoppingListDetails/ShareListModal/QrCodeTab";
+import { SocialTab } from "../../../Ui/ShoppingListDetails/ShareListModal/SocialTab";
+import { useShareList } from "../../../Ui/ShoppingListDetails/ShareListModal/useShareList";
+import { useShoppingListShare } from "../../../Ui/ShoppingListDetails/ShareListModal/useShoppingListShare";
 
 const transformRole = (role: "EDITOR" | "VIEWER" | "OWNER"): "editor" | "viewer" | "owner" => {
   const roleMap = {

@@ -1,7 +1,7 @@
 "use server";
 
+import { pcomparatorAuthenticatedApiClient } from "@deazl/system";
 import { HTTPError } from "ky";
-import { pcomparatorAuthenticatedApiClient } from "~/clients/PcomparatorApiClient";
 import { auth } from "~/libraries/nextauth/authConfig";
 
 /**

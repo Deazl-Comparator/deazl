@@ -1,4 +1,4 @@
-import type { ProductCreationRequest } from "~/Domain/ValueObjects/ProductCreationRequest.vo";
+import type { ProductCreationRequest } from "../../Domain/ValueObjects/ProductCreationRequest.vo";
 
 /**
  * Interface pour un service d'application qui gère la création de produits

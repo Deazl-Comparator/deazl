@@ -1,12 +1,12 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { SmartConversionApplicationService } from "~/Application/Services/SmartConversion.service";
-import { PrismaShoppingListRepository } from "~/Infrastructure/Repositories/PrismaShoppingList.infrastructure";
-import { PrismaShoppingListItemRepository } from "~/Infrastructure/Repositories/PrismaShoppingListItem.infrastructure";
+// import { SmartConversionApplicationService } from "~/Application/Services/SmartConversion.service";
+// import { PrismaShoppingListRepository } from "~/Infrastructure/Repositories/PrismaShoppingList.infrastructure";
+// import { PrismaShoppingListItemRepository } from "~/Infrastructure/Repositories/PrismaShoppingListItem.infrastructure";
 
-const conversionService = new SmartConversionApplicationService(
-  new PrismaShoppingListRepository(),
-  new PrismaShoppingListItemRepository()
-);
+// const conversionService = new SmartConversionApplicationService(
+//   new PrismaShoppingListRepository(),
+//   new PrismaShoppingListItemRepository()
+// );
 
 /**
  * API pour générer des suggestions de conversion d'un item vers un produit
@@ -19,16 +19,16 @@ export async function GET(request: NextRequest, { params }: { params: { itemId: 
       return NextResponse.json({ error: "Item ID is required" }, { status: 400 });
     }
 
-    const suggestions = await conversionService.generateConversionSuggestions(itemId);
+    // const suggestions = await conversionService.generateConversionSuggestions(itemId);
 
-    if (!suggestions) {
-      return NextResponse.json(
-        { message: "No conversion suggestions available for this item" },
-        { status: 200 }
-      );
-    }
+    // if (!suggestions) {
+    //   return NextResponse.json(
+    //     { message: "No conversion suggestions available for this item" },
+    //     { status: 200 }
+    //   );
+    // }
 
-    return NextResponse.json(suggestions);
+    return NextResponse.json([]);
   } catch (error) {
     console.error("Error generating conversion suggestions:", error);
 

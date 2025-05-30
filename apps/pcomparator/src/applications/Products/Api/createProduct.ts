@@ -1,7 +1,7 @@
 "use server";
 
+import { pcomparatorAuthenticatedApiClient } from "@deazl/system";
 import { ProductSchema } from "~/applications/Products/Domain/Entities/Product";
-import { pcomparatorAuthenticatedApiClient } from "~/clients/PcomparatorApiClient";
 import { auth } from "~/libraries/nextauth/authConfig";
 import { prisma } from "~/libraries/prisma";
 

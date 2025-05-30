@@ -1,3 +1,4 @@
+import { auth } from "@deazl/system";
 import type { ReactNode } from "react";
 import { SignButton } from "~/applications/Authentication/Ui/Signin/SignButton/SignButton";
 import { DesktopNav } from "~/components/DesktopNav";
@@ -6,7 +7,6 @@ import { Header } from "~/components/Header/Header";
 import { Toast } from "~/components/Toast/Toast";
 import { Tabbar } from "~/core/Tabbar";
 import { getDevice } from "~/core/getDevice";
-import { auth } from "~/libraries/nextauth/authConfig";
 
 export interface ApplicationLayoutProps {
   children: ReactNode;

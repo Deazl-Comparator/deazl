@@ -1,8 +1,8 @@
 "use server";
 
+import { pcomparatorAuthenticatedApiClient } from "@deazl/system";
 import { z } from "zod";
 import { type Currency, getCurrencySymbol } from "~/applications/Prices/Domain/ValueObjects/Currency";
-import { pcomparatorAuthenticatedApiClient } from "~/clients/PcomparatorApiClient";
 import { auth } from "~/libraries/nextauth/authConfig";
 import { HTTPError } from "~/types/error";
 
@@ -35,7 +35,7 @@ export const listUserPrices = async (): Promise<Payload> => {
     ).data;
 
     return PayloadSchema.parse(
-      prices?.map<NonNullable<Payload>[number]>((price) => ({
+      prices?.map((price: any) => ({
         priceId: price.id,
         name: price.product.name as string,
         proof: price.priceProofImage as string,

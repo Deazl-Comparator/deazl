@@ -24,8 +24,8 @@ export const useShareList = (shareLink: string) => {
   const [collaborators, setCollaborators] = useState<CollaboratorType[]>([
     {
       id: "1",
-      name: data?.user.name!,
-      email: data?.user.email!,
+      name: data?.user?.name!,
+      email: data?.user?.email!,
       avatar: "",
       role: "owner"
     }

@@ -1,6 +1,6 @@
 import { ValueObject } from "@deazl/shared";
 import type { z } from "zod";
-import type { UnitSchema } from "~/Domain/Schemas/ShoppingListItem.schema";
+import type { UnitSchema } from "../Schemas/ShoppingListItem.schema";
 
 export enum UnitType {
   UNIT = "unit",

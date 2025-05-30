@@ -1,9 +1,9 @@
 "use server";
 
 import { z } from "zod";
-import { ShoppingListApplicationService } from "~/Application/Services/ShoppingList.service";
-import type { ShoppingListPayload } from "~/Domain/Entities/ShoppingList.entity";
-import { PrismaShoppingListRepository } from "~/Infrastructure/Repositories/PrismaShoppingList.infrastructure";
+import { ShoppingListApplicationService } from "../../Application/Services/ShoppingList.service";
+import type { ShoppingListPayload } from "../../Domain/Entities/ShoppingList.entity";
+import { PrismaShoppingListRepository } from "../../Infrastructure/Repositories/PrismaShoppingList.infrastructure";
 
 const shoppingListApplicationService = new ShoppingListApplicationService(new PrismaShoppingListRepository());
 

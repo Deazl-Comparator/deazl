@@ -16,8 +16,9 @@ export const Header = ({ rightArea }: HeaderProps) => {
   const device = useDevice();
   const isScrolled = useScroll(64);
 
+  console.log(isScrolled);
   return (
-    <Navbar isBlurred={isScrolled} className="bg-transparent" shouldHideOnScroll>
+    <Navbar isBlurred={isScrolled} className="bg-transparent">
       <NavbarBrand>
         <Link href="/" className="flex-[0_0_auto]">
           <Image src={Logo.src} fallbackSrc={Logo.blurDataURL} width={35} height={35} />

@@ -1,11 +1,10 @@
 "use client";
 
+import { ShoppingListCreateForm, createShoppingList } from "@deazl/shopping-lists";
 import { Button } from "@heroui/react";
 import { ArrowLeftIcon } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { createShoppingList } from "~/Api/shoppingLists/createShoppingList.api";
-import { ShoppingListCreateForm } from "~/Ui/ShoppingListCreateForm";
 
 async function handleCreateList(formData: FormData) {
   const name = formData.get("name") as string;

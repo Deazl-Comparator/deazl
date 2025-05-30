@@ -1,4 +1,4 @@
-import { DomainError } from "~/Domain/Core/DomainError";
+import { DomainError } from "../DomainError";
 
 export class ApplicationError extends Error {
   constructor(message: string) {

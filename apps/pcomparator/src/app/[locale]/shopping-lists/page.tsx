@@ -1,5 +1,4 @@
-import { listUserShoppingList } from "~/Api/shoppingLists/listUserShoppingList.api";
-import { ShoppingListsView } from "~/Ui/ShoppingLists/ShoppingListsView";
+import { ShoppingListsView, listUserShoppingList } from "@deazl/shopping-lists";
 import { withLinguiPage } from "~/core/withLinguiLayout";
 
 export const metadata = {

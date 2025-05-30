@@ -1,7 +1,7 @@
 import { Button, Checkbox } from "@heroui/react";
 import { CheckIcon, TrashIcon } from "lucide-react";
 import { useCallback } from "react";
-import type { ShoppingListItemPayload } from "~/Domain/Entities/ShoppingListItem.entity";
+import type { ShoppingListItemPayload } from "../../../Domain/Entities/ShoppingListItem.entity";
 
 interface ShoppingListItemListProps {
   items: ShoppingListItemPayload[];
@@ -32,9 +32,8 @@ export const ShoppingListItemList = ({
       {items.map((item) => (
         <li
           key={item.id}
-          className={`flex items-center justify-between p-3 border rounded-md transition-colors cursor-pointer ${
-            item.isCompleted ? "bg-gray-50 border-gray-200" : "hover:bg-primary-50 border-primary-100"
-          }`}
+          className={`flex items-center justify-between p-3 border rounded-md transition-colors cursor-pointer ${item.isCompleted ? "bg-gray-50 border-gray-200" : "hover:bg-primary-50 border-primary-100"
+            }`}
           onClick={() => onOpenEditModal(item)}
         >
           <div className="flex items-center gap-3 flex-1">
@@ -51,9 +50,8 @@ export const ShoppingListItemList = ({
             <div className="flex flex-col">
               <label
                 htmlFor={`item-${item.id}`}
-                className={`${
-                  item.isCompleted ? "line-through text-gray-400" : "font-medium"
-                } cursor-pointer bg-transparent`}
+                className={`${item.isCompleted ? "line-through text-gray-400" : "font-medium"
+                  } cursor-pointer bg-transparent`}
               >
                 {item.customName || `Product #${item.productId?.substring(0, 8) || "Unknown"}`}
               </label>

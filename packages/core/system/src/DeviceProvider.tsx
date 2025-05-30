@@ -1,7 +1,7 @@
 "use client";
 
 import { type ReactNode, createContext, useEffect, useState } from "react";
-import useMediaQuery, { MediaQuery } from "~/hooks/useMediaQuery";
+import useMediaQuery, { MediaQuery } from "./hooks/useMediaQuery";
 
 export type Device = "mobile" | "desktop";
 

@@ -3,9 +3,9 @@
 import { addToast } from "@heroui/react";
 import { Trans } from "@lingui/react/macro";
 import { useState } from "react";
-import { addProductItemToList } from "~/Api/addProductItemToList.api";
-import { addItemToList } from "~/Api/items/addItemToList.api";
-import type { ProductSearchResult } from "~/Api/searchProducts.api";
+import { addProductItemToList } from "../../../Api/addProductItemToList.api";
+import { addItemToList } from "../../../Api/items/addItemToList.api";
+import type { ProductSearchResult } from "../../../Api/searchProducts.api";
 
 interface UseSmartAddProps {
   listId: string;

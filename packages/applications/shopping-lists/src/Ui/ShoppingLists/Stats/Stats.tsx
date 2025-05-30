@@ -1,7 +1,7 @@
 import { Trans } from "@lingui/react/macro";
 import { ArchiveIcon, ShoppingBagIcon, ShoppingCartIcon } from "lucide-react";
-import type { ShoppingList } from "~/Domain/Entities/ShoppingList.entity";
-import { StatsCard } from "~/Ui/ShoppingLists/Stats/StatsCard";
+import type { ShoppingList } from "../../../Domain/Entities/ShoppingList.entity";
+import { StatsCard } from "../../../Ui/ShoppingLists/Stats/StatsCard";
 
 interface StatsProps {
   activeLists: ShoppingList[];

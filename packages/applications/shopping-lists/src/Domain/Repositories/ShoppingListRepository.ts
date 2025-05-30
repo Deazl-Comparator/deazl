@@ -1,5 +1,5 @@
-import type { ShoppingList } from "~/Domain/Entities/ShoppingList.entity";
-import type { ShoppingListQuery } from "~/Domain/ValueObjects/ShoppingListQuery.vo";
+import type { ShoppingList } from "../../Domain/Entities/ShoppingList.entity";
+import type { ShoppingListQuery } from "../../Domain/ValueObjects/ShoppingListQuery.vo";
 
 export interface ShoppingListRepository {
   save(list: ShoppingList): Promise<ShoppingList>;

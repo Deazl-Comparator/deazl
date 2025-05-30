@@ -4,7 +4,7 @@ import { BarcodeScanner } from "@deazl/components";
 import { Autocomplete, AutocompleteItem, Avatar, Button, useDisclosure } from "@heroui/react";
 import { PlusIcon, QrCodeIcon, SearchIcon, StoreIcon, TagIcon } from "lucide-react";
 import { forwardRef, useCallback, useState } from "react";
-import type { ProductSearchResult } from "~/Api/searchProducts.api";
+import type { ProductSearchResult } from "../../../Api/searchProducts.api";
 import { type SmartSuggestion, useSmartProductSearch } from "./useSmartProductSearch";
 
 interface SmartItemInputProps {

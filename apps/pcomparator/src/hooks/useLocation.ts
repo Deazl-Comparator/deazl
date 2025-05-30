@@ -1,4 +1,3 @@
-import ky from "ky";
 import { useCallback, useEffect, useState } from "react";
 
 interface Location {
@@ -19,7 +18,8 @@ const useLocation = () => {
   const fetchLocations = async (url: string) => {
     try {
       setLoading(true);
-      const data = await ky.get(url).json<LocationResponse>();
+      // const data = await ky.get(url).json<LocationResponse>();
+      const data: any = {};
 
       setLocation(
         data.features.map(({ properties }) => ({

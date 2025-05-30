@@ -1,4 +1,4 @@
-import { UniqueEntityID } from "~/Domain/Core/UniqueEntityId";
+import { UniqueEntityID } from "./UniqueEntityId";
 
 const isEntity = (v: any): v is Entity<any> => {
   return v instanceof Entity;

@@ -15,7 +15,7 @@ import {
 } from "@heroui/react";
 import { CheckIcon, ExternalLinkIcon, Package2Icon, SparklesIcon } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
-import type { ConversionResult, ConversionSuggestion } from "~/Application/Services/SmartConversion.service";
+import type { ConversionResult, ConversionSuggestion } from "../../Application/Services/SmartConversion.service";
 
 interface SmartConversionSectionProps {
   itemId: string;
@@ -34,9 +34,8 @@ interface ProductSuggestionCardProps {
 const ProductSuggestionCard = ({ suggestion, isSelected, onSelect }: ProductSuggestionCardProps) => {
   return (
     <Card
-      className={`cursor-pointer transition-all ${
-        isSelected ? "ring-2 ring-primary-500 bg-primary-50" : "hover:shadow-md border border-gray-200"
-      }`}
+      className={`cursor-pointer transition-all ${isSelected ? "ring-2 ring-primary-500 bg-primary-50" : "hover:shadow-md border border-gray-200"
+        }`}
       isPressable
       onPress={onSelect}
     >

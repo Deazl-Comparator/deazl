@@ -1,12 +1,9 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { SmartConversionApplicationService } from "~/Application/Services/SmartConversion.service";
-import { PrismaShoppingListRepository } from "~/Infrastructure/Repositories/PrismaShoppingList.infrastructure";
-import { PrismaShoppingListItemRepository } from "~/Infrastructure/Repositories/PrismaShoppingListItem.infrastructure";
 
-const conversionService = new SmartConversionApplicationService(
-  new PrismaShoppingListRepository(),
-  new PrismaShoppingListItemRepository()
-);
+// const conversionService = new SmartConversionApplicationService(
+//   new PrismaShoppingListRepository(),
+//   new PrismaShoppingListItemRepository()
+// );
 
 /**
  * API pour identifier les opportunités de conversion dans une liste
@@ -19,9 +16,9 @@ export async function GET(request: NextRequest, { params }: { params: { listId: 
       return NextResponse.json({ error: "List ID is required" }, { status: 400 });
     }
 
-    const opportunities = await conversionService.identifyConversionOpportunities(listId);
+    // const opportunities = await conversionService.identifyConversionOpportunities(listId);
 
-    return NextResponse.json(opportunities);
+    return NextResponse.json([]);
   } catch (error) {
     console.error("Error identifying conversion opportunities:", error);
 

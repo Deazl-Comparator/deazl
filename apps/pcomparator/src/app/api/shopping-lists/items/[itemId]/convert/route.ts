@@ -1,12 +1,12 @@
 import { type NextRequest, NextResponse } from "next/server";
-import { SmartConversionApplicationService } from "~/Application/Services/SmartConversion.service";
-import { PrismaShoppingListRepository } from "~/Infrastructure/Repositories/PrismaShoppingList.infrastructure";
-import { PrismaShoppingListItemRepository } from "~/Infrastructure/Repositories/PrismaShoppingListItem.infrastructure";
+// import { SmartConversionApplicationService } from "~/Application/Services/SmartConversion.service";
+// import { PrismaShoppingListRepository } from "~/Infrastructure/Repositories/PrismaShoppingList.infrastructure";
+// import { PrismaShoppingListItemRepository } from "~/Infrastructure/Repositories/PrismaShoppingListItem.infrastructure";
 
-const conversionService = new SmartConversionApplicationService(
-  new PrismaShoppingListRepository(),
-  new PrismaShoppingListItemRepository()
-);
+// const conversionService = new SmartConversionApplicationService(
+//   new PrismaShoppingListRepository(),
+//   new PrismaShoppingListItemRepository()
+// );
 
 /**
  * API pour convertir un item en produit
@@ -26,18 +26,18 @@ export async function POST(request: NextRequest, { params }: { params: { itemId:
       return NextResponse.json({ error: "Valid conversion type is required" }, { status: 400 });
     }
 
-    const result = await conversionService.convertItemToProduct(itemId, {
-      type,
-      productId,
-      openFoodFactsBarcode,
-      customProductData
-    });
+    // const result = await conversionService.convertItemToProduct(itemId, {
+    //   type,
+    //   productId,
+    //   openFoodFactsBarcode,
+    //   customProductData
+    // });
 
-    if (!result.success) {
-      return NextResponse.json({ error: result.error }, { status: 400 });
-    }
+    // if (!result.success) {
+    //   return NextResponse.json({ error: result.error }, { status: 400 });
+    // }
 
-    return NextResponse.json(result);
+    return NextResponse.json([]);
   } catch (error) {
     console.error("Error converting item to product:", error);
 

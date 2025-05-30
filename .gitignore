@@ -1,9 +1,18 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# dependencies
+# dependencies (Zero-Install: node_modules is ignored, .yarn/cache is committed)
 node_modules
 /.pnp
 .pnp.js
+
+# Yarn Zero-Install - keep cache and releases, ignore unplugged and install state
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
 
 # testing
 /coverage

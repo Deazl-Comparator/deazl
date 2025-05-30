@@ -5,7 +5,6 @@
   "keywords": [
     "deazl",
     "shared",
-    "components",
     "application",
     "react"
   ],
@@ -43,8 +42,8 @@
   },
   "clean-package": "../../../clean-package.config.json",
   "dependencies": {
-    "@deazl/system": "0.0.1",
-    "@deazl/components": "0.0.1"
+    "@deazl/components": "0.0.1",
+    "@deazl/system": "0.0.1"
   },
   "devDependencies": {
     "tsup": "^8.5.0"

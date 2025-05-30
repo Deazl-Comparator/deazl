@@ -1,9 +1,9 @@
 "use server";
 
+import { pcomparatorAuthenticatedApiClient } from "@deazl/system";
+import { OpenFoodFactPricesApiClient } from "@deazl/system/src/clients/OpenFoodFactPricesApiClient";
 import { z } from "zod";
 import { Currency } from "~/applications/Prices/Domain/ValueObjects/Currency";
-import { OpenFoodFactPricesApiClient } from "~/clients/OpenFoodFactPricesApiClient";
-import { pcomparatorAuthenticatedApiClient } from "~/clients/PcomparatorApiClient";
 
 const ParamsSchema = z.object({
   barcode: z.string(),

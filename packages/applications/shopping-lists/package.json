@@ -29,13 +29,18 @@
     "url": "https://github.com/Deazl-Comparator/deazl/issues"
   },
   "scripts": {
-    "build": "tsup src --dts",
-    "build:fast": "tsup src",
+    "build": "node --max-old-space-size=8192 ./node_modules/.bin/tsup src",
+    "build:dts": "node --max-old-space-size=8192 ./node_modules/.bin/tsup src --dts-only",
+    "build:full": "yarn build && yarn build:dts",
+    "build:fast": "node --max-old-space-size=8192 ./node_modules/.bin/tsup src",
     "dev": "pnpm build:fast --watch",
     "clean": "rimraf dist .turbo",
     "typecheck": "tsc --noEmit",
     "prepack": "clean-package",
-    "postpack": "clean-package restore"
+    "postpack": "clean-package restore",
+    "check:all": "biome check .",
+    "check:fix": "biome check . --write",
+    "typescript:check": "tsc --noEmit"
   },
   "peerDependencies": {
     "react": ">=18 || >=19.0.0-rc.0",
@@ -43,9 +48,9 @@
   },
   "clean-package": "../../../clean-package.config.json",
   "dependencies": {
-    "@deazl/system": "0.0.1",
     "@deazl/components": "0.0.1",
-    "@deazl/shared": "0.0.1"
+    "@deazl/shared": "0.0.1",
+    "@deazl/system": "0.0.1"
   },
   "devDependencies": {
     "tsup": "^8.5.0"

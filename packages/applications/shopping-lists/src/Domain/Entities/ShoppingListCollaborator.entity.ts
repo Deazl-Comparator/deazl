@@ -1,6 +1,6 @@
 import { Entity, UniqueEntityID } from "@deazl/shared";
 import type { z } from "zod";
-import type { ShoppingListCollaboratorSchema } from "~/Domain/Schemas/ShoppingList.schema";
+import type { ShoppingListCollaboratorSchema } from "../../Domain/Schemas/ShoppingList.schema";
 
 export enum CollaboratorRole {
   OWNER = "OWNER",
