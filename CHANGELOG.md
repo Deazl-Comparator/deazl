@@ -1,3 +1,10 @@
+# [4.10.0-beta.6](https://github.com/Deazl-Comparator/deazl/compare/v4.10.0-beta.5...v4.10.0-beta.6) (2025-05-30)
+
+
+### Features
+
+* create FUNDING.yml ([05d5496](https://github.com/Deazl-Comparator/deazl/commit/05d54964c7b7fef4e1bcb8d36a0a10d5d72cdb3d))
+
 # [4.10.0-beta.5](https://github.com/Deazl-Comparator/deazl/compare/v4.10.0-beta.4...v4.10.0-beta.5) (2025-05-29)
 
 
