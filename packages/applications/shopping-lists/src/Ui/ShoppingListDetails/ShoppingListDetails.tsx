@@ -1,6 +1,6 @@
 "use client";
 
-import type { ShoppingListPayload } from "../../Domain/Entities/ShoppingList.entity";
+import type { ShoppingListPayload } from "../../Domain/Schemas/ShoppingList.schema";
 import { ShoppingListContainer } from "../../Ui/ShoppingListDetails/ShoppingListContainer";
 import { ShoppingListDetailsHeader } from "../../Ui/ShoppingListDetails/ShoppingListDetailsHeader";
 import { StoreProvider } from "../Contexts/StoreContext";
