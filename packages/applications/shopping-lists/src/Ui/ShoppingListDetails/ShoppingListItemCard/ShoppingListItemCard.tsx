@@ -1,6 +1,5 @@
 import { Button, Card, CardBody, CardHeader, useDisclosure } from "@heroui/react";
 import { FilterIcon, InfoIcon, ShoppingCartIcon } from "lucide-react";
-import type { ShoppingListPayload } from "../../../Domain/Entities/ShoppingList.entity";
 import type { ShoppingListItemPayload } from "../../../Domain/Entities/ShoppingListItem.entity";
 import { EditItemModal } from "../../../Ui/ShoppingListDetails/EditItemModal";
 import { StoreSelector } from "../../../Ui/ShoppingListDetails/StoreSelector";
@@ -8,6 +7,7 @@ import { ShoppingListFilter } from "./ShoppingListFilter";
 import { ShoppingListItemList } from "./ShoppingListItemList";
 import { ShoppingListStats } from "./ShoppingListStats";
 import { useShoppingListItems } from "./useShoppingListItems";
+import type { ShoppingListPayload } from "../../../Domain/Schemas/ShoppingList.schema";
 
 export const ShoppingListItemCard = ({
   list,

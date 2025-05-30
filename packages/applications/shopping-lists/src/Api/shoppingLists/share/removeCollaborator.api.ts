@@ -1,7 +1,10 @@
 "use server";
 
-import { z } from "zod";
 import { ShoppingListSharingApplicationService } from "../../../Application/Services/ShoppingListSharing.service";
+import {
+  type RemoveCollaboratorPayload,
+  RemoveCollaboratorSchema
+} from "../../../Domain/Schemas/ShoppingListSharing.schema";
 import { PrismaShoppingListRepository } from "../../../Infrastructure/Repositories/PrismaShoppingList.infrastructure";
 import { PrismaShoppingListSharingRepository } from "../../../Infrastructure/Repositories/PrismaShoppingListSharing.infrastructure";
 
@@ -9,13 +12,6 @@ const shoppingListSharingService = new ShoppingListSharingApplicationService(
   new PrismaShoppingListRepository(),
   new PrismaShoppingListSharingRepository()
 );
-
-export const RemoveCollaboratorSchema = z.object({
-  listId: z.string().uuid(),
-  userId: z.string().uuid()
-});
-
-export type RemoveCollaboratorPayload = z.infer<typeof RemoveCollaboratorSchema>;
 
 export async function removeCollaborator(params: RemoveCollaboratorPayload): Promise<void> {
   try {

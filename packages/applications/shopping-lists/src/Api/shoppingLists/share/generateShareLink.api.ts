@@ -1,14 +1,14 @@
 "use server";
 
-import { z } from "zod";
-
-const GenerateShareLinkSchema = z.string().uuid();
-
-type GenerateShareLinkPayload = z.infer<typeof GenerateShareLinkSchema>;
+import {
+  type GenerateShareLinkPayload,
+  GenerateShareLinkSchema
+} from "../../../Domain/Schemas/ShoppingListSharing.schema";
 
 export const generateShareLink = async (shoppingListId: GenerateShareLinkPayload) => {
   try {
-    const token = `token_${shoppingListId}`;
+    const payload = GenerateShareLinkSchema.parse(shoppingListId);
+    const token = `token_${payload}`;
 
     return `${process.env.PCOMPARATOR_PUBLIC_URL}/shared/${token}`;
   } catch (error) {

@@ -1,15 +1,11 @@
 "use server";
 
-import { z } from "zod";
 import { ShoppingListApplicationService } from "../../Application/Services/ShoppingList.service";
 import type { ShoppingList } from "../../Domain/Entities/ShoppingList.entity";
+import { type GetShoppingListPayload, GetShoppingListSchema } from "../../Domain/Schemas/ShoppingList.schema";
 import { PrismaShoppingListRepository } from "../../Infrastructure/Repositories/PrismaShoppingList.infrastructure";
 
 const shoppingListApplicationService = new ShoppingListApplicationService(new PrismaShoppingListRepository());
-
-const GetShoppingListSchema = z.string().uuid();
-
-type GetShoppingListPayload = z.infer<typeof GetShoppingListSchema>;
 
 export const getShoppingList = async (
   shoppingListId: GetShoppingListPayload

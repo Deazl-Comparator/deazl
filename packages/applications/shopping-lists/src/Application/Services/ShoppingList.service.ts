@@ -1,9 +1,12 @@
 import { AuthenticationService, DataAccessError, DomainError } from "@deazl/shared";
-import type { CreateShoppingListPayload } from "../../Api/shoppingLists/createShoppingList.api";
-import type { DeleteShoppingListPayload } from "../../Api/shoppingLists/deleteShoppingList.api";
-import type { GetShoppingListPayload } from "../../Api/shoppingLists/getShoppingList.api";
 import { ShoppingList } from "../../Domain/Entities/ShoppingList.entity";
 import type { ShoppingListRepository } from "../../Domain/Repositories/ShoppingListRepository";
+import type {
+  CreateShoppingListPayload,
+  DeleteShoppingListPayload,
+  GetShoppingListPayload,
+  UpdateShoppingListPayload
+} from "../../Domain/Schemas/ShoppingList.schema";
 import { ShoppingListQuery } from "../../Domain/ValueObjects/ShoppingListQuery.vo";
 
 export class ShoppingListApplicationService {
@@ -85,10 +88,7 @@ export class ShoppingListApplicationService {
     }
   }
 
-  async updateShoppingList(
-    shoppingListId: string,
-    data: Partial<{ name: string; description: string }>
-  ): Promise<ShoppingList> {
+  async updateShoppingList(shoppingListId: string, data: UpdateShoppingListPayload): Promise<ShoppingList> {
     try {
       const currentUser: any = await this.authService.getCurrentUser();
 

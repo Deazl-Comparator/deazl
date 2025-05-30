@@ -2,20 +2,10 @@ import { Entity, UniqueEntityID } from "@deazl/shared";
 import type { z } from "zod";
 import type { ShoppingListCollaborator } from "../../Domain/Entities/ShoppingListCollaborator.entity";
 import type { ShoppingListItem } from "../../Domain/Entities/ShoppingListItem.entity";
-import type { ShoppingListSchema } from "../../Domain/Schemas/ShoppingList.schema";
+import type { ShoppingListPayload } from "../../Domain/Schemas/ShoppingList.schema";
 import type { UserRoleEnum } from "../../Domain/Schemas/UserRole.schema";
 
 export type UserRole = z.infer<typeof UserRoleEnum>;
-
-export type ShoppingListPayload = z.infer<typeof ShoppingListSchema> & {
-  totalItems: number;
-  completedItems: number;
-  progressPercentage: number;
-  totalPrice: number;
-  totalPendingPrice: number;
-  totalCompletedPrice: number;
-  userRole?: UserRole;
-};
 
 interface ShoppingListProps {
   name: string;

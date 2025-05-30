@@ -1,7 +1,10 @@
 "use server";
 
-import { z } from "zod";
 import { ShoppingListSharingApplicationService } from "../../../Application/Services/ShoppingListSharing.service";
+import {
+  type GetCollaboratorsPayload,
+  GetCollaboratorsSchema
+} from "../../../Domain/Schemas/ShoppingListSharing.schema";
 import { PrismaShoppingListRepository } from "../../../Infrastructure/Repositories/PrismaShoppingList.infrastructure";
 import { PrismaShoppingListSharingRepository } from "../../../Infrastructure/Repositories/PrismaShoppingListSharing.infrastructure";
 
@@ -9,10 +12,6 @@ const shoppingListSharingService = new ShoppingListSharingApplicationService(
   new PrismaShoppingListRepository(),
   new PrismaShoppingListSharingRepository()
 );
-
-const GetCollaboratorsSchema = z.string().uuid();
-
-type GetCollaboratorsPayload = z.infer<typeof GetCollaboratorsSchema>;
 
 export async function getCollaborators(shoppingListId: GetCollaboratorsPayload) {
   try {

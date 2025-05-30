@@ -1,12 +1,12 @@
 import { Button } from "@heroui/react";
 import { Trans } from "@lingui/react/macro";
 import { useMemo, useState } from "react";
-import type { ShoppingListPayload } from "../../Domain/Entities/ShoppingList.entity";
 import { ShoppingListItemCard } from "../../Ui/ShoppingListDetails/ShoppingListItemCard";
 import { ShoppingModeScanner } from "../../Ui/ShoppingListDetails/ShoppingModeScanner";
 import { SmartConversionSection } from "../../Ui/ShoppingListDetails/SmartConversionSection";
 import { SmartQuickAddBar } from "../../Ui/ShoppingListDetails/SmartQuickAddBar/SmartQuickAddBar";
 import { useShoppingListActions } from "../../Ui/ShoppingListDetails/useShoppingListActions";
+import type { ShoppingListPayload } from "../../Domain/Schemas/ShoppingList.schema";
 
 interface ShoppingListContainerProps {
   initialList: ShoppingListPayload;
@@ -46,8 +46,8 @@ export const ShoppingListContainer = ({ initialList, user }: ShoppingListContain
           <Button
             onPress={() => setIsShoppingMode(!isShoppingMode)}
             className={`px-4 py-2 rounded-lg font-medium transition-colors ${isShoppingMode
-                ? "bg-red-500 text-white hover:bg-red-600"
-                : "bg-blue-500 text-white hover:bg-blue-600"
+              ? "bg-red-500 text-white hover:bg-red-600"
+              : "bg-blue-500 text-white hover:bg-blue-600"
               }`}
           >
             {isShoppingMode ? <Trans>Exit Shopping Mode</Trans> : <Trans>Start Shopping</Trans>}
