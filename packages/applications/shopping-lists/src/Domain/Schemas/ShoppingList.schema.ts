@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { ShoppingListItemSchema } from "../../Domain/Schemas/ShoppingListItem.schema";
 import { UserRoleEnum } from "../../Domain/Schemas/UserRole.schema";
+import type { UserRole } from "../Entities/ShoppingList.entity";
 
 export const ShoppingListCollaboratorSchema = z.object({
   id: z.string(),
@@ -27,11 +28,30 @@ export const ShoppingListSchema = z.object({
   collaborators: z.array(ShoppingListCollaboratorSchema).optional()
 });
 
-export const CreateShoppingListSchema = ShoppingListSchema.omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
-  items: true
-}).extend({
-  items: z.array(ShoppingListItemSchema.omit({ id: true, shoppingListId: true })).optional()
+export const CreateShoppingListSchema = z.object({
+  name: z.string(),
+  description: z.string().optional()
 });
+export type CreateShoppingListPayload = z.infer<typeof CreateShoppingListSchema>;
+
+export const DeleteShoppingListSchema = z.string().uuid();
+export type DeleteShoppingListPayload = z.infer<typeof DeleteShoppingListSchema>;
+
+export const GetShoppingListSchema = z.string().uuid();
+export type GetShoppingListPayload = z.infer<typeof GetShoppingListSchema>;
+
+export const UpdateShoppingListSchema = z.object({
+  name: z.string(),
+  description: z.string().optional()
+});
+export type UpdateShoppingListPayload = z.infer<typeof UpdateShoppingListSchema>;
+
+export type ShoppingListPayload = z.infer<typeof ShoppingListSchema> & {
+  totalItems: number;
+  completedItems: number;
+  progressPercentage: number;
+  totalPrice: number;
+  totalPendingPrice: number;
+  totalCompletedPrice: number;
+  userRole?: UserRole;
+};

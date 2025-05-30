@@ -1,7 +1,7 @@
 "use server";
 
 import { ShoppingListApplicationService } from "../../Application/Services/ShoppingList.service";
-import type { ShoppingListPayload } from "../../Domain/Entities/ShoppingList.entity";
+import type { ShoppingListPayload } from "../../Domain/Schemas/ShoppingList.schema";
 import { PrismaShoppingListRepository } from "../../Infrastructure/Repositories/PrismaShoppingList.infrastructure";
 
 const shoppingListApplicationService = new ShoppingListApplicationService(new PrismaShoppingListRepository());
