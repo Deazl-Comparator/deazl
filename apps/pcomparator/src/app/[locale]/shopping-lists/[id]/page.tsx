@@ -1,4 +1,4 @@
-import { getShoppingList } from "@deazl/shopping-lists";
+import { ShoppingListDetails, getShoppingList } from "@deazl/shopping-lists";
 import { notFound } from "next/navigation";
 import { auth } from "~/libraries/nextauth/authConfig";
 

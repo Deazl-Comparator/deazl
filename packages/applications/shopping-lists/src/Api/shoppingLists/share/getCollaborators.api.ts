@@ -10,9 +10,9 @@ const shoppingListSharingService = new ShoppingListSharingApplicationService(
   new PrismaShoppingListSharingRepository()
 );
 
-export const GetCollaboratorsSchema = z.string().uuid();
+const GetCollaboratorsSchema = z.string().uuid();
 
-export type GetCollaboratorsPayload = z.infer<typeof GetCollaboratorsSchema>;
+type GetCollaboratorsPayload = z.infer<typeof GetCollaboratorsSchema>;
 
 export async function getCollaborators(shoppingListId: GetCollaboratorsPayload) {
   try {

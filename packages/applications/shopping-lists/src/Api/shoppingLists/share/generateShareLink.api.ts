@@ -2,9 +2,9 @@
 
 import { z } from "zod";
 
-export const GenerateShareLinkSchema = z.string().uuid();
+const GenerateShareLinkSchema = z.string().uuid();
 
-export type GenerateShareLinkPayload = z.infer<typeof GenerateShareLinkSchema>;
+type GenerateShareLinkPayload = z.infer<typeof GenerateShareLinkSchema>;
 
 export const generateShareLink = async (shoppingListId: GenerateShareLinkPayload) => {
   try {

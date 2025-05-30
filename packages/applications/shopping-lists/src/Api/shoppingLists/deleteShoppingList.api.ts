@@ -6,9 +6,9 @@ import { PrismaShoppingListRepository } from "../../Infrastructure/Repositories/
 
 const shoppingListApplicationService = new ShoppingListApplicationService(new PrismaShoppingListRepository());
 
-export const DeleteShoppingListSchema = z.string().uuid();
+const DeleteShoppingListSchema = z.string().uuid();
 
-export type DeleteShoppingListPayload = z.infer<typeof DeleteShoppingListSchema>;
+type DeleteShoppingListPayload = z.infer<typeof DeleteShoppingListSchema>;
 
 export const deleteShoppingList = async (shoppingListId: DeleteShoppingListPayload) => {
   try {

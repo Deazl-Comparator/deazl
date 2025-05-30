@@ -3,6 +3,7 @@ export class InfrastructureError extends Error {
     message: string,
     public readonly cause?: unknown
   ) {
+    console.error("InfrastructureError:", message, cause);
     super(`Infrastructure error: ${message}`);
     this.name = "InfrastructureError";
     this.cause = cause;

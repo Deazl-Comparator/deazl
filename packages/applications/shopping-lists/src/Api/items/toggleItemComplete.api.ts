@@ -10,12 +10,12 @@ const shoppingListItemService = new ShoppingListItemApplicationService(
   new PrismaShoppingListItemRepository()
 );
 
-export const ToggleItemCompleteSchema = z.object({
+const ToggleItemCompleteSchema = z.object({
   itemId: z.string().uuid(),
   isCompleted: z.boolean()
 });
 
-export type ToggleItemCompletePayload = z.infer<typeof ToggleItemCompleteSchema>;
+type ToggleItemCompletePayload = z.infer<typeof ToggleItemCompleteSchema>;
 
 export const toggleItemComplete = async (itemId: string, isCompleted: boolean): Promise<void> => {
   try {

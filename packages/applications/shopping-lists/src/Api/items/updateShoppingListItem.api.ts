@@ -14,7 +14,7 @@ const shoppingListItemService = new ShoppingListItemApplicationService(
   new PrismaShoppingListItemRepository()
 );
 
-export const UpdateShoppingListItemSchema = z.object({
+const UpdateShoppingListItemSchema = z.object({
   itemId: z.string().uuid(),
   data: z
     .object({
@@ -28,7 +28,7 @@ export const UpdateShoppingListItemSchema = z.object({
     .partial()
 });
 
-export type UpdateShoppingListItemPayload = z.infer<typeof UpdateShoppingListItemSchema>;
+type UpdateShoppingListItemPayload = z.infer<typeof UpdateShoppingListItemSchema>;
 
 export const updateShoppingListItem = async (
   itemId: string,

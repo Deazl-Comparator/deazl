@@ -10,13 +10,13 @@ const shoppingListSharingService = new ShoppingListSharingApplicationService(
   new PrismaShoppingListSharingRepository()
 );
 
-export const AddCollaboratorSchema = z.object({
+const AddCollaboratorSchema = z.object({
   shoppingListId: z.string().uuid(),
   email: z.string().email(),
   role: z.enum(["EDITOR", "VIEWER"])
 });
 
-export type AddCollaboratorPayload = z.infer<typeof AddCollaboratorSchema>;
+type AddCollaboratorPayload = z.infer<typeof AddCollaboratorSchema>;
 
 export async function addCollaborator(params: AddCollaboratorPayload): Promise<void> {
   try {

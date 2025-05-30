@@ -7,9 +7,9 @@ import { PrismaShoppingListRepository } from "../../Infrastructure/Repositories/
 
 const shoppingListApplicationService = new ShoppingListApplicationService(new PrismaShoppingListRepository());
 
-export const GetShoppingListSchema = z.string().uuid();
+const GetShoppingListSchema = z.string().uuid();
 
-export type GetShoppingListPayload = z.infer<typeof GetShoppingListSchema>;
+type GetShoppingListPayload = z.infer<typeof GetShoppingListSchema>;
 
 export const getShoppingList = async (
   shoppingListId: GetShoppingListPayload

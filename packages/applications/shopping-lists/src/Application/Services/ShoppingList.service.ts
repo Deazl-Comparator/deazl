@@ -16,6 +16,7 @@ export class ShoppingListApplicationService {
   async listUserShoppingLists(): Promise<ShoppingList[]> {
     try {
       const currentUser: any = await this.authService.getCurrentUser();
+
       const lists = await this.repository.findManyByQuery(ShoppingListQuery.forUserAccess(currentUser.id));
 
       return lists;

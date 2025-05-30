@@ -10,9 +10,9 @@ const shoppingListItemService = new ShoppingListItemApplicationService(
   new PrismaShoppingListItemRepository()
 );
 
-export const RemoveItemFromListSchema = z.string().uuid();
+const RemoveItemFromListSchema = z.string().uuid();
 
-export type RemoveItemFromListPayload = z.infer<typeof RemoveItemFromListSchema>;
+type RemoveItemFromListPayload = z.infer<typeof RemoveItemFromListSchema>;
 
 export const removeItemFromList = async (itemId: RemoveItemFromListPayload): Promise<void> => {
   try {
