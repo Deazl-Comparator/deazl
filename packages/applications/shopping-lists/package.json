@@ -1,0 +1,58 @@
+{
+  "name": "@deazl/shopping-lists",
+  "version": "0.0.2-beta.0",
+  "description": "Shopping Lists application for Deazl",
+  "keywords": [
+    "deazl",
+    "shopping",
+    "lists",
+    "application",
+    "react"
+  ],
+  "author": "Clément Muth <clementmuth@deazl.fr>",
+  "homepage": "https://deazl.fr",
+  "license": "MIT",
+  "main": "src/index.ts",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Deazl-Comparator/deazl.git",
+    "directory": "pcomparator/packages/applications/shopping-lists"
+  },
+  "bugs": {
+    "url": "https://github.com/Deazl-Comparator/deazl/issues"
+  },
+  "scripts": {
+    "build": "node --max-old-space-size=8192 ./node_modules/.bin/tsup src",
+    "build:dts": "node --max-old-space-size=8192 ./node_modules/.bin/tsup src --dts-only",
+    "build:full": "yarn build && yarn build:dts",
+    "build:fast": "node --max-old-space-size=8192 ./node_modules/.bin/tsup src",
+    "dev": "pnpm build:fast --watch",
+    "clean": "rimraf dist .turbo",
+    "typecheck": "tsc --noEmit",
+    "prepack": "clean-package",
+    "postpack": "clean-package restore",
+    "check:all": "biome check .",
+    "check:fix": "biome check . --write",
+    "typescript:check": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": ">=18 || >=19.0.0-rc.0",
+    "react-dom": ">=18 || >=19.0.0-rc.0"
+  },
+  "clean-package": "../../../clean-package.config.json",
+  "dependencies": {
+    "@deazl/components": "0.0.1",
+    "@deazl/shared": "0.0.1",
+    "@deazl/system": "0.0.1"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.0"
+  }
+}

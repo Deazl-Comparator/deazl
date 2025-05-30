@@ -1,0 +1,14 @@
+{
+  "mode": "pre",
+  "tag": "1.0.1",
+  "initialVersions": {
+    "@deazl/pcomparator": "4.8.0",
+    "@deazl/shared": "0.0.1",
+    "@deazl/shopping-lists": "0.0.2-beta.0",
+    "@deazl/components": "0.0.1",
+    "@deazl/system": "0.0.1"
+  },
+  "changesets": [
+    "good-bobcats-jam"
+  ]
+}
