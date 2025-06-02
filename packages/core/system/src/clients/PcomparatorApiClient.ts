@@ -1,4 +1,4 @@
-import { headers } from "next/headers";
+// import { headers } from "next/headers";
 import type { Middleware } from "../openapi-fetch";
 import createClient from "../openapi-fetch";
 
@@ -28,7 +28,7 @@ const middleware: Middleware = {
 
 const middlewareAuthenticated: Middleware = {
   async onRequest({ request }) {
-    request.headers.set("cookie", (await headers()).get("cookie")!);
+    // request.headers.set("cookie", (await headers()).get("cookie")!);
 
     return request;
   }

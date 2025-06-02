@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 
 type UseResponse<T> = [result: T | null, loading: boolean];

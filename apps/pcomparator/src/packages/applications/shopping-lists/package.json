@@ -12,7 +12,21 @@
   "author": "Clément Muth <clementmuth@deazl.fr>",
   "homepage": "https://deazl.fr",
   "license": "MIT",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./actions": {
+      "import": "./dist/Api/actions/shopping-list.actions.mjs",
+      "require": "./dist/Api/actions/shopping-list.actions.js",
+      "types": "./dist/Api/actions/shopping-list.actions.d.ts"
+    }
+  },
   "sideEffects": false,
   "files": [
     "dist"
@@ -29,7 +43,7 @@
     "url": "https://github.com/Deazl-Comparator/deazl/issues"
   },
   "scripts": {
-    "build": "node --max-old-space-size=8192 ./node_modules/.bin/tsup src",
+    "build": "node --max-old-space-size=8192 ../../../node_modules/tsup src",
     "build:dts": "node --max-old-space-size=8192 ./node_modules/.bin/tsup src --dts-only",
     "build:full": "yarn build && yarn build:dts",
     "build:fast": "node --max-old-space-size=8192 ./node_modules/.bin/tsup src",

@@ -2,6 +2,9 @@ name: Prerelease
 
 on:
   push:
+    paths:
+      - ".changeset/**"
+      - "packages/**"
     branches:
       - dev
       - beta
@@ -12,11 +15,11 @@ concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
   prerelease:
-    name: Prerelease
+    name: changesets pre-release
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     permissions:
       contents: write
-      issues: write
       pull-requests: write
       id-token: write
     steps:
@@ -48,8 +51,18 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      # - name: Build packages
-      #   run: yarn build
+      - name: Debug condition values
+        run: |
+          echo "pre.json exists: ${{ steps.check_if_pre_json_exists.outputs.files_exists }}"
+          echo "Commit message: ${{ github.event.head_commit.message }}"
+          echo "Contains version packages: ${{ contains(github.event.head_commit.message, 'ci(changesets): version packages') }}"
+          echo "Full condition would be: ${{ steps.check_if_pre_json_exists.outputs.files_exists == 'true' && contains(github.event.head_commit.message, 'ci(changesets): version packages') }}"
+
+      - name: Check if pre.json exists
+        id: check_if_pre_json_exists
+        uses: andstor/file-existence-action@v3.0.0
+        with:
+          files: ".changeset/pre.json"
 
       - name: Determine prerelease tag
         id: prerelease-tag
@@ -66,13 +79,27 @@ jobs:
             echo "tag=canary" >> $GITHUB_OUTPUT
           fi
 
-      - name: Enter prerelease mode
-        run: yarn changeset:pre:enter ${{ steps.prerelease-tag.outputs.tag }}
+      - name: Enter prerelease mode if not already in it
+        if: steps.check_if_pre_json_exists.outputs.files_exists == 'false'
+        run: yarn changeset pre enter ${{ steps.prerelease-tag.outputs.tag }}
 
-      - name: Create snapshot release
-        run: |
-          yarn changeset version --snapshot ${{ steps.prerelease-tag.outputs.tag }}
-          yarn changeset publish --tag ${{ steps.prerelease-tag.outputs.tag }}
+      - name: Create pre-release PR
+        id: create-pre-release-pr
+        if: "${{ steps.check_if_pre_json_exists.outputs.files_exists == 'true' && !startsWith(github.event.head_commit.message, 'ci(changesets): version packages') }}"
+        uses: changesets/action@v1
+        with:
+          version: yarn changeset version
+          title: "ci(changesets): :package: version packages"
+          commit: "ci(changesets): version packages"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish to NPM
+        id: publish-to-npm
+        if: "${{ steps.check_if_pre_json_exists.outputs.files_exists == 'true' && contains(github.event.head_commit.message, 'ci(changesets): version packages') }}"
+        uses: changesets/action@v1
+        with:
+          publish: yarn changeset publish --tag ${{ steps.prerelease-tag.outputs.tag }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

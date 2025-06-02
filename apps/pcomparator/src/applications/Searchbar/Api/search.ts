@@ -38,9 +38,11 @@ export const search = async (_: any, data: FormData): Promise<SearchReturnType> 
     ).data;
 
     if (!product) throw new Error("");
+    // @ts-ignore
     if (!product.prices || product.reason === "NO_PRICES")
       return { success: false, search: payload.data.search, reason: "NO_PRICES" };
 
+    // @ts-ignore
     return { success: true, prices: product.prices, search: payload.data.search };
   } catch (error) {
     // if (error instanceof ) {

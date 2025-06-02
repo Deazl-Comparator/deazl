@@ -2207,6 +2207,7 @@ __metadata:
   dependencies:
     "@deazl/system": "npm:0.0.1"
     tsup: "npm:^8.5.0"
+    typescript: "npm:^5.8.3"
   peerDependencies:
     react: ">=18 || >=19.0.0-rc.0"
     react-dom: ">=18 || >=19.0.0-rc.0"
@@ -2303,9 +2304,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@deazl/shared@npm:0.0.1, @deazl/shared@workspace:packages/applications/shared":
+"@deazl/shared@npm:0.0.1, @deazl/shared@workspace:apps/pcomparator/src/packages/applications/shared":
   version: 0.0.0-use.local
-  resolution: "@deazl/shared@workspace:packages/applications/shared"
+  resolution: "@deazl/shared@workspace:apps/pcomparator/src/packages/applications/shared"
   dependencies:
     "@deazl/components": "npm:0.0.1"
     "@deazl/system": "npm:0.0.1"
@@ -2316,9 +2317,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@deazl/shopping-lists@workspace:^, @deazl/shopping-lists@workspace:packages/applications/shopping-lists":
+"@deazl/shopping-lists@workspace:^, @deazl/shopping-lists@workspace:apps/pcomparator/src/packages/applications/shopping-lists":
   version: 0.0.0-use.local
-  resolution: "@deazl/shopping-lists@workspace:packages/applications/shopping-lists"
+  resolution: "@deazl/shopping-lists@workspace:apps/pcomparator/src/packages/applications/shopping-lists"
   dependencies:
     "@deazl/components": "npm:0.0.1"
     "@deazl/shared": "npm:0.0.1"
@@ -2338,6 +2339,7 @@ __metadata:
     ky: "npm:^1.8.1"
     next-auth: "npm:beta"
     tsup: "npm:^8.5.0"
+    typescript: "npm:^5.8.3"
   peerDependencies:
     react: ">=18 || >=19.0.0-rc.0"
     react-dom: ">=18 || >=19.0.0-rc.0"

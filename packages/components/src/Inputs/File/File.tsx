@@ -5,9 +5,9 @@ import { useLingui } from "@lingui/react";
 import clsx from "clsx";
 import { useState } from "react";
 import { Controller, type FieldValues, type RegisterOptions, useFormContext } from "react-hook-form";
-import { useFileHandler } from "./useFileHandler";
+import FormError from "../../Form/FormError";
 import { FileNames } from "./FileNames";
-import FormError from "src/Form/FormError";
+import { useFileHandler } from "./useFileHandler";
 
 export interface FileProps extends Omit<InputPropsNextUi, keyof RegisterOptions<FieldValues, any>> {
   name: string;

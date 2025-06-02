@@ -1,5 +1,5 @@
-import { ShoppingListsView, listUserShoppingList } from "@deazl/shopping-lists";
 import { withLinguiPage } from "~/core/withLinguiLayout";
+import { ShoppingListsView, listUserShoppingList } from "~/packages/applications/shopping-lists/src";
 
 export const metadata = {
   title: "Shopping Lists | PComparator",

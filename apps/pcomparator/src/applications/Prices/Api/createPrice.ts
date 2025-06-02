@@ -1,7 +1,7 @@
 "use server";
 
 import { pcomparatorAuthenticatedApiClient } from "@deazl/system";
-import { OpenFoodFactPricesApiClient } from "@deazl/system/src/clients/OpenFoodFactPricesApiClient";
+import { OpenFoodFactPricesApiClient } from "@deazl/system";
 import { z } from "zod";
 import { Currency } from "~/applications/Prices/Domain/ValueObjects/Currency";
 

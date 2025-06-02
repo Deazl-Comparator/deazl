@@ -1,6 +1,6 @@
-import { ShoppingListDetails, getShoppingList } from "@deazl/shopping-lists";
 import { notFound } from "next/navigation";
 import { auth } from "~/libraries/nextauth/authConfig";
+import { getShoppingList } from "~/packages/applications/shopping-lists/src";
 
 export default async function ShoppingListPage({ params }: { params: Promise<{ id: string }> }) {
   const shoppingListId = (await params).id;
