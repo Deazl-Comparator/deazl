@@ -18,6 +18,7 @@ export const BarcodeScanner = ({
   description = "Positionnez le code-barres dans le cadre",
   continuous = false
 }: BarcodeScannerProps) => {
+  // Test release
   // Debug des props reçues
   console.log("🔧 BarcodeScanner props:", {
     onScanned: typeof onScanned,
