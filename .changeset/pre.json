@@ -9,6 +9,7 @@
     "@deazl/system": "0.0.1"
   },
   "changesets": [
-    "good-bobcats-jam"
+    "good-bobcats-jam",
+    "silly-pans-cheer"
   ]
 }
