@@ -1,20 +1,19 @@
-name: Release
+name: Stable Release
 
 on:
-  workflow_dispatch:
   push:
     paths:
       - ".changeset/**"
       - "packages/**"
     branches:
-      - canary
+      - master
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
-  release:
-    name: Release
+  stable-release:
+    name: Stable Release
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
@@ -24,11 +23,16 @@ jobs:
     steps:
       - name: Checkout branch
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Install
         uses: ./.github/actions/yarn-nm-install
 
-      - name: Create Release Pull Request
+      - name: Build packages
+        run: yarn build
+
+      - name: Create Release Pull Request or Create Tags
         id: changesets
         uses: changesets/action@v1
         with:
@@ -38,17 +42,20 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create canary tags and releases
-        if: steps.changesets.outputs.published != 'true'
-        timeout-minutes: 15
+      - name: Create stable tags and releases
+        if: steps.changesets.outputs.hasChangesets == 'false'
         run: |
           # Configure git for tagging
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Enter canary prerelease mode and version packages
-          yarn changeset pre enter canary
-          yarn changeset version
+          # Exit prerelease mode if we're in one
+          if [ -f ".changeset/pre.json" ]; then
+            yarn changeset pre exit
+            git add .changeset/pre.json
+            git commit -m "ci(changesets): exit prerelease mode" || echo "No changes to commit"
+            git push origin master
+          fi
           
           # Get all packages that were versioned by changesets
           versioned_packages=$(find packages -name "package.json" -exec sh -c 'if git diff HEAD~1 "$1" | grep -q "version"; then node -p "JSON.stringify({name: require(\"$1\").name, version: require(\"$1\").version})"; fi' _ {} \; | grep -v "^$")
@@ -68,12 +75,12 @@ jobs:
               # Create git tag
               git tag "$tag_name"
               
-              # Create GitHub Release
+              # Create GitHub stable release
               gh release create "$tag_name" \
-                --title "🐤 Canary Release: $package_name@$package_version" \
-                --notes "🚀 **Canary Prerelease: $package_name@$package_version**
+                --title "🚀 Release: $package_name@$package_version" \
+                --notes "🎉 **Stable Release: $package_name@$package_version**
                 
-                Cette version canary est générée depuis la branche \`canary\` pour les tests et validations préliminaires.
+                Cette release stable inclut toutes les fonctionnalités testées et validées.
                 
                 **Installation:**
                 \`\`\`bash
@@ -87,28 +94,34 @@ jobs:
                 **Package:** $package_name  
                 **Version:** $package_version
                 
-                **⚠️ Attention:** Cette version est destinée aux tests internes et peut contenir des bugs.
+                **📋 Changements complets:** Voir le CHANGELOG du package pour tous les détails.
                 
-                **📋 Changements:** Voir le CHANGELOG du package pour les détails." \
-                --prerelease
+                **🔗 Artefacts:** Les packages compilés sont disponibles dans les GitHub Actions artifacts.
+                
+                **🙏 Merci** à tous les contributeurs qui ont rendu cette release possible !" \
+                --latest
             fi
           done
           
-          # Commit and push all changes
-          git add .
-          git commit -m "ci(changesets): version packages for canary release" || echo "No changes to commit"
-          git push origin canary
+          # Push all tags at once
           git push origin --tags
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload build artifacts
-        if: steps.changesets.outputs.published != 'true'
+        if: steps.changesets.outputs.hasChangesets == 'false'
         uses: actions/upload-artifact@v4
         with:
-          name: canary-build-artifacts-${{ github.sha }}
+          name: stable-build-artifacts-${{ github.sha }}
           path: |
             packages/*/dist/
             packages/*/build/
             packages/*/lib/
-          retention-days: 30
+          retention-days: 90
+
+      - name: Notify successful release
+        if: steps.changesets.outputs.hasChangesets == 'false'
+        run: |
+          echo "✅ Successfully released version $(git describe --tags --abbrev=0)"
+          echo "🎉 GitHub Release created"
+          echo "📦 Build artifacts uploaded"
