@@ -1,6 +1,6 @@
 {
   "name": "@deazl/shopping-lists",
-  "version": "1.0.0-1.0.1.1",
+  "version": "0.0.1",
   "description": "Shopping Lists application for Deazl",
   "keywords": [
     "deazl",
@@ -62,9 +62,9 @@
   },
   "clean-package": "../../../clean-package.config.json",
   "dependencies": {
-    "@deazl/components": "0.0.1",
-    "@deazl/shared": "0.0.1",
-    "@deazl/system": "0.0.1"
+    "@deazl/components": "workspace:^",
+    "@deazl/shared": "workspace:^",
+    "@deazl/system": "workspace:^"
   },
   "devDependencies": {
     "tsup": "^8.5.0",
