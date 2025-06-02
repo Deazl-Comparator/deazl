@@ -2304,7 +2304,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@deazl/shared@npm:0.0.1, @deazl/shared@workspace:apps/pcomparator/src/packages/applications/shared":
+"@deazl/shared@npm:0.1.0-1.0.1.0, @deazl/shared@workspace:apps/pcomparator/src/packages/applications/shared":
   version: 0.0.0-use.local
   resolution: "@deazl/shared@workspace:apps/pcomparator/src/packages/applications/shared"
   dependencies:
@@ -2322,7 +2322,7 @@ __metadata:
   resolution: "@deazl/shopping-lists@workspace:apps/pcomparator/src/packages/applications/shopping-lists"
   dependencies:
     "@deazl/components": "npm:0.0.1"
-    "@deazl/shared": "npm:0.0.1"
+    "@deazl/shared": "npm:0.1.0-1.0.1.0"
     "@deazl/system": "npm:0.0.1"
     tsup: "npm:^8.5.0"
     typescript: "npm:^5.8.3"
