@@ -1,5 +1,11 @@
 # @deazl/pcomparator
 
+## 1.0.1
+
+### Patch Changes
+
+- [`afdfe9f`](https://github.com/Deazl-Comparator/deazl/commit/afdfe9fb8e51646e2d0d846a1a1fe56f277a66b3) Thanks [@Clement-Muth](https://github.com/Clement-Muth)! - chore: try exit 0 publish
+
 ## 1.0.0
 
 ### Major Changes
