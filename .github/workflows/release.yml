@@ -43,9 +43,9 @@ jobs:
         timeout-minutes: 15
         run: |
           # Configure git for tagging
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          
+          git config user.name "Clément Muth"
+          git config user.email "clementmuth@gmail.com"
+
           # Enter canary prerelease mode and version packages
           yarn changeset pre enter canary
           yarn changeset version
