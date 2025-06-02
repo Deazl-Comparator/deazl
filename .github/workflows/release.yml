@@ -33,74 +33,75 @@ jobs:
         uses: changesets/action@v1
         with:
           version: yarn run version
+          createGithubReleases: true
           title: "ci(changesets): :package: version packages"
           commit: "ci(changesets): version packages"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create canary tags and releases
-        if: steps.changesets.outputs.published != 'true'
-        timeout-minutes: 15
-        run: |
-          # Configure git for tagging
-          git config user.name "Clément Muth"
-          git config user.email "clementmuth@gmail.com"
+      # - name: Create canary tags and releases
+      #   if: steps.changesets.outputs.published != 'true'
+      #   timeout-minutes: 15
+      #   run: |
+      #     # Configure git for tagging
+      #     git config user.name "Clément Muth"
+      #     git config user.email "clementmuth@gmail.com"
 
-          # Enter canary prerelease mode and version packages
-          yarn changeset pre enter canary
-          yarn changeset version
+      #     # Enter canary prerelease mode and version packages
+      #     yarn changeset pre enter canary
+      #     yarn changeset version
           
-          # Get all packages that were versioned by changesets
-          versioned_packages=$(find packages -name "package.json" -exec sh -c 'if git diff HEAD~1 "$1" | grep -q "version"; then node -p "JSON.stringify({name: require(\"$1\").name, version: require(\"$1\").version})"; fi' _ {} \; | grep -v "^$")
+      #     # Get all packages that were versioned by changesets
+      #     versioned_packages=$(find packages -name "package.json" -exec sh -c 'if git diff HEAD~1 "$1" | grep -q "version"; then node -p "JSON.stringify({name: require(\"$1\").name, version: require(\"$1\").version})"; fi' _ {} \; | grep -v "^$")
           
-          if [ -z "$versioned_packages" ]; then
-            echo "No packages were versioned, skipping release"
-            exit 0
-          fi
+      #     if [ -z "$versioned_packages" ]; then
+      #       echo "No packages were versioned, skipping release"
+      #       exit 0
+      #     fi
           
-          # Create releases for each versioned package
-          echo "$versioned_packages" | while read -r package_info; do
-            if [ -n "$package_info" ]; then
-              package_name=$(echo "$package_info" | node -p "JSON.parse(require('fs').readFileSync('/dev/stdin', 'utf8')).name")
-              package_version=$(echo "$package_info" | node -p "JSON.parse(require('fs').readFileSync('/dev/stdin', 'utf8')).version")
-              tag_name="${package_name}@${package_version}"
+      #     # Create releases for each versioned package
+      #     echo "$versioned_packages" | while read -r package_info; do
+      #       if [ -n "$package_info" ]; then
+      #         package_name=$(echo "$package_info" | node -p "JSON.parse(require('fs').readFileSync('/dev/stdin', 'utf8')).name")
+      #         package_version=$(echo "$package_info" | node -p "JSON.parse(require('fs').readFileSync('/dev/stdin', 'utf8')).version")
+      #         tag_name="${package_name}@${package_version}"
               
-              # Create git tag
-              git tag "$tag_name"
+      #         # Create git tag
+      #         git tag "$tag_name"
               
-              # Create GitHub Release
-              gh release create "$tag_name" \
-                --title "🐤 Canary Release: $package_name@$package_version" \
-                --notes "🚀 **Canary Prerelease: $package_name@$package_version**
+      #         # Create GitHub Release
+      #         gh release create "$tag_name" \
+      #           --title "🐤 Canary Release: $package_name@$package_version" \
+      #           --notes "🚀 **Canary Prerelease: $package_name@$package_version**
                 
-                Cette version canary est générée depuis la branche \`canary\` pour les tests et validations préliminaires.
+      #           Cette version canary est générée depuis la branche \`canary\` pour les tests et validations préliminaires.
                 
-                **Installation:**
-                \`\`\`bash
-                # Ces packages ne sont pas publiés sur NPM
-                # Utilisez les artefacts de build ou clonez à partir de ce tag
-                git clone https://github.com/Deazl-Comparator/deazl.git
-                git checkout $tag_name
-                yarn install && yarn build
-                \`\`\`
+      #           **Installation:**
+      #           \`\`\`bash
+      #           # Ces packages ne sont pas publiés sur NPM
+      #           # Utilisez les artefacts de build ou clonez à partir de ce tag
+      #           git clone https://github.com/Deazl-Comparator/deazl.git
+      #           git checkout $tag_name
+      #           yarn install && yarn build
+      #           \`\`\`
                 
-                **Package:** $package_name  
-                **Version:** $package_version
+      #           **Package:** $package_name  
+      #           **Version:** $package_version
                 
-                **⚠️ Attention:** Cette version est destinée aux tests internes et peut contenir des bugs.
+      #           **⚠️ Attention:** Cette version est destinée aux tests internes et peut contenir des bugs.
                 
-                **📋 Changements:** Voir le CHANGELOG du package pour les détails." \
-                --prerelease
-            fi
-          done
+      #           **📋 Changements:** Voir le CHANGELOG du package pour les détails." \
+      #           --prerelease
+      #       fi
+      #     done
           
-          # Commit and push all changes
-          git add .
-          git commit -m "ci(changesets): version packages for canary release" || echo "No changes to commit"
-          git push origin canary
-          git push origin --tags
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     # Commit and push all changes
+      #     git add .
+      #     git commit -m "ci(changesets): version packages for canary release" || echo "No changes to commit"
+      #     git push origin canary
+      #     git push origin --tags
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload build artifacts
         if: steps.changesets.outputs.published != 'true'
