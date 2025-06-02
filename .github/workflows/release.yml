@@ -37,7 +37,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create canary release
-        if: steps.build.outcome == 'success' && steps.changesets.outputs.published != 'true'
+        if: steps.changesets.outputs.published != 'true'
         timeout-minutes: 15
         run: |
           git checkout canary
