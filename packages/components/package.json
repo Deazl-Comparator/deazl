@@ -44,7 +44,7 @@
   },
   "clean-package": "../../../clean-package.config.json",
   "dependencies": {
-    "@deazl/system": "0.0.1"
+    "@deazl/system": "workspace:^"
   },
   "devDependencies": {
     "tsup": "^8.5.0",
