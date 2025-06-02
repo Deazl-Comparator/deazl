@@ -6,7 +6,7 @@ on:
       - ".changeset/**"
       - "packages/**"
     branches:
-      - canary
+      - dev
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -40,7 +40,7 @@ jobs:
         if: steps.changesets.outputs.published != 'true'
         timeout-minutes: 15
         run: |
-          git checkout canary
+          git checkout dev
           yarn version:canary
           yarn release:canary
         env:
