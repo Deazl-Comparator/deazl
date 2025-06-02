@@ -63,7 +63,7 @@
   "clean-package": "../../../clean-package.config.json",
   "dependencies": {
     "@deazl/components": "0.0.1",
-    "@deazl/shared": "0.0.1",
+    "@deazl/shared": "0.1.0-1.0.1.0",
     "@deazl/system": "0.0.1"
   },
   "devDependencies": {

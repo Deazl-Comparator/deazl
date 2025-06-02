@@ -1,5 +1,18 @@
 # @deazl/pcomparator
 
+## 5.0.0-1.0.1.1
+
+### Major Changes
+
+- [#106](https://github.com/Deazl-Comparator/deazl/pull/106) [`1692b22`](https://github.com/Deazl-Comparator/deazl/commit/1692b22f06172a621a3ed6736de288ac8ab38516) Thanks [@Clement-Muth](https://github.com/Clement-Muth)! - feat: add comprehensive notification system across all packages
+
+### Patch Changes
+
+- [#110](https://github.com/Deazl-Comparator/deazl/pull/110) [`a0e1469`](https://github.com/Deazl-Comparator/deazl/commit/a0e1469c2d988194ded1e570cf42ba5fd9c83ba0) Thanks [@Clement-Muth](https://github.com/Clement-Muth)! - refactor: add release test log
+
+- Updated dependencies [[`1692b22`](https://github.com/Deazl-Comparator/deazl/commit/1692b22f06172a621a3ed6736de288ac8ab38516)]:
+  - @deazl/shopping-lists@1.0.0-1.0.1.1
+
 ## 4.8.1-1.0.1.0
 
 ### Patch Changes
