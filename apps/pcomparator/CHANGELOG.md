@@ -1,5 +1,11 @@
 # @deazl/pcomparator
 
+## 1.0.0-beta.1
+
+### Patch Changes
+
+- [#115](https://github.com/Deazl-Comparator/deazl/pull/115) [`79c0181`](https://github.com/Deazl-Comparator/deazl/commit/79c0181e655222578cdca49778fdec02819f5c82) Thanks [@Clement-Muth](https://github.com/Clement-Muth)! - Fix release workflow
+
 ## 1.0.0-1.0.0.0
 
 ### Major Changes
