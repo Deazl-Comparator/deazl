@@ -33,8 +33,7 @@ jobs:
         uses: changesets/action@v1
         with:
           version: yarn run version
-          publish: yarn release
-          createGithubReleases: true
+          publish: exit 0;
           title: "ci(changesets): :package: version packages"
           commit: "ci(changesets): version packages"
         env:
