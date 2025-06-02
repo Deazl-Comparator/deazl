@@ -1,4 +1,4 @@
-name: Prerelease
+name: Pre-release
 
 on:
   push:
@@ -6,10 +6,7 @@ on:
       - ".changeset/**"
       - "packages/**"
     branches:
-      - dev
-      - beta
-      - alpha
-      - "release/**"
+      - "beta/release-next"
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
@@ -23,33 +20,13 @@ jobs:
       pull-requests: write
       id-token: write
     steps:
-      - name: Checkout Repo
+      - name: Checkout branch
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Setup Yarn
-        run: corepack enable
-
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
-
-      - name: Setup yarn cache
-        uses: actions/cache@v4
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
+      - name: Install
+        uses: ./.github/actions/yarn-nm-install
 
       - name: Debug condition values
         run: |
@@ -64,31 +41,19 @@ jobs:
         with:
           files: ".changeset/pre.json"
 
-      - name: Determine prerelease tag
-        id: prerelease-tag
-        run: |
-          if [[ ${{ github.ref }} == "refs/heads/dev" ]]; then
-            echo "tag=beta" >> $GITHUB_OUTPUT
-          elif [[ ${{ github.ref }} == "refs/heads/beta" ]]; then
-            echo "tag=beta" >> $GITHUB_OUTPUT
-          elif [[ ${{ github.ref }} == "refs/heads/alpha" ]]; then
-            echo "tag=alpha" >> $GITHUB_OUTPUT
-          elif [[ ${{ github.ref }} == refs/heads/release/* ]]; then
-            echo "tag=rc" >> $GITHUB_OUTPUT
-          else
-            echo "tag=canary" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Enter prerelease mode if not already in it
-        if: steps.check_if_pre_json_exists.outputs.files_exists == 'false'
-        run: yarn changeset pre enter ${{ steps.prerelease-tag.outputs.tag }}
+      - name: Get pre-release changesets
+        id: get-pre-release-changesets
+        uses: notiz-dev/github-action-json-property@release
+        with:
+          path: ".changeset/pre.json"
+          prop_path: "changesets"
 
       - name: Create pre-release PR
         id: create-pre-release-pr
         if: "${{ steps.check_if_pre_json_exists.outputs.files_exists == 'true' && !startsWith(github.event.head_commit.message, 'ci(changesets): version packages') }}"
         uses: changesets/action@v1
         with:
-          version: yarn changeset version
+          version: yarn version
           title: "ci(changesets): :package: version packages"
           commit: "ci(changesets): version packages"
         env:
@@ -99,7 +64,8 @@ jobs:
         if: "${{ steps.check_if_pre_json_exists.outputs.files_exists == 'true' && contains(github.event.head_commit.message, 'ci(changesets): version packages') }}"
         uses: changesets/action@v1
         with:
-          publish: yarn changeset publish --tag ${{ steps.prerelease-tag.outputs.tag }}
+          publish: yarn release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -96,6 +96,12 @@ runs:
         path: ${{ inputs.cwd }}/.yarn/ci-cache
         key: yarn-install-state-cache-${{ inputs.cache-prefix }}-${{ runner.os }}-${{ steps.yarn-config.outputs.CURRENT_NODE_VERSION }}-${{ steps.yarn-config.outputs.CURRENT_BRANCH }}-${{ hashFiles(format('{0}/yarn.lock', inputs.cwd), format('{0}/.yarnrc.yml', inputs.cwd)) }}
 
+    - name: Setup Git User
+      shell: bash
+      run: |
+        git config --global user.email "clementmuth@gmail.com"
+        git config --global user.name "Clément Muth"
+
     - name: 📥 Install dependencies
       shell: bash
       working-directory: ${{ inputs.cwd }}
