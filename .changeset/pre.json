@@ -1,6 +1,6 @@
 {
   "mode": "pre",
-  "tag": "1.0.0",
+  "tag": "beta",
   "initialVersions": {
     "@deazl/pcomparator": "0.0.1",
     "@deazl/shared": "0.0.1",
