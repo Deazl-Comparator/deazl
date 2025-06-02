@@ -2,4 +2,4 @@
 "@deazl/pcomparator": major
 ---
 
-First project release
+First major project release
