@@ -34,7 +34,7 @@ jobs:
         with:
           version: yarn run version
           createGithubReleases: true
-          publish: false
+          publish: yarn release
           title: "ci(changesets): :package: version packages"
           commit: "ci(changesets): version packages"
         env:

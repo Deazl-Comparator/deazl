@@ -47,7 +47,7 @@
 		"check:fix": "turbo check:fix",
 		"typescript:check": "turbo typescript:check",
 		"version": "changeset version",
-		"release": "changeset version && changeset publish",
+		"release": "echo 'ok'",
 		"version:canary": "changeset version --snapshot canary",
 		"release:canary": "changeset pre enter canary && changeset version && changeset publish --tag canary && changeset pre exit",
 		"postinstall": "husky"
