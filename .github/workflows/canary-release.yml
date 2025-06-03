@@ -79,18 +79,30 @@ jobs:
         run: |
           echo "🏷️  Creating canary GitHub releases..."
           
-          # Find versioned packages
+          # First, let's debug what packages we have
+          echo "🔍 Debugging: Listing all packages..."
+          find packages -name "package.json" -exec sh -c 'echo "Package: $1" && cat "$1" | jq -r "{name: .name, version: .version}"' _ {} \;
+          
+          # Find packages with canary versions (contain alpha, beta, canary, or other prerelease identifiers)
           versioned_packages=$(find packages -name "package.json" -exec sh -c '
-            if git diff HEAD~1 "$1" | grep -q "version"; then 
-              node -p "JSON.stringify({name: require(\"$1\").name, version: require(\"$1\").version})"
+            abs_path="$(pwd)/$1"
+            version=$(node -p "require(\"$abs_path\").version")
+            name=$(node -p "require(\"$abs_path\").name")
+            # Check if version contains prerelease identifiers (canary, alpha, beta, rc, or similar)
+            if echo "$version" | grep -qE "(canary|alpha|beta|rc|-[0-9]+\.[0-9]+\.[0-9]+|\.pre\.)"; then 
+              echo "{\"name\":\"$name\",\"version\":\"$version\"}"
             fi
           ' _ {} \; | grep -v "^$")
           
+          echo "🧪 Debug: Found versioned packages:"
+          echo "$versioned_packages"
+          
           if [ -n "$versioned_packages" ]; then
+            echo "📦 Found canary packages:"
             echo "$versioned_packages" | while read -r package_info; do
               if [ -n "$package_info" ]; then
-                package_name=$(echo "$package_info" | node -p "JSON.parse(require('fs').readFileSync('/dev/stdin', 'utf8')).name")
-                package_version=$(echo "$package_info" | node -p "JSON.parse(require('fs').readFileSync('/dev/stdin', 'utf8')).version")
+                package_name=$(echo "$package_info" | node -p "JSON.parse(process.argv[1]).name" "$package_info")
+                package_version=$(echo "$package_info" | node -p "JSON.parse(process.argv[1]).version" "$package_info")
                 tag_name="${package_name}@${package_version}"
                 
                 echo "🏷️  Creating canary release: $tag_name"
