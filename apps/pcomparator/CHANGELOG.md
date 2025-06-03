@@ -1,5 +1,24 @@
 # @deazl/pcomparator
 
+## 1.0.7
+
+### Patch Changes
+
+- [`54fd257`](https://github.com/Deazl-Comparator/deazl/commit/54fd2579c136293b6b06aefee92355231fa5910c) Thanks [@Clement-Muth](https://github.com/Clement-Muth)! - fix(release): remove redundant build step from release workflow
+
+- [`07e2435`](https://github.com/Deazl-Comparator/deazl/commit/07e2435d93012758d07d9087ee14a7e4b1804abb) Thanks [@Clement-Muth](https://github.com/Clement-Muth)! - fix(release): update canary release commands to use yarn instead of pnpm
+
+- [`9a9aaf1`](https://github.com/Deazl-Comparator/deazl/commit/9a9aaf158954319977cd738b5735cc47841bd78f) Thanks [@Clement-Muth](https://github.com/Clement-Muth)! - feat(docs): add comprehensive canary release guide and update documentation structure
+
+- [`b41bc29`](https://github.com/Deazl-Comparator/deazl/commit/b41bc294ecdf4b9b867dc409687a46c132b46193) Thanks [@Clement-Muth](https://github.com/Clement-Muth)! - feat(release): streamline canary release process and fix workflow conflicts
+
+- [`28bd0bf`](https://github.com/Deazl-Comparator/deazl/commit/28bd0bf5287ad870da219f55f78b4655267ce1fa) Thanks [@Clement-Muth](https://github.com/Clement-Muth)! - feat(release): update release workflow to include canary release step and restrict access in changeset config
+
+- Updated dependencies [[`355a9f3`](https://github.com/Deazl-Comparator/deazl/commit/355a9f3f78c473fba9d78f2455c256b5fd2ff09e), [`8f7f76b`](https://github.com/Deazl-Comparator/deazl/commit/8f7f76b3f6e7b38fc3e7c7344e67df7e789d1509), [`b2e41e4`](https://github.com/Deazl-Comparator/deazl/commit/b2e41e4b08fb1cc6ddd85604cc9767254d12b5fe)]:
+  - @deazl/shopping-lists@0.0.2
+  - @deazl/system@0.0.2
+  - @deazl/components@0.0.2
+
 ## 1.0.6
 
 ### Patch Changes
