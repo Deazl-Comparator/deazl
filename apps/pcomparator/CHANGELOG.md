@@ -1,5 +1,13 @@
 # @deazl/pcomparator
 
+## 1.0.6
+
+### Patch Changes
+
+- [`cc68930`](https://github.com/Deazl-Comparator/deazl/commit/cc68930a9c79fb7ddcc2e8cf9b1f56ec4c832903) Thanks [@Clement-Muth](https://github.com/Clement-Muth)! - fix(release): remove redundant build step from release workflow
+
+- [`0916a72`](https://github.com/Deazl-Comparator/deazl/commit/0916a72fea73e3a570222652c7d9e1ff3d9ce252) Thanks [@Clement-Muth](https://github.com/Clement-Muth)! - feat(release): add support for private packages and create GitHub release script
+
 ## 1.0.5
 
 ### Patch Changes
