@@ -50,9 +50,6 @@ jobs:
           yarn changeset pre enter canary
           yarn changeset version
           
-          # Build packages before creating releases
-          yarn build
-          
           # Get all packages that were just versioned by changesets
           # Use git status to see what files were modified by changeset version
           versioned_packages=()
@@ -136,7 +133,7 @@ jobs:
                 # Utilisez les artefacts de build ou clonez à partir de ce tag
                 git clone https://github.com/Deazl-Comparator/deazl.git
                 git checkout $tag_name
-                yarn install && yarn build
+                yarn install
                 \`\`\`
                 
                 **Package:** $package_name  
