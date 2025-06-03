@@ -47,8 +47,8 @@ jobs:
         timeout-minutes: 15
         run: |
           git checkout canary
-          pnpm version:canary
-          pnpm release:canary
+          yarn version:canary
+          yarn release:canary
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
