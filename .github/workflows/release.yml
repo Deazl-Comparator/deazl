@@ -105,11 +105,23 @@ jobs:
           
           # Create releases for each versioned package
           for package_info in "${versioned_packages[@]}"; do
-            package_name="${package_info%@*}"
-            package_version="${package_info#*@}"
-            tag_name="$package_info"
+            # Parse package name and version correctly for scoped packages
+            if [[ "$package_info" =~ ^(@[^/]+/[^@]+)@(.+)$ ]]; then
+              # Scoped package like @deazl/components@1.0.0
+              package_name="${BASH_REMATCH[1]}"
+              package_version="${BASH_REMATCH[2]}"
+            elif [[ "$package_info" =~ ^([^@]+)@(.+)$ ]]; then
+              # Regular package like my-package@1.0.0
+              package_name="${BASH_REMATCH[1]}"
+              package_version="${BASH_REMATCH[2]}"
+            else
+              echo "Error: Could not parse package info: $package_info"
+              continue
+            fi
             
-            echo "Creating release for $package_name@$package_version"
+            tag_name="${package_name}@${package_version}"
+            
+            echo "Creating release for $package_name@$package_version (tag: $tag_name)"
             
             # Create git tag if it doesn't exist
             if ! git tag | grep -q "^$tag_name$"; then
@@ -118,6 +130,9 @@ jobs:
             else
               echo "Tag already exists: $tag_name"
             fi
+            
+            # Push the tag immediately before creating GitHub release
+            git push origin "$tag_name" || echo "Tag already exists on remote"
             
             # Create GitHub Release if it doesn't exist
             if ! gh release view "$tag_name" >/dev/null 2>&1; then
@@ -151,11 +166,10 @@ jobs:
             fi
           done
           
-          # Commit and push all changes
+          # Commit and push all changes (changesets files)
           git add .
           git commit -m "ci(changesets): version packages for canary release" || echo "No changes to commit"
           git push origin canary
-          git push origin --tags
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
