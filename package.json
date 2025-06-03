@@ -35,6 +35,7 @@
 		"changeset:alpha": "changeset pre enter alpha",
 		"changeset:test": "./scripts/changeset-test.sh",
 		"changeset:workflow": "./scripts/test-full-workflow.sh",
+		"changeset:release": "./scripts/create-github-release.sh",
 		"clean": "yarn turbo clean && yarn clean:jest && yarn clean:lock && yarn clean:node-modules && yarn install",
 		"clean:node-modules": "rimraf ./apps/**/node_modules && rimraf ./packages/**/**/node_modules && rimraf ./node_modules",
 		"clean:cache": "rimraf .yarn/cache .yarn/install-state.gz",
@@ -47,7 +48,6 @@
 		"check:fix": "turbo check:fix",
 		"typescript:check": "turbo typescript:check",
 		"version": "changeset version",
-		"release": "echo 'ok'",
 		"version:canary": "changeset version --snapshot canary",
 		"release:canary": "changeset pre enter canary && changeset version && changeset publish --tag canary && changeset pre exit",
 		"postinstall": "husky"

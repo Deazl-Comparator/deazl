@@ -28,148 +28,27 @@ jobs:
       - name: Install
         uses: ./.github/actions/yarn-nm-install
 
-      - name: Create Release Pull Request
+      - name: Build packages
+        run: yarn build
+
+      - name: Create Release Pull Request or Release
         id: changesets
         uses: changesets/action@v1
         with:
-          version: yarn run version
           title: "ci(changesets): :package: version packages"
           commit: "ci(changesets): version packages"
+          setupGitUser: false
+          createGithubReleases: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create canary tags and releases
-        if: steps.changesets.outputs.hasChangesets == 'false'
+      - name: Create canary release
+        if: steps.changesets.outputs.published != 'true' && steps.changesets.outputs.hasChangesets == 'false'
         timeout-minutes: 15
         run: |
-          # Configure git for tagging
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          # Enter canary prerelease mode and version packages
-          yarn changeset pre enter canary
-          yarn changeset version
-          
-          # Get all packages that were just versioned by changesets
-          # Use git status to see what files were modified by changeset version
-          versioned_packages=()
-          
-          # Check which package.json files were modified
-          if git diff --name-only HEAD | grep -E "packages/.*/package\.json$"; then
-            while IFS= read -r package_file; do
-              if [[ -f "$package_file" ]]; then
-                package_name=$(node -p "require('./$package_file').name" 2>/dev/null || echo "")
-                package_version=$(node -p "require('./$package_file').version" 2>/dev/null || echo "")
-                
-                if [[ -n "$package_name" && -n "$package_version" ]]; then
-                  versioned_packages+=("$package_name@$package_version")
-                  echo "Found versioned package: $package_name@$package_version"
-                fi
-              fi
-            done < <(git diff --name-only HEAD | grep -E "packages/.*/package\.json$")
-          fi
-          
-          # If no packages were found via git diff, check all packages
-          if [[ ${#versioned_packages[@]} -eq 0 ]]; then
-            echo "No packages found via git diff, checking all packages..."
-            for package_dir in packages/*/; do
-              if [[ -f "$package_dir/package.json" ]]; then
-                package_name=$(node -p "require('./$package_dir/package.json').name" 2>/dev/null || echo "")
-                package_version=$(node -p "require('./$package_dir/package.json').version" 2>/dev/null || echo "")
-                
-                if [[ -n "$package_name" && -n "$package_version" ]]; then
-                  versioned_packages+=("$package_name@$package_version")
-                  echo "Found package: $package_name@$package_version"
-                fi
-              fi
-            done
-            
-            # Check nested packages too
-            for package_dir in packages/*/*/; do
-              if [[ -f "$package_dir/package.json" ]]; then
-                package_name=$(node -p "require('./$package_dir/package.json').name" 2>/dev/null || echo "")
-                package_version=$(node -p "require('./$package_dir/package.json').version" 2>/dev/null || echo "")
-                
-                if [[ -n "$package_name" && -n "$package_version" ]]; then
-                  versioned_packages+=("$package_name@$package_version")
-                  echo "Found nested package: $package_name@$package_version"
-                fi
-              fi
-            done
-          fi
-          
-          if [[ ${#versioned_packages[@]} -eq 0 ]]; then
-            echo "No packages found to release"
-            exit 0
-          fi
-          
-          # Create releases for each versioned package
-          for package_info in "${versioned_packages[@]}"; do
-            # Parse package name and version correctly for scoped packages
-            if [[ "$package_info" =~ ^(@[^/]+/[^@]+)@(.+)$ ]]; then
-              # Scoped package like @deazl/components@1.0.0
-              package_name="${BASH_REMATCH[1]}"
-              package_version="${BASH_REMATCH[2]}"
-            elif [[ "$package_info" =~ ^([^@]+)@(.+)$ ]]; then
-              # Regular package like my-package@1.0.0
-              package_name="${BASH_REMATCH[1]}"
-              package_version="${BASH_REMATCH[2]}"
-            else
-              echo "Error: Could not parse package info: $package_info"
-              continue
-            fi
-            
-            tag_name="${package_name}@${package_version}"
-            
-            echo "Creating release for $package_name@$package_version (tag: $tag_name)"
-            
-            # Create git tag if it doesn't exist
-            if ! git tag | grep -q "^$tag_name$"; then
-              git tag "$tag_name"
-              echo "Created tag: $tag_name"
-            else
-              echo "Tag already exists: $tag_name"
-            fi
-            
-            # Push the tag immediately before creating GitHub release
-            git push origin "$tag_name" || echo "Tag already exists on remote"
-            
-            # Create GitHub Release if it doesn't exist
-            if ! gh release view "$tag_name" >/dev/null 2>&1; then
-              gh release create "$tag_name" \
-                --title "🐤 Canary Release: $package_name@$package_version" \
-                --notes "🚀 **Canary Prerelease: $package_name@$package_version**
-                
-                Cette version canary est générée depuis la branche \`canary\` pour les tests et validations préliminaires.
-                
-                **Installation:**
-                \`\`\`bash
-                # Ces packages ne sont pas publiés sur NPM
-                # Utilisez les artefacts de build ou clonez à partir de ce tag
-                git clone https://github.com/Deazl-Comparator/deazl.git
-                git checkout $tag_name
-                yarn install
-                \`\`\`
-                
-                **Package:** $package_name  
-                **Version:** $package_version  
-                **Branch:** canary
-                
-                **⚠️ Attention:** Cette version est destinée aux tests internes et peut contenir des bugs.
-                
-                **📋 Changements:** Voir le CHANGELOG du package pour les détails." \
-                --prerelease
-              
-              echo "Created GitHub release: $tag_name"
-            else
-              echo "GitHub release already exists: $tag_name"
-            fi
-          done
-          
-          # Commit and push all changes (changesets files)
-          git add .
-          git commit -m "ci(changesets): version packages for canary release" || echo "No changes to commit"
-          git push origin canary
+          git checkout canary
+          yarn version:canary
+          yarn release:canary
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
