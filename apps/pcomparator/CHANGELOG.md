@@ -1,5 +1,15 @@
 # @deazl/pcomparator
 
+## 1.0.2
+
+### Patch Changes
+
+- [`2c02e70`](https://github.com/Deazl-Comparator/deazl/commit/2c02e70b5cd4b315f732e83bbb41814b8a9ba72c) Thanks [@Clement-Muth](https://github.com/Clement-Muth)! - chore: use self hosted runner
+
+- [`74f7e6d`](https://github.com/Deazl-Comparator/deazl/commit/74f7e6d892ba73ef3f03ce79f63d59c29369165c) Thanks [@Clement-Muth](https://github.com/Clement-Muth)! - Retry with echo script
+
+- [`61a3b2b`](https://github.com/Deazl-Comparator/deazl/commit/61a3b2be91a7d335ad56e1c6bd93377e02df07bb) Thanks [@Clement-Muth](https://github.com/Clement-Muth)! - chore: use self-hosted name
+
 ## 1.0.1
 
 ### Patch Changes
