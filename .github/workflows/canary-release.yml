@@ -30,9 +30,6 @@ jobs:
       - name: Install
         uses: ./.github/actions/yarn-nm-install
 
-      - name: Build packages
-        run: yarn build
-
       - name: Check for changesets
         id: check-changesets
         run: |
@@ -106,25 +103,25 @@ jobs:
                   --title "🧪 Canary Release: $package_name@$package_version" \
                   --notes "🚀 **Canary Prerelease: $package_name@$package_version**
                   
-Cette version canary contient les dernières fonctionnalités en cours de développement.
+                  Cette version canary contient les dernières fonctionnalités en cours de développement.
 
-⚠️ **Attention**: Version expérimentale, utilisez avec précaution.
+                  ⚠️ **Attention**: Version expérimentale, utilisez avec précaution.
 
-**Installation:**
-\`\`\`bash
-# Ces packages sont privés et ne sont pas publiés sur NPM
-# Clonez le repository et utilisez ce tag :
-git clone https://github.com/Deazl-Comparator/deazl.git
-git checkout $tag_name
-yarn install && yarn build
-\`\`\`
+                  **Installation:**
+                  \`\`\`bash
+                  # Ces packages sont privés et ne sont pas publiés sur NPM
+                  # Clonez le repository et utilisez ce tag :
+                  git clone https://github.com/Deazl-Comparator/deazl.git
+                  git checkout $tag_name
+                  yarn install && yarn build
+                  \`\`\`
 
-**Package:** $package_name  
-**Version:** $package_version
+                  **Package:** $package_name  
+                  **Version:** $package_version
 
-**📋 Changements:** Voir le CHANGELOG du package pour les détails.
+                  **📋 Changements:** Voir le CHANGELOG du package pour les détails.
 
-**🎯 Prochaine étape:** Cette version sera testée avant promotion en release stable." \
+                  **🎯 Prochaine étape:** Cette version sera testée avant promotion en release stable." \
                   --prerelease || echo "⚠️  Release already exists or error creating release"
               fi
             done
