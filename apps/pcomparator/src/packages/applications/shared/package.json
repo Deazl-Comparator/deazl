@@ -2,13 +2,20 @@
   "name": "@deazl/shared",
   "version": "0.0.1",
   "description": "Shared components for Deazl applications",
-  "keywords": ["deazl", "shared", "application", "react"],
+  "keywords": [
+    "deazl",
+    "shared",
+    "application",
+    "react"
+  ],
   "author": "Clément Muth <clementmuth@deazl.fr>",
   "homepage": "https://deazl.fr",
   "license": "MIT",
   "main": "src/index.ts",
   "sideEffects": false,
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "publishConfig": {
     "access": "public"
   },
@@ -39,6 +46,7 @@
     "@deazl/system": "workspace:^"
   },
   "devDependencies": {
+    "clean-package": "^2.2.0",
     "tsup": "^8.5.0"
   }
 }

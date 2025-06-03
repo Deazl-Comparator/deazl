@@ -2206,6 +2206,7 @@ __metadata:
   resolution: "@deazl/components@workspace:packages/components"
   dependencies:
     "@deazl/system": "workspace:^"
+    clean-package: "npm:^2.2.0"
     tsup: "npm:^8.5.0"
     typescript: "npm:^5.8.3"
   peerDependencies:
@@ -2310,6 +2311,7 @@ __metadata:
   dependencies:
     "@deazl/components": "workspace:^"
     "@deazl/system": "workspace:^"
+    clean-package: "npm:^2.2.0"
     tsup: "npm:^8.5.0"
   peerDependencies:
     react: ">=18 || >=19.0.0-rc.0"
@@ -2324,6 +2326,7 @@ __metadata:
     "@deazl/components": "workspace:^"
     "@deazl/shared": "workspace:^"
     "@deazl/system": "workspace:^"
+    clean-package: "npm:^2.2.0"
     tsup: "npm:^8.5.0"
     typescript: "npm:^5.8.3"
   peerDependencies:
@@ -2336,6 +2339,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@deazl/system@workspace:packages/core/system"
   dependencies:
+    clean-package: "npm:^2.2.0"
     ky: "npm:^1.8.1"
     next-auth: "npm:beta"
     tsup: "npm:^8.5.0"
@@ -10997,6 +11001,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"clean-package@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "clean-package@npm:2.2.0"
+  dependencies:
+    dot-prop: "npm:^6.0.1"
+  bin:
+    clean-package: bin/main.js
+  checksum: 10/69ab3643932ee97fd98f07fcb0bbc42fd55eaca44b1735378d1f562f109dd3acc892bd0cf57470cad8eeaf0dd9ae8ec9db7b00b03a006a6893ba88ca8f85bbd4
+  languageName: node
+  linkType: hard
+
 "clean-stack@npm:^2.0.0":
   version: 2.2.0
   resolution: "clean-stack@npm:2.2.0"
@@ -11887,6 +11902,7 @@ __metadata:
     "@semantic-release/git": "npm:^10.0.1"
     "@semantic-release/github": "npm:^11.0.1"
     "@semantic-release/release-notes-generator": "npm:^14.0.1"
+    clean-package: "npm:^2.2.0"
     commitlint-plugin-function-rules: "npm:^4.0.2"
     husky: "npm:^9.1.7"
     prisma: "npm:5.21.1"
@@ -12219,6 +12235,15 @@ __metadata:
   dependencies:
     is-obj: "npm:^2.0.0"
   checksum: 10/33b2561617bd5c73cf9305368ba4638871c5dbf9c8100c8335acd2e2d590a81ec0e75c11cfaea5cc3cf8c2f668cad4beddb52c11856d0c9e666348eee1baf57a
+  languageName: node
+  linkType: hard
+
+"dot-prop@npm:^6.0.1":
+  version: 6.0.1
+  resolution: "dot-prop@npm:6.0.1"
+  dependencies:
+    is-obj: "npm:^2.0.0"
+  checksum: 10/1200a4f6f81151161b8526c37966d60738cf12619b0ed1f55be01bdb55790bf0a5cd1398b8f2c296dcc07d0a7c2dd0e650baf0b069c367e74bb5df2f6603aba0
   languageName: node
   linkType: hard
 
