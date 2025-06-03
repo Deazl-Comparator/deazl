@@ -2,13 +2,7 @@
   "name": "@deazl/shopping-lists",
   "version": "0.0.1",
   "description": "Shopping Lists application for Deazl",
-  "keywords": [
-    "deazl",
-    "shopping",
-    "lists",
-    "application",
-    "react"
-  ],
+  "keywords": ["deazl", "shopping", "lists", "application", "react"],
   "author": "Clément Muth <clementmuth@deazl.fr>",
   "homepage": "https://deazl.fr",
   "license": "MIT",
@@ -28,9 +22,7 @@
     }
   },
   "sideEffects": false,
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "publishConfig": {
     "access": "public"
   },
@@ -60,7 +52,7 @@
     "react": ">=18 || >=19.0.0-rc.0",
     "react-dom": ">=18 || >=19.0.0-rc.0"
   },
-  "clean-package": "../../../../clean-package.config.json",
+  "clean-package": "../../../../../../clean-package.config.json",
   "dependencies": {
     "@deazl/components": "workspace:^",
     "@deazl/shared": "workspace:^",
