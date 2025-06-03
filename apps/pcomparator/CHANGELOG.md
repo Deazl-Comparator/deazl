@@ -1,5 +1,11 @@
 # @deazl/pcomparator
 
+## 1.0.5
+
+### Patch Changes
+
+- [`3dc0bfe`](https://github.com/Deazl-Comparator/deazl/commit/3dc0bfeb9fefdf6c32574cd8569c196a4e04875d) Thanks [@Clement-Muth](https://github.com/Clement-Muth)! - fix(release): improve package version parsing and tag handling in release workflow
+
 ## 1.0.4
 
 ### Patch Changes
