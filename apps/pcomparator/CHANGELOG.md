@@ -1,5 +1,11 @@
 # @deazl/pcomparator
 
+## 1.0.3
+
+### Patch Changes
+
+- [`b7d73a7`](https://github.com/Deazl-Comparator/deazl/commit/b7d73a73d988738f81c888a18cc627e63a83e81b) Thanks [@Clement-Muth](https://github.com/Clement-Muth)! - chore: update release workflow to create canary tags and releases
+
 ## 1.0.2
 
 ### Patch Changes
