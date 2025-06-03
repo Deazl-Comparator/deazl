@@ -34,10 +34,21 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
+          publish: yarn run release
           title: "ci(changesets): :package: version packages"
           commit: "ci(changesets): version packages"
           setupGitUser: false
           createGithubReleases: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create canary release
+        if: steps.changesets.outputs.published != 'true'
+        timeout-minutes: 15
+        run: |
+          git checkout canary
+          pnpm version:canary
+          pnpm release:canary
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

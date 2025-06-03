@@ -76,74 +76,59 @@ jobs:
 
       - name: Create GitHub releases
         if: steps.check-changesets.outputs.has_changesets == 'true'
-        run: |
-          echo "🏷️  Creating canary GitHub releases..."
-          
-          # First, let's debug what packages we have
-          echo "🔍 Debugging: Listing all packages..."
-          find packages -name "package.json" -exec sh -c 'echo "Package: $1" && cat "$1" | jq -r "{name: .name, version: .version}"' _ {} \;
-          
-          # Find packages with canary versions (contain alpha, beta, canary, or other prerelease identifiers)
-          versioned_packages=$(find packages -name "package.json" -exec sh -c '
-            abs_path="$(pwd)/$1"
-            version=$(node -p "require(\"$abs_path\").version")
-            name=$(node -p "require(\"$abs_path\").name")
-            # Check if version contains prerelease identifiers (canary, alpha, beta, rc, or similar)
-            if echo "$version" | grep -qE "(canary|alpha|beta|rc|-[0-9]+\.[0-9]+\.[0-9]+|\.pre\.)"; then 
-              echo "{\"name\":\"$name\",\"version\":\"$version\"}"
-            fi
-          ' _ {} \; | grep -v "^$")
-          
-          echo "🧪 Debug: Found versioned packages:"
-          echo "$versioned_packages"
-          
-          if [ -n "$versioned_packages" ]; then
-            echo "📦 Found canary packages:"
-            echo "$versioned_packages" | while read -r package_info; do
-              if [ -n "$package_info" ]; then
-                package_name=$(echo "$package_info" | node -p "JSON.parse(process.argv[1]).name" "$package_info")
-                package_version=$(echo "$package_info" | node -p "JSON.parse(process.argv[1]).version" "$package_info")
-                tag_name="${package_name}@${package_version}"
-                
-                echo "🏷️  Creating canary release: $tag_name"
-                
-                # Create git tag
-                git tag "$tag_name"
-                
-                # Create GitHub Release
-                gh release create "$tag_name" \
-                  --title "🧪 Canary Release: $package_name@$package_version" \
-                  --notes "🚀 **Canary Prerelease: $package_name@$package_version**
-                  
-                  Cette version canary contient les dernières fonctionnalités en cours de développement.
-
-                  ⚠️ **Attention**: Version expérimentale, utilisez avec précaution.
-
-                  **Installation:**
-                  \`\`\`bash
-                  # Ces packages sont privés et ne sont pas publiés sur NPM
-                  # Clonez le repository et utilisez ce tag :
-                  git clone https://github.com/Deazl-Comparator/deazl.git
-                  git checkout $tag_name
-                  yarn install && yarn build
-                  \`\`\`
-
-                  **Package:** $package_name  
-                  **Version:** $package_version
-
-                  **📋 Changements:** Voir le CHANGELOG du package pour les détails.
-
-                  **🎯 Prochaine étape:** Cette version sera testée avant promotion en release stable." \
-                  --prerelease || echo "⚠️  Release already exists or error creating release"
-              fi
-            done
-            
-            echo "✅ Canary releases created successfully"
-          else
-            echo "📦 No packages were versioned"
-          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "🏷️ Creating canary GitHub releases..."
+          
+          # Simple and robust approach
+          found_canary=false
+
+          for package_json in packages/*/package.json packages/*/*/package.json apps/*/package.json; do
+            if [ -f "$package_json" ]; then
+              version=$(cat "$package_json" | jq -r '.version')
+              name=$(cat "$package_json" | jq -r '.name')
+              
+              echo "🔍 Checking package: $name@$version"
+              
+              # Check if version contains canary
+              if echo "$version" | grep -q "canary"; then 
+                echo "✅ Found canary package: $name@$version"
+                found_canary=true
+                
+                tag_name="${name}@${version}"
+                
+                # Check if tag already exists
+                if git tag --list | grep -q "^${tag_name}$"; then
+                  echo "⚠️ Tag $tag_name already exists, skipping..."
+                else
+                  echo "🏷️ Creating canary release: $tag_name"
+                  
+                  # Create git tag
+                  git tag "$tag_name"
+
+                  # Push tag immediately to make it available for GitHub release
+                  git push origin "$tag_name"
+                  
+                  # Create GitHub Release with simple notes
+                  gh release create "$tag_name" \
+                    --title "$name@$version" \
+                    --notes "Canary prerelease for $name version $version" \
+                    --prerelease || echo "⚠️ Error creating release for $tag_name"
+                    
+                  echo "✅ Created release for $tag_name"
+                fi
+              else
+                echo "❌ Not a canary version: $name@$version"
+              fi
+            fi
+          done
+          
+          if [ "$found_canary" = "true" ]; then
+            echo "✅ Canary releases created successfully"
+          else
+            echo "📦 No canary packages found"
+          fi
 
       - name: Push changes
         if: steps.check-changesets.outputs.has_changesets == 'true'
@@ -166,7 +151,7 @@ jobs:
         run: |
           if [ "${{ steps.check-changesets.outputs.has_changesets }}" == "true" ]; then
             echo "✅ Canary release process completed successfully"
-            echo "🏷️  New canary releases created"
+            echo "🏷️ New canary releases created"
             echo "📦 Build artifacts uploaded"
           else
             echo "📦 No changesets found - skipped release creation"
