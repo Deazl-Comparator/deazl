@@ -1,5 +1,11 @@
 # @deazl/pcomparator
 
+## 1.0.4
+
+### Patch Changes
+
+- [`55a96bc`](https://github.com/Deazl-Comparator/deazl/commit/55a96bc3a6df6e65743f21af018e54752269e899) Thanks [@Clement-Muth](https://github.com/Clement-Muth)! - chore: remove build step before creating releases in release workflow
+
 ## 1.0.3
 
 ### Patch Changes
