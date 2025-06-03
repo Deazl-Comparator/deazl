@@ -1,0 +1,165 @@
+name: Canary Release
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".changeset/**"
+      - "packages/**"
+    branches:
+      - canary
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  canary-release:
+    name: Canary Release
+    runs-on: self-hosted
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install
+        uses: ./.github/actions/yarn-nm-install
+
+      - name: Build packages
+        run: yarn build
+
+      - name: Check for changesets
+        id: check-changesets
+        run: |
+          if [ -n "$(ls .changeset/*.md 2>/dev/null | grep -v README.md)" ]; then
+            echo "has_changesets=true" >> $GITHUB_OUTPUT
+            echo "📦 Changesets found, proceeding with canary release"
+          else
+            echo "has_changesets=false" >> $GITHUB_OUTPUT
+            echo "📦 No changesets found, skipping release"
+          fi
+
+      - name: Setup canary prerelease mode
+        if: steps.check-changesets.outputs.has_changesets == 'true'
+        run: |
+          echo "🧪 Setting up canary prerelease mode..."
+          
+          # Check if we're already in pre mode
+          if [ ! -f ".changeset/pre.json" ]; then
+            echo "📦 Entering canary pre mode..."
+            yarn changeset pre enter canary
+          else
+            echo "📦 Already in pre mode, checking tag..."
+            current_tag=$(cat .changeset/pre.json | grep '"tag"' | sed 's/.*"tag": "\([^"]*\)".*/\1/')
+            if [ "$current_tag" != "canary" ]; then
+              echo "📦 Switching to canary pre mode..."
+              yarn changeset pre exit
+              yarn changeset pre enter canary
+            else
+              echo "📦 Already in canary pre mode"
+            fi
+          fi
+
+      - name: Version packages
+        if: steps.check-changesets.outputs.has_changesets == 'true'
+        run: |
+          echo "📝 Versioning packages..."
+          yarn changeset version
+          
+          # Commit version changes
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "ci(changesets): canary version packages" || echo "No changes to commit"
+
+      - name: Create GitHub releases
+        if: steps.check-changesets.outputs.has_changesets == 'true'
+        run: |
+          echo "🏷️  Creating canary GitHub releases..."
+          
+          # Find versioned packages
+          versioned_packages=$(find packages -name "package.json" -exec sh -c '
+            if git diff HEAD~1 "$1" | grep -q "version"; then 
+              node -p "JSON.stringify({name: require(\"$1\").name, version: require(\"$1\").version})"
+            fi
+          ' _ {} \; | grep -v "^$")
+          
+          if [ -n "$versioned_packages" ]; then
+            echo "$versioned_packages" | while read -r package_info; do
+              if [ -n "$package_info" ]; then
+                package_name=$(echo "$package_info" | node -p "JSON.parse(require('fs').readFileSync('/dev/stdin', 'utf8')).name")
+                package_version=$(echo "$package_info" | node -p "JSON.parse(require('fs').readFileSync('/dev/stdin', 'utf8')).version")
+                tag_name="${package_name}@${package_version}"
+                
+                echo "🏷️  Creating canary release: $tag_name"
+                
+                # Create git tag
+                git tag "$tag_name"
+                
+                # Create GitHub Release
+                gh release create "$tag_name" \
+                  --title "🧪 Canary Release: $package_name@$package_version" \
+                  --notes "🚀 **Canary Prerelease: $package_name@$package_version**
+                  
+Cette version canary contient les dernières fonctionnalités en cours de développement.
+
+⚠️ **Attention**: Version expérimentale, utilisez avec précaution.
+
+**Installation:**
+\`\`\`bash
+# Ces packages sont privés et ne sont pas publiés sur NPM
+# Clonez le repository et utilisez ce tag :
+git clone https://github.com/Deazl-Comparator/deazl.git
+git checkout $tag_name
+yarn install && yarn build
+\`\`\`
+
+**Package:** $package_name  
+**Version:** $package_version
+
+**📋 Changements:** Voir le CHANGELOG du package pour les détails.
+
+**🎯 Prochaine étape:** Cette version sera testée avant promotion en release stable." \
+                  --prerelease || echo "⚠️  Release already exists or error creating release"
+              fi
+            done
+            
+            echo "✅ Canary releases created successfully"
+          else
+            echo "📦 No packages were versioned"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push changes
+        if: steps.check-changesets.outputs.has_changesets == 'true'
+        run: |
+          echo "🚀 Pushing changes..."
+          git push origin --tags
+          git push origin canary
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: canary-build-artifacts-${{ github.sha }}
+          path: |
+            packages/*/dist/
+            packages/*/build/
+            packages/*/lib/
+          retention-days: 30
+
+      - name: Summary
+        run: |
+          if [ "${{ steps.check-changesets.outputs.has_changesets }}" == "true" ]; then
+            echo "✅ Canary release process completed successfully"
+            echo "🏷️  New canary releases created"
+            echo "📦 Build artifacts uploaded"
+          else
+            echo "📦 No changesets found - skipped release creation"
+            echo "📦 Build artifacts uploaded for reference"
+          fi

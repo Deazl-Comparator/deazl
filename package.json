@@ -49,7 +49,7 @@
 		"typescript:check": "turbo typescript:check",
 		"version": "changeset version",
 		"version:canary": "changeset version --snapshot canary",
-		"release:canary": "changeset pre enter canary && changeset version && changeset publish --tag canary && changeset pre exit",
+		"release:canary": "changeset publish --tag canary",
 		"postinstall": "husky"
 	},
 	"dependencies": {
