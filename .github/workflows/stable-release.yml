@@ -14,7 +14,7 @@ concurrency:
 jobs:
   stable-release:
     name: Stable Release
-    runs-on: ubuntu-latest
+    runs-on: deazl-runner
     timeout-minutes: 30
     permissions:
       contents: write
