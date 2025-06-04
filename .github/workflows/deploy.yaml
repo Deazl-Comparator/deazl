@@ -1,8 +1,9 @@
 name: Deploy
 
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - canary
   workflow_dispatch:
     inputs:
       environment:
@@ -19,8 +20,7 @@ permissions:
 jobs:
   deploy-staging:
     name: Deploy to Staging
-    runs-on: ubuntu-latest
-    if: github.event.release.prerelease == true || (github.event_name == 'workflow_dispatch' && inputs.environment == 'staging')
+    runs-on: self-hosted
 
     steps:
       - name: Checkout
